@@ -1,0 +1,177 @@
+/*
+Copyright (C) 2018 Goods Memo.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+MA 02110-1301  USA
+*/
+/*
+    Created on : 2018/10/08, 12:14:02
+    Author     : Goods Memo
+*/
+
+/* 例：ワードプレスCocoonテーマのCSSにfooterクラスの設定があった場合、それも初期化する。*/
+.goodsmemo-amazon-items div,
+.goodsmemo-amazon-items span,
+.goodsmemo-amazon-items p,
+.goodsmemo-amazon-items img,
+.goodsmemo-amazon-items .footer,
+.goodsmemo-rakuten-items div,
+.goodsmemo-rakuten-items span,
+.goodsmemo-rakuten-items p,
+.goodsmemo-rakuten-items img,
+.goodsmemo-rakuten-items .footer
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.goodsmemo-amazon-items.goodsmemo-items,
+.goodsmemo-rakuten-items.goodsmemo-items
+{
+    border-bottom: 1px #ddd solid;
+}
+
+.goodsmemo-amazon-items .goodsmemo-oneItem,
+.goodsmemo-rakuten-items .goodsmemo-oneItem
+{
+    clear: both;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border-top: 1px #ddd solid;
+}
+
+.goodsmemo-amazon-items .goodsmemo-oneItem .imageArea,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea
+{
+    float: left;
+    width: 160px;
+    margin-right: 10px;
+}
+
+.goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea img
+{
+    /* 幅が128よりも狭い画像があった。 */
+    width : auto;/* imgタグのwidth値を解除 */
+    height: auto;
+}
+
+.goodsmemo-amazon-items .goodsmemo-oneItem .review,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .review
+{
+    overflow: hidden;/* 画像の下に回り込むことを防ぐ */
+}
+
+/* 商品詳細テーブル */
+.goodsmemo-amazon-items .goodsmemo-oneItem .itemDetailsTable,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .itemDetailsTable
+{
+    display: table;
+    border-collapse: separate;  /* セルの間隔を空ける */
+    border-spacing: 5px 0;  /* 左右 上下で記述。上 下 右 左と指定できない */
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem .itemDetailsTable .tableRow,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .itemDetailsTable .tableRow
+{
+    display: table-row;
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem .itemDetailsTable .tableRow p,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .itemDetailsTable .tableRow p
+{
+    display: table-cell;
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem .itemDetailsTable .tableRow p.rowLabel,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .itemDetailsTable .tableRow p.rowLabel
+{
+    text-align: right;/* インラインブロックのspanに対して、右寄せ指定。*/
+    min-width: 4.6em;
+    /*margin-right: 5px;*/ /* table-cell に margin は無効です。display: table; で余白を指定する。*/
+}
+
+/* 価格 */
+.goodsmemo-amazon-items .goodsmemo-oneItem .priceValue,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .priceValue
+{
+    font-size: 115%;
+    color: #b12704;
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem .priceTime,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .priceTime
+{
+    margin-left: 10px;
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem a.priceTimeLink,
+.goodsmemo-rakuten-items .goodsmemo-oneItem a.priceTimeLink
+{
+    color: #333;
+    margin-left: 10px;
+}
+.goodsmemo-amazon-items .goodsmemo-oneItem a:hover.priceTimeLink,
+.goodsmemo-rakuten-items .goodsmemo-oneItem a:hover.priceTimeLink
+{
+    color: #e53900;
+}
+
+/* ポイント倍率 */
+.goodsmemo-amazon-items .goodsmemo-oneItem .pointRate,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .pointRate
+{
+    font-size: 115%;
+    color: #b12704;
+    margin-left: 5px;
+}
+
+.goodsmemo-amazon-items .footer,
+.goodsmemo-rakuten-items .footer
+{
+    clear: both;
+    font-size: small;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border-top: 1px #ddd solid;
+}
+
+.goodsmemo-amazon-search-widget
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    min-width:336px;
+    min-height: 320px;/* 20px + 280px + 20px */
+
+    border-top: 1px #ddd solid;
+    border-bottom: 1px #ddd solid;
+}
+
+p.gma-error-message
+{
+    max-height: 4em;/* 大体２行ほどの高さ */
+    overflow: auto;
+}
+
+/*480px以下*/
+@media screen and (max-width: 480px) {
+
+    .goodsmemo-amazon-items .goodsmemo-oneItem .imageArea,
+    .goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea
+    {
+	width: 25%;
+    }
+
+}
