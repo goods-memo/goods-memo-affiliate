@@ -21,17 +21,15 @@ MA 02110-1301  USA
     Author     : Goods Memo
 */
 
-/* 例：ワードプレスCocoonテーマのCSSにfooterクラスの設定があった場合、それも初期化する。*/
+/* 初期化する。*/
 .goodsmemo-amazon-items div,
 .goodsmemo-amazon-items span,
 .goodsmemo-amazon-items p,
 .goodsmemo-amazon-items img,
-.goodsmemo-amazon-items .footer,
 .goodsmemo-rakuten-items div,
 .goodsmemo-rakuten-items span,
 .goodsmemo-rakuten-items p,
-.goodsmemo-rakuten-items img,
-.goodsmemo-rakuten-items .footer
+.goodsmemo-rakuten-items img
 {
     margin: 0;
     padding: 0;
@@ -139,7 +137,7 @@ MA 02110-1301  USA
 .goodsmemo-rakuten-items .footer
 {
     clear: both;
-    font-size: small;
+    font-size: 70%;
 
     padding-top: 20px;
     padding-bottom: 20px;
