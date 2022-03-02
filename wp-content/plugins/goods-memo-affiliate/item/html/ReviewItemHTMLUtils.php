@@ -75,7 +75,7 @@ class ReviewItemHTMLUtils {
 	}
 	private static function makeFitReviewLinesText($reviewLineArray, $reviewLength) {
 		$fitReviewLinesText = "";
-		$BR_TAG = "<br />";
+		$BR_TAG = "<br>";
 
 		$lineCount = count ( $reviewLineArray );
 		$lastIndex = $lineCount - 1;
@@ -84,7 +84,7 @@ class ReviewItemHTMLUtils {
 
 			$fitReviewLinesText .= $reviewLineArray [$i];
 
-			// $BR_TAGを加えた長さで判定する。例：mb_strimwidthの数え間違い例：<br />…… が <br /…… という風に切断されていた。
+			// $BR_TAGを加えた長さで判定する。例：mb_strimwidthの数え間違い例：<br>…… が <br…… という風に切断されていた。
 			$stringWidth = mb_strwidth ( $fitReviewLinesText . $BR_TAG, "UTF-8" ); // 文字幅（見た目の長さ） //var_dump($stringWidth);
 			if ($stringWidth >= $reviewLength) {
 
@@ -106,7 +106,7 @@ class ReviewItemHTMLUtils {
 		return $newReviewText;
 	}
 	private static function addLineBreakTo($reviewText, $arrayOfStringToBreak) {
-		$LINE_BREAK_TAG = "<br />";
+		$LINE_BREAK_TAG = "<br>";
 		$NON_SENTENCE_CHARACTERS = ' 　' . implode ( $arrayOfStringToBreak ); // 例："「半角空白」「全角空白」●◆" //「●箇条書き」の本文でない文字たち
 
 		$newReviewText = $reviewText;
@@ -115,23 +115,25 @@ class ReviewItemHTMLUtils {
 		for($i = 0; $i < $count; $i ++) {
 
 			$stringToBreak = $arrayOfStringToBreak [$i]; // 例：●
-			                                             // 例：'/●([^ ●◆]+?)/u'
-			                                             // ●の後に、「半角空白」または「全角空白」または「●」または「◆」でない文字列。この文字列は、「●箇条書き」の本文のこと。
-			                                             // +? 最短一致 //UTF-8でpreg系を使う場合は、パターン修飾子として"u"を指定する。
+
+			// 例：'/●([^ ●◆]+?)/u'
+			// ●の後に、「半角空白」または「全角空白」または「●」または「◆」でない文字列。この文字列は、「●箇条書き」の本文のこと。
+			// +? 最短一致 //UTF-8でpreg系を使う場合は、パターン修飾子として"u"を指定する。
 			$pattern = '/' . $stringToBreak . '([^' . $NON_SENTENCE_CHARACTERS . ']+?)/u'; // var_dump($pattern);
 
-			$replace = $LINE_BREAK_TAG . $stringToBreak . '\1'; // 例：<br />●\1 \1は本文。// var_dump($replace);
+			$replace = $LINE_BREAK_TAG . $stringToBreak . '\1'; // 例：<br>●\1 \1は本文。// var_dump($replace);
 			$newReviewText = preg_replace ( $pattern, $replace, $newReviewText );
 		}
 
-		if (TextUtils::startsWith ( $newReviewText, $LINE_BREAK_TAG )) { // 先頭の<br />を取り除く。
+		if (TextUtils::startsWith ( $newReviewText, $LINE_BREAK_TAG )) { // 先頭の<br>を取り除く。
 			$startIndex = mb_strlen ( $LINE_BREAK_TAG, "UTF-8" );
 			$newReviewText = mb_substr ( $newReviewText, $startIndex, NULL, "UTF-8" ); // var_dump($newReviewText);
 		}
 
-		// 例：'#<br />[\s ]*?<br />#u' // #区切り。<br />にスラッシュ文字があるため。
+		// 例：'#<br>[\s ]*?<br>#u'
+		// ここでは正規表現の区切り文字（デリミタ）を/の代わりに#を使った。以前スラッシュ文字がある<br />を使って処理していたから。
 		$pattern = '#' . $LINE_BREAK_TAG . '[\s　]*?' . $LINE_BREAK_TAG . '#u'; // *? 最短一致 //var_dump($pattern);
-		$newReviewText = preg_replace ( $pattern, $LINE_BREAK_TAG, $newReviewText ); // 例：<br /><br />を<br />に置換する。
+		$newReviewText = preg_replace ( $pattern, $LINE_BREAK_TAG, $newReviewText ); // 例：<br>空白文字<br>を<br>に置換する。
 
 		return $newReviewText;
 	}
