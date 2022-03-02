@@ -46,8 +46,11 @@ require_once GOODS_MEMO_DIR . "text/TextUtils.php";
  * @author Goods Memo
  */
 class ItemArrayHTMLMaking {
+
 	const NO_APPLICABLE_PRODUCT = "該当する商品は、ありませんでした。";
+
 	public static function makeItemArrayHTML($itemArray, ItemHTMLOption $itemHTMLOption) {
+
 		$_ = function ($s) {
 			return $s;
 		}; // 展開用のラムダ関数。ヒアドキュメントで定数を展開できる。
@@ -83,7 +86,9 @@ class ItemArrayHTMLMaking {
 
 		return $itemArrayHTML;
 	}
+
 	private static function makeOneItemHTML(Item $item, $index, ItemHTMLOption $itemHTMLOption, $footerID) {
+
 		$idIndex = $index + 1; // １から始まる値にする。
 		$idPrefix = $itemHTMLOption->getIdPrefix ();
 
@@ -213,13 +218,17 @@ class ItemArrayHTMLMaking {
 
 		return $oneItemHTML;
 	}
+
 	private static function makeTitle(Item $item, ItemHTMLOption $itemHTMLOption) {
+
 		$title = $item->getTitle ();
 		$titleLength = $itemHTMLOption->getTitleLength ();
 		$trimmedTitle = TextUtils::mb_strimwidth ( $title, 0, $titleLength, "…" );
 		return $trimmedTitle;
 	}
+
 	private static function setImageInfoIfURLIsEmpty(ImageItem &$imageItem) {
+
 		$imageURL = $imageItem->getImageURL ();
 		if (empty ( $imageURL )) {
 
@@ -230,17 +239,23 @@ class ItemArrayHTMLMaking {
 			$imageItem->setImageHeight ( 300 ); // no-image.png の高さ
 		}
 	}
+
 	private static function makePriceTimeText(PriceItem $priceItem) {
+
 		$priceTime = $priceItem->getPriceTime ();
 		$priceTimeText = DateTextMaking::makeTimeText ( DateTextMaking::TIME_TEXT_FORMAT, $priceTime );
 		return $priceTimeText;
 	}
+
 	private static function makeContributorText(ProductionItem $productionItem) {
+
 		$contributorArray = $productionItem->getContributorArray ();
 		$contributorText = implode ( ", ", $contributorArray );
 		return $contributorText;
 	}
+
 	private static function makeReviewText(Item $item, ItemHTMLOption $itemHTMLOption) {
+
 		$reviewItem = $item->getReviewItem ();
 		$reviewItemHTMLOption = $itemHTMLOption->getReviewItemHTMLOption ();
 		$reviewText = ReviewItemHTMLUtils::makeFitReviewText ( $reviewItem, $reviewItemHTMLOption );

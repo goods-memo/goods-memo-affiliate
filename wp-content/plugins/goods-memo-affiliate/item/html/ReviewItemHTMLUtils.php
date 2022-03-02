@@ -34,7 +34,9 @@ require_once GOODS_MEMO_DIR . "text/TextUtils.php";
  * @author Goods Memo
  */
 class ReviewItemHTMLUtils {
+
 	public static function makeReviewItemHTMLOption($optionMap, $editorialReviewLengthID, $arrayOfStringToDeleteID, $arrayOfStringToBreakID): ReviewItemHTMLOption {
+
 		$reviewItemHTMLOption = new ReviewItemHTMLOption ();
 
 		$reviewLength = $optionMap [$editorialReviewLengthID]; // var_dump($reviewLength);
@@ -48,7 +50,9 @@ class ReviewItemHTMLUtils {
 
 		return $reviewItemHTMLOption;
 	}
+
 	public static function makeFitReviewText(ReviewItem $reviewItem, ReviewItemHTMLOption $reviewItemHTMLOption) {
+
 		// 「ちょうどいい」の単語で「fit」を選んだ。
 		$reviewLength = $reviewItemHTMLOption->getReviewLength ();
 
@@ -73,7 +77,9 @@ class ReviewItemHTMLUtils {
 
 		return $reviewText;
 	}
+
 	private static function makeFitReviewLinesText($reviewLineArray, $reviewLength) {
+
 		$fitReviewLinesText = "";
 		$BR_TAG = "<br>";
 
@@ -99,13 +105,16 @@ class ReviewItemHTMLUtils {
 
 		return $fitReviewLinesText;
 	}
+
 	private static function deleteStringFrom($reviewText, $arrayOfStringToDelete) {
 
 		// 一行で処理できた。メソッドにする必要はなかった。
 		$newReviewText = str_replace ( $arrayOfStringToDelete, "", $reviewText );
 		return $newReviewText;
 	}
+
 	private static function addLineBreakTo($reviewText, $arrayOfStringToBreak) {
+
 		$LINE_BREAK_TAG = "<br>";
 		$NON_SENTENCE_CHARACTERS = ' 　' . implode ( $arrayOfStringToBreak ); // 例："「半角空白」「全角空白」●◆" //「●箇条書き」の本文でない文字たち
 

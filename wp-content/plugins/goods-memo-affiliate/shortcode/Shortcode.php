@@ -42,6 +42,7 @@ require_once GOODS_MEMO_DIR . "exception/FileNotFoundException.php";
  * @author Goods Memo
  */
 class Shortcode {
+
 	public static function makeAffiliateHTML($atts, $content = null) {
 
 		// ショートコードの名前は英小文字、数字、下線を使う必要があります。特にハイフン（ダッシュ）には注意して、使わないのが賢明です。
