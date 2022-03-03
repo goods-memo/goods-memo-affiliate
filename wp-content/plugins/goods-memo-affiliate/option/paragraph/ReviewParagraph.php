@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\paragraph;
 
 use goodsmemo\option\paragraph\AbstractParagraph;
@@ -42,39 +41,43 @@ require_once GOODS_MEMO_DIR . "option/field/TextareaField.php";
  */
 class ReviewParagraph extends AbstractParagraph {
 
-    use AbstractTextParagraph;
+	use AbstractTextParagraph;
 
-    const DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL = "商品説明の表示文字数（目安の文字数）";
-    const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 200;
-    //
-    const DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL = "商品説明から削除する文字列の配列（JSON配列。空の配列[]）";
-    const DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br /＞"]'; //削除する文字列の配列
-    //
-    const DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL = "商品説明で改行する文字の配列（JSON配列。空の配列[]）";
-    const DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE = '["●","■","◆","★","【"]'; //改行する文字列の配列
+	const DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL = "商品説明の表示文字数（目安の文字数）";
 
-    public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
+	const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 200;
 
-	parent::setOptionGroup($pageInfo->getOptionGroup());
-	parent::setSectionTitle($sectionInfo->getSectionTitle());
-	parent::setFieldInfoArray($fieldInfoArray);
+	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL = "商品説明から削除する文字列の配列（JSON配列。空の配列[]）";
 
-	$editorialReviewLengthTextField = new TextField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[0]);
-	parent::addField($pageInfo, $sectionInfo, $editorialReviewLengthTextField);
+	// 削除する文字列の配列。例：全角の＜＞
+	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞"]';
 
-	$arrayOfStringToDeleteTextarea = new TextareaField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[1]);
-	parent::addField($pageInfo, $sectionInfo, $arrayOfStringToDeleteTextarea);
+	const DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL = "商品説明で改行する文字の配列（JSON配列。空の配列[]）";
 
-	$arrayOfStringToBreakTextarea = new TextareaField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[2]);
-	parent::addField($pageInfo, $sectionInfo, $arrayOfStringToBreakTextarea);
-    }
+	const DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE = '["●","■","◆","★","【"]';
 
-    public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {
-	//sanitizedValueMap：変更するため、配列の参照渡しとする。
+	// 改行する文字列の配列
+	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
 
-	$this->validateMoreThanZero($inputedValueMap);
-	$this->validateExistence($inputedValueMap);
-	parent::sanitizeParagraphValue($inputedValueMap, $sanitizedValueMap);
-    }
+		parent::setOptionGroup ( $pageInfo->getOptionGroup () );
+		parent::setSectionTitle ( $sectionInfo->getSectionTitle () );
+		parent::setFieldInfoArray ( $fieldInfoArray );
 
+		$editorialReviewLengthTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
+		parent::addField ( $pageInfo, $sectionInfo, $editorialReviewLengthTextField );
+
+		$arrayOfStringToDeleteTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1] );
+		parent::addField ( $pageInfo, $sectionInfo, $arrayOfStringToDeleteTextarea );
+
+		$arrayOfStringToBreakTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [2] );
+		parent::addField ( $pageInfo, $sectionInfo, $arrayOfStringToBreakTextarea );
+	}
+
+	public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {
+
+		// sanitizedValueMap：変更するため、配列の参照渡しとする。
+		$this->validateMoreThanZero ( $inputedValueMap );
+		$this->validateExistence ( $inputedValueMap );
+		parent::sanitizeParagraphValue ( $inputedValueMap, $sanitizedValueMap );
+	}
 }
