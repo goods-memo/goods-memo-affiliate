@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\amazon;
 
 use goodsmemo\option\AbstractSettingSection;
@@ -37,8 +36,8 @@ use goodsmemo\option\amazon\ProductTypeParagraph;
 use goodsmemo\option\amazon\ProductTypeParagraphUtils;
 use goodsmemo\option\amazon\RESTParagraph;
 use goodsmemo\option\amazon\RESTParagraphUtils;
-use goodsmemo\option\amazon\SearchWidgetParagraph;
-use goodsmemo\option\amazon\SearchWidgetParagraphUtils;
+use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraph;
+use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraphUtils;
 
 require_once GOODS_MEMO_DIR . "option/AbstractSettingSection.php";
 require_once GOODS_MEMO_DIR . "option/PageInfo.php";
@@ -56,8 +55,8 @@ require_once GOODS_MEMO_DIR . "option/amazon/ProductTypeParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/ProductTypeParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/RESTParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/RESTParagraphUtils.php";
-require_once GOODS_MEMO_DIR . "option/amazon/SearchWidgetParagraph.php";
-require_once GOODS_MEMO_DIR . "option/amazon/SearchWidgetParagraphUtils.php";
+require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraph.php";
+require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraphUtils.php";
 
 /**
  * Description of AmazonSettionSection
@@ -65,60 +64,61 @@ require_once GOODS_MEMO_DIR . "option/amazon/SearchWidgetParagraphUtils.php";
  * @author Goods Memo
  */
 class AmazonSettingSection extends AbstractSettingSection {
-
 	const ID_PREFIX = "amazon";
 
 	public function initSection(PageInfo $pageInfo) {
 
-		$sectionInfo = new SectionInfo();
-		$sectionInfo->setSectionID("amazon_section_id");
-		$sectionInfo->setSectionTitle("アマゾンの設定");
+		$sectionInfo = new SectionInfo ();
+		$sectionInfo->setSectionID ( "amazon_section_id" );
+		$sectionInfo->setSectionTitle ( "アマゾンの設定" );
 
-		add_settings_section(
-			$sectionInfo->getSectionID(), // ID
-			$sectionInfo->getSectionTitle(), // Title
-			array($this, SettingSection::PRINT_SECTION_INFO_FUNCTION_NAME), // Callback
-			$pageInfo->getSettingMenuSlug() //設定ページのslug。メニューのslugと同じもの。
+		add_settings_section ( $sectionInfo->getSectionID (), // ID
+		$sectionInfo->getSectionTitle (), // Title
+		array (
+				$this,
+				SettingSection::PRINT_SECTION_INFO_FUNCTION_NAME
+		), // Callback
+		$pageInfo->getSettingMenuSlug () // 設定ページのslug。メニューのslugと同じもの。
 		);
 
-		$urlParagraph = new URLParagraph();
-		$urlFieldInfoArray = URLParagraphUtils::makeFieldInfoArray();
-		$urlParagraph->initParagraph($pageInfo, $sectionInfo, $urlFieldInfoArray);
-		parent::addParagraph($urlParagraph);
+		$urlParagraph = new URLParagraph ();
+		$urlFieldInfoArray = URLParagraphUtils::makeFieldInfoArray ();
+		$urlParagraph->initParagraph ( $pageInfo, $sectionInfo, $urlFieldInfoArray );
+		parent::addParagraph ( $urlParagraph );
 
-		$commonRESTParagraph = new CommonRESTParagraph();
-		$commonRESTFieldInfoArray = CommonRESTParagraphUtils::makeFieldInfoArray();
-		$commonRESTParagraph->initParagraph($pageInfo, $sectionInfo, $commonRESTFieldInfoArray);
-		parent::addParagraph($commonRESTParagraph);
+		$commonRESTParagraph = new CommonRESTParagraph ();
+		$commonRESTFieldInfoArray = CommonRESTParagraphUtils::makeFieldInfoArray ();
+		$commonRESTParagraph->initParagraph ( $pageInfo, $sectionInfo, $commonRESTFieldInfoArray );
+		parent::addParagraph ( $commonRESTParagraph );
 
-		$itemHTMLParagraph = new ItemHTMLParagraph();
-		$itemHTMLFieldInfoArray = ItemHTMLParagraphUtils::makeFieldInfoArray();
-		$itemHTMLParagraph->initParagraph($pageInfo, $sectionInfo, $itemHTMLFieldInfoArray);
-		parent::addParagraph($itemHTMLParagraph);
+		$itemHTMLParagraph = new ItemHTMLParagraph ();
+		$itemHTMLFieldInfoArray = ItemHTMLParagraphUtils::makeFieldInfoArray ();
+		$itemHTMLParagraph->initParagraph ( $pageInfo, $sectionInfo, $itemHTMLFieldInfoArray );
+		parent::addParagraph ( $itemHTMLParagraph );
 
-		$reviewParagraph = new ReviewParagraph();
-		$reviewFieldInfoArray = ReviewParagraphUtils::makeFieldInfoArray();
-		$reviewParagraph->initParagraph($pageInfo, $sectionInfo, $reviewFieldInfoArray);
-		parent::addParagraph($reviewParagraph);
+		$reviewParagraph = new ReviewParagraph ();
+		$reviewFieldInfoArray = ReviewParagraphUtils::makeFieldInfoArray ();
+		$reviewParagraph->initParagraph ( $pageInfo, $sectionInfo, $reviewFieldInfoArray );
+		parent::addParagraph ( $reviewParagraph );
 
-		$productTypeParagraph = new ProductTypeParagraph();
-		$productTypeFieldInfoArray = ProductTypeParagraphUtils::makeFieldInfoArray();
-		$productTypeParagraph->initParagraph($pageInfo, $sectionInfo, $productTypeFieldInfoArray);
-		parent::addParagraph($productTypeParagraph);
+		$productTypeParagraph = new ProductTypeParagraph ();
+		$productTypeFieldInfoArray = ProductTypeParagraphUtils::makeFieldInfoArray ();
+		$productTypeParagraph->initParagraph ( $pageInfo, $sectionInfo, $productTypeFieldInfoArray );
+		parent::addParagraph ( $productTypeParagraph );
 
-		$restParagraph = new RESTParagraph();
-		$restFieldInfoArray = RESTParagraphUtils::makeFieldInfoArray();
-		$restParagraph->initParagraph($pageInfo, $sectionInfo, $restFieldInfoArray);
-		parent::addParagraph($restParagraph);
+		$restParagraph = new RESTParagraph ();
+		$restFieldInfoArray = RESTParagraphUtils::makeFieldInfoArray ();
+		$restParagraph->initParagraph ( $pageInfo, $sectionInfo, $restFieldInfoArray );
+		parent::addParagraph ( $restParagraph );
 
-		$searchWidgetParagraph = new SearchWidgetParagraph();
-		$searchWidgetFieldInfoArray = SearchWidgetParagraphUtils::makeFieldInfoArray();
-		$searchWidgetParagraph->initParagraph($pageInfo, $sectionInfo, $searchWidgetFieldInfoArray);
-		parent::addParagraph($searchWidgetParagraph);
+		$displayHTMLPAAPINotAvailableParagraph = new DisplayHTMLPAAPINotAvailableParagraph ();
+		$displayHTMLPAAPINotAvailableFieldInfoArray = DisplayHTMLPAAPINotAvailableParagraphUtils::makeFieldInfoArray ();
+		$displayHTMLPAAPINotAvailableParagraph->initParagraph ( $pageInfo, $sectionInfo, $displayHTMLPAAPINotAvailableFieldInfoArray );
+		parent::addParagraph ( $displayHTMLPAAPINotAvailableParagraph );
 	}
 
 	public function printSectionInfo() {
+
 		print 'アマゾンアフィリエイトの設定を入力してください。未入力だった場合、初期値を表示します。';
 	}
-
 }

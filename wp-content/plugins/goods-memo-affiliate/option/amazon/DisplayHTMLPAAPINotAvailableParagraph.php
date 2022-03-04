@@ -23,7 +23,7 @@ require_once GOODS_MEMO_DIR . "option/field/CheckboxField.php";
  */
 class DisplayHTMLPAAPINotAvailableParagraph extends AbstractParagraph {
 	use AbstractTextParagraph;
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKED_VALUE = "displayHTMLPAAPINotAvailableChecked";
+	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKED_VALUE = "displayHTMLChecked";
 	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_LABEL_FOR_CHECKBOX = "常に表示する。Product Advertising API を、常に使用しない場合（アクセス制限のため利用できない場合）";
 
 	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {

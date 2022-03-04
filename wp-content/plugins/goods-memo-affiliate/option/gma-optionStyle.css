@@ -104,8 +104,12 @@ MA 02110-1301  USA
     border-left: solid 1px darkgray;
 }
 
-/*SearchWidgetParagraph*/
+/*DisplayHTMLPAAPINotAvailableParagraph*/
 .form-table:nth-of-type(1) tr:nth-of-type(13) {
+    border-right: solid 1px darkgray;
+    border-left: solid 1px darkgray;
+}
+.form-table:nth-of-type(1) tr:nth-of-type(14) {
     border-right: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     border-left: solid 1px darkgray;

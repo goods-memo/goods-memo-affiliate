@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\field;
 
 use goodsmemo\option\field\AbstractTextField;
@@ -34,24 +33,25 @@ require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
  */
 class TextareaField extends AbstractTextField {
 
-    public function __construct($optionNameOfDatabase, FieldInfo $fieldInfo) {
+	public function __construct($optionNameOfDatabase, FieldInfo $fieldInfo) {
 
-	parent::__construct($optionNameOfDatabase, $fieldInfo);
-    }
+		parent::__construct ( $optionNameOfDatabase, $fieldInfo );
+	}
 
-    public function printField() {
+	public function printField() {
 
-	$optionNameOfDatabase = parent::getOptionNameOfDatabase();
-	$fieldInfo = parent::getFieldInfo();
+		$optionNameOfDatabase = parent::getOptionNameOfDatabase ();
+		$fieldInfo = parent::getFieldInfo ();
 
-	$textareaID = $fieldInfo->getFieldID();
-	$defaultValue = $fieldInfo->getDefaultFieldValue();
+		$textareaID = $fieldInfo->getFieldID ();
+		$defaultValue = $fieldInfo->getDefaultFieldValue ();
 
-	$format = <<< EOD
-<textarea id="{$textareaID}" name="{$optionNameOfDatabase}[{$textareaID}]" rows="3" cols="50" maxlength="1050">%s</textarea>
-EOD;
+		// 参考：URLの最大文字数は2083文字。アフィリエイトURLと「表示するHTML」を合わせて、最大5000文字とした。
+		// ブラウザでは、基本的に文字数の制限はないらしい。
+		$format = <<< EOD
+		<textarea id="{$textareaID}" name="{$optionNameOfDatabase}[{$textareaID}]" rows="3" cols="50" maxlength="5000">%s</textarea>
+		EOD;
 
-	parent::printInputField($format, $textareaID, $defaultValue);
-    }
-
+		parent::printInputField ( $format, $textareaID, $defaultValue );
+	}
 }
