@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\rakuten;
 
 use goodsmemo\option\field\FieldInfo;
@@ -35,35 +34,33 @@ require_once GOODS_MEMO_DIR . "option/rakuten/RakutenSettingSection.php";
  * @author Goods Memo
  */
 class ReviewParagraphUtils {
+	const EDITORIAL_REVIEW_LENGTH_ID = RakutenSettingSection::ID_PREFIX . "_editorial_review_length_id";
+	const ARRAY_OF_STRING_TO_DELETE_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_delete_id";
+	const ARRAY_OF_STRING_TO_BREAK_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_break_id";
 
-    const EDITORIAL_REVIEW_LENGTH_ID = RakutenSettingSection::ID_PREFIX . "_editorial_review_length_id";
-    const ARRAY_OF_STRING_TO_DELETE_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_delete_id";
-    const ARRAY_OF_STRING_TO_BREAK_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_break_id";
+	public static function makeFieldInfoArray() {
 
-    public static function makeFieldInfoArray() {
+		$fieldInfoArray = array ();
 
-	$fieldInfoArray = array();
+		$editorialReviewLengthFieldInfo = new FieldInfo ();
+		$editorialReviewLengthFieldInfo->setFieldID ( ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID );
+		$editorialReviewLengthFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL );
+		$editorialReviewLengthFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE );
+		$editorialReviewLengthFieldInfo->enableMoreThanZeroVerification ();
+		array_push ( $fieldInfoArray, $editorialReviewLengthFieldInfo );
 
-	$editorialReviewLengthFieldInfo = new FieldInfo();
-	$editorialReviewLengthFieldInfo->setFieldID(ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID);
-	$editorialReviewLengthFieldInfo->setFieldLabel(ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL);
-	$editorialReviewLengthFieldInfo->setDefaultFieldValue(ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE);
-	$editorialReviewLengthFieldInfo->setNumericalVerificationEnabled(true);
-	array_push($fieldInfoArray, $editorialReviewLengthFieldInfo);
+		$arrayOfStringToDeleteFieldInfo = new FieldInfo ();
+		$arrayOfStringToDeleteFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID );
+		$arrayOfStringToDeleteFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL );
+		$arrayOfStringToDeleteFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE );
+		array_push ( $fieldInfoArray, $arrayOfStringToDeleteFieldInfo );
 
-	$arrayOfStringToDeleteFieldInfo = new FieldInfo();
-	$arrayOfStringToDeleteFieldInfo->setFieldID(ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID);
-	$arrayOfStringToDeleteFieldInfo->setFieldLabel(ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL);
-	$arrayOfStringToDeleteFieldInfo->setDefaultFieldValue(ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE);
-	array_push($fieldInfoArray, $arrayOfStringToDeleteFieldInfo);
+		$arrayOfStringToBreakFieldInfo = new FieldInfo ();
+		$arrayOfStringToBreakFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
+		$arrayOfStringToBreakFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL );
+		$arrayOfStringToBreakFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE );
+		array_push ( $fieldInfoArray, $arrayOfStringToBreakFieldInfo );
 
-	$arrayOfStringToBreakFieldInfo = new FieldInfo();
-	$arrayOfStringToBreakFieldInfo->setFieldID(ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID);
-	$arrayOfStringToBreakFieldInfo->setFieldLabel(ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL);
-	$arrayOfStringToBreakFieldInfo->setDefaultFieldValue(ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE);
-	array_push($fieldInfoArray, $arrayOfStringToBreakFieldInfo);
-
-	return $fieldInfoArray;
-    }
-
+		return $fieldInfoArray;
+	}
 }

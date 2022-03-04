@@ -34,6 +34,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID );
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldLabel ( '「表示するHTML」の表示設定' );
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setDefaultFieldValue ( "" );
+		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setExistenceVerificationEnabled ( false ); // チェックボックスでは値の存在検査をしない。
 		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableCheckboxFieldInfo );
 
 		return $fieldInfoArray;
