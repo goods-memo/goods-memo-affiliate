@@ -45,11 +45,12 @@ class TextareaField extends AbstractTextField {
 
 		$textareaID = $fieldInfo->getFieldID ();
 		$defaultValue = $fieldInfo->getDefaultFieldValue ();
+		$rows = $fieldInfo->getRows ();
 
 		// 参考：URLの最大文字数は2083文字。アフィリエイトURLと「表示するHTML」を合わせて、最大5000文字とした。
 		// ブラウザでは、基本的に文字数の制限はないらしい。
 		$format = <<< EOD
-		<textarea id="{$textareaID}" name="{$optionNameOfDatabase}[{$textareaID}]" rows="3" cols="50" maxlength="5000">%s</textarea>
+		<textarea id="{$textareaID}" name="{$optionNameOfDatabase}[{$textareaID}]" rows="{$rows}" cols="50" maxlength="5000">%s</textarea>
 		EOD;
 
 		parent::printInputField ( $format, $textareaID, $defaultValue );

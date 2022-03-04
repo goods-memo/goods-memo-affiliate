@@ -29,8 +29,10 @@ class FieldInfo {
 	private $fieldID;
 	private $fieldLabel;
 	private $defaultFieldValue = "";
-	private $existenceVerificationEnabled = true;
-	private $moreThanZeroVerificationEnabled = false;
+	private int $rows = 3; // 例：textareaタグの行数
+	private bool $existenceVerificationEnabled = true;
+	private bool $moreThanZeroVerificationEnabled = false;
+	private bool $htmlSpecialcharsConversionEnabled = false;
 
 	public function getFieldID() {
 
@@ -49,9 +51,18 @@ class FieldInfo {
 
 	/**
 	 *
+	 * @return number
+	 */
+	public function getRows(): int {
+
+		return $this->rows;
+	}
+
+	/**
+	 *
 	 * @return boolean
 	 */
-	public function getExistenceVerificationEnabled() {
+	public function getExistenceVerificationEnabled(): bool {
 
 		return $this->existenceVerificationEnabled;
 	}
@@ -60,9 +71,18 @@ class FieldInfo {
 	 *
 	 * @return boolean
 	 */
-	public function getMoreThanZeroVerificationEnabled() {
+	public function getMoreThanZeroVerificationEnabled(): bool {
 
 		return $this->moreThanZeroVerificationEnabled;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function getHtmlSpecialcharsConversionEnabled(): bool {
+
+		return $this->htmlSpecialcharsConversionEnabled;
 	}
 
 	public function setFieldID($fieldID) {
@@ -82,9 +102,18 @@ class FieldInfo {
 
 	/**
 	 *
+	 * @param number $rows
+	 */
+	public function setRows(int $rows) {
+
+		$this->rows = $rows;
+	}
+
+	/**
+	 *
 	 * @param boolean $existenceVerificationEnabled
 	 */
-	public function setExistenceVerificationEnabled($existenceVerificationEnabled) {
+	public function setExistenceVerificationEnabled(bool $existenceVerificationEnabled) {
 
 		$this->existenceVerificationEnabled = $existenceVerificationEnabled;
 	}
@@ -93,9 +122,18 @@ class FieldInfo {
 	 *
 	 * @param boolean $moreThanZeroVerificationEnabled
 	 */
-	public function setMoreThanZeroVerificationEnabled($moreThanZeroVerificationEnabled) {
+	public function setMoreThanZeroVerificationEnabled(bool $moreThanZeroVerificationEnabled) {
 
 		$this->moreThanZeroVerificationEnabled = $moreThanZeroVerificationEnabled;
+	}
+
+	/**
+	 *
+	 * @param boolean $htmlSpecialcharsConversionEnabled
+	 */
+	public function setHtmlSpecialcharsConversionEnabled(bool $htmlSpecialcharsConversionEnabled) {
+
+		$this->htmlSpecialcharsConversionEnabled = $htmlSpecialcharsConversionEnabled;
 	}
 
 	public function enableMoreThanZeroVerification() {

@@ -35,7 +35,14 @@ class ParagraphUtils {
 			$inputFieldID = $fieldInfo->getFieldID ();
 			if (isset ( $inputedValueMap [$inputFieldID] )) {
 
-				$sanitizedValueMap [$inputFieldID] = sanitize_text_field ( $inputedValueMap [$inputFieldID] );
+				$inputedValue = $inputedValueMap [$inputFieldID];
+				if ($fieldInfo->getHtmlSpecialcharsConversionEnabled ()) {
+					$inputedValue = htmlspecialchars ( $inputedValue );
+				}
+
+				// sanitize_textarea_field：textarea要素の正当な入力である改行、その他の空白を保持する。
+				// sanitize_text_field：改行、その他の空白も取り除く。文字エンコードUTF-8で無効な文字やHTML要素も取り除く。
+				$sanitizedValueMap [$inputFieldID] = sanitize_textarea_field ( $inputedValue );
 			}
 		}
 	}

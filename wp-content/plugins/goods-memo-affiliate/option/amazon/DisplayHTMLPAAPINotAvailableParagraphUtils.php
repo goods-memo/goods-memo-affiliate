@@ -9,8 +9,8 @@ require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
 
 class DisplayHTMLPAAPINotAvailableParagraphUtils {
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID = AmazonSettingSection::ID_PREFIX . "_display_html_textarea_id";
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID = AmazonSettingSection::ID_PREFIX . "_display_html_checkbox_id";
+	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_textarea_id";
+	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_checkbox_id";
 
 	public static function makeFieldInfoArray() {
 
@@ -28,6 +28,9 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		</p>
 		EOD;
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setDefaultFieldValue ( $htmlOfDisplayHTMLPAAPINotAvailable );
+		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setRows ( 10 );
+		// 特殊文字を HTML エンティティに変換する、を有効。例：< (小なり) を&lt;に変換する。
+		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
 		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableTextareaFieldInfo );
 
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo = new FieldInfo ();
