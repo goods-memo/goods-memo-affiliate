@@ -33,7 +33,7 @@ require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
  */
 class TextareaField extends AbstractTextField {
 
-	public function __construct($optionNameOfDatabase, FieldInfo $fieldInfo) {
+	public function __construct($optionNameOfDatabase, TextareaFieldInfo $fieldInfo) {
 
 		parent::__construct ( $optionNameOfDatabase, $fieldInfo );
 	}

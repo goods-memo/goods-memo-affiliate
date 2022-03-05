@@ -54,7 +54,7 @@ class ParagraphUtils {
 
 				// sanitize_textarea_field：textarea要素の正当な入力である改行、その他の空白を保持する。
 				$inputedValue = sanitize_textarea_field ( $inputedValue );
-			} elseif ($fieldInfo instanceof TextFieldInfo) {
+			} else {
 
 				// sanitize_text_field：改行、その他の空白も取り除く。文字エンコードUTF-8で無効な文字やHTML要素も取り除く。
 				$inputedValue = sanitize_text_field ( $inputedValue );
@@ -68,7 +68,7 @@ class ParagraphUtils {
 
 		foreach ( $fieldInfoArray as $fieldInfo ) {
 
-			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo, TextareaFieldInfoの場合
+			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo（親クラス）、TextareaFieldInfo（子クラス）の場合
 				if ($fieldInfo->getMoreThanZeroVerificationEnabled () === false) {
 					continue;
 				}
@@ -77,7 +77,6 @@ class ParagraphUtils {
 			}
 
 			$inputFieldID = $fieldInfo->getFieldID ();
-
 			if (isset ( $inputedValueMap [$inputFieldID] )) {
 
 				$value = $inputedValueMap [$inputFieldID];
@@ -97,7 +96,7 @@ class ParagraphUtils {
 
 		foreach ( $fieldInfoArray as $fieldInfo ) {
 
-			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo, TextareaFieldInfoの場合
+			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo（親クラス）、TextareaFieldInfo（子クラス）の場合
 				if ($fieldInfo->getExistenceVerificationEnabled () === false) {
 					continue;
 				}
@@ -108,6 +107,7 @@ class ParagraphUtils {
 			$inputFieldID = $fieldInfo->getFieldID ();
 			$valueExists;
 			if (isset ( $inputedValueMap [$inputFieldID] )) {
+
 				$value = $inputedValueMap [$inputFieldID];
 				if (trim ( $value )) {
 					$valueExists = true;

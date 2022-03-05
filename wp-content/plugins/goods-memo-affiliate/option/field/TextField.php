@@ -10,22 +10,21 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\field;
 
 use goodsmemo\option\field\AbstractTextField;
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\TextFieldInfo;
 
 require_once GOODS_MEMO_DIR . "option/field/AbstractTextField.php";
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextFieldInfo.php";
 
 /**
  * Description of TextField
@@ -34,24 +33,23 @@ require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
  */
 class TextField extends AbstractTextField {
 
-    public function __construct($optionNameOfDatabase, FieldInfo $fieldInfo) {
+	public function __construct($optionNameOfDatabase, TextFieldInfo $fieldInfo) {
 
-	parent::__construct($optionNameOfDatabase, $fieldInfo);
-    }
+		parent::__construct ( $optionNameOfDatabase, $fieldInfo );
+	}
 
-    public function printField() {
+	public function printField() {
 
-	$optionNameOfDatabase = parent::getOptionNameOfDatabase();
-	$fieldInfo = parent::getFieldInfo();
+		$optionNameOfDatabase = parent::getOptionNameOfDatabase ();
+		$fieldInfo = parent::getFieldInfo ();
 
-	$textFieldID = $fieldInfo->getFieldID();
-	$defaultValue = $fieldInfo->getDefaultFieldValue();
+		$textFieldID = $fieldInfo->getFieldID ();
+		$defaultValue = $fieldInfo->getDefaultFieldValue ();
 
-	$format = <<< EOD
-<input type="text" id="{$textFieldID}" name="{$optionNameOfDatabase}[{$textFieldID}]" size="50" maxlength="50" value="%s" />
-EOD;
+		$format = <<< EOD
+		<input type="text" id="{$textFieldID}" name="{$optionNameOfDatabase}[{$textFieldID}]" size="50" maxlength="50" value="%s" />
+		EOD;
 
-	parent::printInputField($format, $textFieldID, $defaultValue);
-    }
-
+		parent::printInputField ( $format, $textFieldID, $defaultValue );
+	}
 }

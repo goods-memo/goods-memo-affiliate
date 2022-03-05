@@ -10,6 +10,7 @@ namespace goodsmemo\option\field;
 abstract class AbstractFieldInfo {
 	private string $fieldID = "";
 	private string $fieldLabel = "";
+	private string $defaultFieldValue = "";
 
 	public function getFieldID(): string {
 
@@ -21,6 +22,11 @@ abstract class AbstractFieldInfo {
 		return $this->fieldLabel;
 	}
 
+	public function getDefaultFieldValue(): string {
+
+		return $this->defaultFieldValue;
+	}
+
 	public function setFieldID(string $fieldID) {
 
 		$this->fieldID = $fieldID;
@@ -29,6 +35,11 @@ abstract class AbstractFieldInfo {
 	public function setFieldLabel(string $fieldLabel) {
 
 		$this->fieldLabel = $fieldLabel;
+	}
+
+	public function setDefaultFieldValue(string $defaultFieldValue) {
+
+		$this->defaultFieldValue = $defaultFieldValue;
 	}
 }
 

@@ -10,22 +10,21 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\field;
 
 use goodsmemo\option\field\AbstractField;
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\SelectFieldInfo;
 
 require_once GOODS_MEMO_DIR . "option/field/AbstractField.php";
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/SelectFieldInfo.php";
 
 /**
  * Description of SelectField
@@ -33,54 +32,52 @@ require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
  * @author Goods Memo
  */
 class SelectField extends AbstractField {
+	private $valueTitleMap;
 
-    private $valueTitleMap;
+	public function __construct($optionNameOfDatabase, SelectFieldInfo $fieldInfo, $valueTitleMap) {
 
-    public function __construct($optionNameOfDatabase, FieldInfo $fieldInfo, $valueTitleMap) {
-
-	parent::__construct($optionNameOfDatabase, $fieldInfo);
-	$this->valueTitleMap = $valueTitleMap;
-    }
-
-    public function printField() {
-
-	$optionMap = parent::getOptionMap(); //var_dump($optionMap);
-	$fieldInfo = parent::getFieldInfo();
-	$selectFieldID = $fieldInfo->getFieldID(); //var_dump($selectFieldID);
-
-	$valueOfDatabase;
-	if (isset($optionMap[$selectFieldID])) {//nullでない
-	    $valueOfDatabase = esc_attr($optionMap[$selectFieldID]);
-	} else {
-	    $valueOfDatabase = "";
+		parent::__construct ( $optionNameOfDatabase, $fieldInfo );
+		$this->valueTitleMap = $valueTitleMap;
 	}
 
-	$outputValue;
-	if ($valueOfDatabase) {//emptyでない。例えば "-1" も有効となる。
-	    $outputValue = $valueOfDatabase;
-	} else {//ゼロまたは空文字
-	    $outputValue = $fieldInfo->getDefaultFieldValue();
+	public function printField() {
+
+		$optionMap = parent::getOptionMap (); // var_dump($optionMap);
+		$fieldInfo = parent::getFieldInfo ();
+		$selectFieldID = $fieldInfo->getFieldID (); // var_dump($selectFieldID);
+
+		$valueOfDatabase;
+		if (isset ( $optionMap [$selectFieldID] )) { // nullでない
+			$valueOfDatabase = esc_attr ( $optionMap [$selectFieldID] );
+		} else {
+			$valueOfDatabase = "";
+		}
+
+		$outputValue;
+		if ($valueOfDatabase) { // emptyでない。例えば "-1" も有効となる。
+			$outputValue = $valueOfDatabase;
+		} else { // ゼロまたは空文字
+			$outputValue = $fieldInfo->getDefaultFieldValue ();
+		}
+
+		$optionNameOfDatabase = parent::getOptionNameOfDatabase ();
+
+		$startTag = <<< EOD
+		<select id="{$selectFieldID}" name="{$optionNameOfDatabase}[{$selectFieldID}]" >
+		EOD;
+
+		$optionsTag = "";
+		foreach ( $this->valueTitleMap as $value => $title ) {
+
+			$selectedAttribute = selected ( $value, $outputValue, false );
+			$oneOptionTag = <<< EOD
+			<option value="{$value}" {$selectedAttribute} >{$title}</option>
+			EOD;
+			$optionsTag .= $oneOptionTag;
+		}
+
+		$endTag = "</select>";
+
+		print $startTag . $optionsTag . $endTag;
 	}
-
-	$optionNameOfDatabase = parent::getOptionNameOfDatabase();
-
-	$startTag = <<< EOD
-<select id="{$selectFieldID}" name="{$optionNameOfDatabase}[{$selectFieldID}]" >
-EOD;
-
-	$optionsTag = "";
-	foreach ($this->valueTitleMap as $value => $title) {
-
-	    $selectedAttribute = selected($value, $outputValue, false);
-	    $oneOptionTag = <<< EOD
-<option value="{$value}" {$selectedAttribute} >{$title}</option>
-EOD;
-	    $optionsTag .= $oneOptionTag;
-	}
-
-	$endTag = "</select>";
-
-	print $startTag . $optionsTag . $endTag;
-    }
-
 }

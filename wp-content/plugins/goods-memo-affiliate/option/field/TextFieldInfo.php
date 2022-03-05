@@ -12,14 +12,8 @@ require_once GOODS_MEMO_DIR . "option/field/AbstractFieldInfo.php";
  *        
  */
 class TextFieldInfo extends AbstractFieldInfo {
-	private string $defaultFieldValue = "";
 	private bool $existenceVerificationEnabled = TRUE;
 	private bool $moreThanZeroVerificationEnabled = FALSE;
-
-	public function getDefaultFieldValue(): string {
-
-		return $this->defaultFieldValue;
-	}
 
 	/**
 	 *
@@ -37,11 +31,6 @@ class TextFieldInfo extends AbstractFieldInfo {
 	public function getMoreThanZeroVerificationEnabled(): bool {
 
 		return $this->moreThanZeroVerificationEnabled;
-	}
-
-	public function setDefaultFieldValue(string $defaultFieldValue) {
-
-		$this->defaultFieldValue = $defaultFieldValue;
 	}
 
 	/**
