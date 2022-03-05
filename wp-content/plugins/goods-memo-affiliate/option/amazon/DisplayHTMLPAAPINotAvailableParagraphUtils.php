@@ -19,7 +19,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo = new FieldInfo ();
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID );
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」" );
-		$htmlOfDisplayHTMLPAAPINotAvailable = <<< EOD
+		$displayHTMLPAAPINotAvailable = <<< EOD
 		<p>
 		Product Advertising API 利用不可の時、表示するHTMLを、ここに設定します。<br>
 		Product Advertising API アソシエイトタグ：GOODS_MEMO_ASSOCIATE_TAG<br>
@@ -27,7 +27,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		URLエンコードされたキーワード：GOODS_MEMO_ENCODED_SEARCH_KEYWORD
 		</p>
 		EOD;
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setDefaultFieldValue ( $htmlOfDisplayHTMLPAAPINotAvailable );
+		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setDefaultFieldValue ( $displayHTMLPAAPINotAvailable );
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setRows ( 10 );
 		// 特殊文字を HTML エンティティに変換する、を有効。例：< (小なり) を&lt;に変換する。
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
