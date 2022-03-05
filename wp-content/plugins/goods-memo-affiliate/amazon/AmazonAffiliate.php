@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\amazon;
 
 use goodsmemo\amazon\KeywordSearchOperation;
@@ -48,33 +47,30 @@ class AmazonAffiliate {
 
 	public static function makeHTML($operationOfShortcode, $searchIndexOfShortcode, $keyword, $number) {
 
-		$optionMap = AffiliateOptionUtils::getAffiliateOption(); //ここで一回だけデータベースを読み込む。
+		$optionMap = AffiliateOptionUtils::getAffiliateOption (); // ここで一回だけデータベースを読み込む。
 
-		$urlInfo = URLUtils::makeURLInfo($optionMap, URLParagraphUtils::HOSTNAME_ID);
-		$commonParameter = AmazonOptionUtils::makeCommonRESTParameter($optionMap);
-		$restParameter = AmazonOptionUtils::makeRESTParameter($optionMap, $operationOfShortcode, $searchIndexOfShortcode,
-				$keyword);
-		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption($optionMap, $number);
-		$productTypeOption = AmazonOptionUtils::makeProductTypeOption($optionMap);
-		$searchWidgetOption = AmazonOptionUtils::makeSearchWidgetOption($optionMap);
+		$urlInfo = URLUtils::makeURLInfo ( $optionMap, URLParagraphUtils::HOSTNAME_ID );
+		$commonParameter = AmazonOptionUtils::makeCommonRESTParameter ( $optionMap );
+		$restParameter = AmazonOptionUtils::makeRESTParameter ( $optionMap, $operationOfShortcode, $searchIndexOfShortcode, $keyword );
+		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $number );
+		$productTypeOption = AmazonOptionUtils::makeProductTypeOption ( $optionMap );
+		$displayHTMLPAAPINotAvailableOption = AmazonOptionUtils::makeDisplayHTMLPAAPINotAvailableOption ( $optionMap );
 
 		$affiliateHTML;
 
-		$operation = $restParameter->getOperation();
+		$operation = $restParameter->getOperation ();
 		switch ($operation) {
-			case RESTParagraphUtils::ITEM_SEARCH_OPERATION:
+			case RESTParagraphUtils::ITEM_SEARCH_OPERATION :
 
-				//現時点では、「Operation="ItemSearch", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
-				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation($urlInfo, $commonParameter, $restParameter,
-						$itemHTMLOption, $productTypeOption, $searchWidgetOption);
+				// 現時点では、「Operation="ItemSearch", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
+				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLPAAPINotAvailableOption );
 				break;
 
-			default:
+			default :
 
-				throw new IllegalArgumentException("無効なオペレーション：" . $operation);
+				throw new IllegalArgumentException ( "無効なオペレーション：" . $operation );
 		}
 
 		return $affiliateHTML;
 	}
-
 }

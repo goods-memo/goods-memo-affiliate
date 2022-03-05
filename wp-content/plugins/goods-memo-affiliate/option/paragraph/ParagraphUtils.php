@@ -80,6 +80,8 @@ class ParagraphUtils {
 			if (isset ( $inputedValueMap [$inputFieldID] )) {
 
 				$value = $inputedValueMap [$inputFieldID];
+				$value = trim ( $value ); // 例：「200半角空白」を「200」とみなす。
+
 				if (is_numeric ( $value ) && $value >= 0) {
 					;
 				} else {
