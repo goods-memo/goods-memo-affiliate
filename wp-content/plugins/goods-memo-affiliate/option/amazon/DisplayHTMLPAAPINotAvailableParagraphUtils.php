@@ -2,11 +2,13 @@
 
 namespace goodsmemo\option\amazon;
 
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\TextareaFieldInfo;
+use goodsmemo\option\field\CheckboxFieldInfo;
 use goodsmemo\option\amazon\AmazonSettingSection;
 
+require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/CheckboxFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
 
 class DisplayHTMLPAAPINotAvailableParagraphUtils {
 	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_textarea_id";
@@ -16,7 +18,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 
 		$fieldInfoArray = array ();
 
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo = new FieldInfo ();
+		$displayHTMLPAAPINotAvailableTextareaFieldInfo = new TextareaFieldInfo ();
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID );
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」" );
 		$displayHTMLPAAPINotAvailable = <<< EOD
@@ -33,11 +35,9 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
 		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableTextareaFieldInfo );
 
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo = new FieldInfo ();
+		$displayHTMLPAAPINotAvailableCheckboxFieldInfo = new CheckboxFieldInfo ();
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID );
 		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldLabel ( '「表示するHTML」の表示設定' );
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setDefaultFieldValue ( "" );
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setExistenceVerificationEnabled ( false ); // チェックボックスでは値の存在検査をしない。
 		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableCheckboxFieldInfo );
 
 		return $fieldInfoArray;

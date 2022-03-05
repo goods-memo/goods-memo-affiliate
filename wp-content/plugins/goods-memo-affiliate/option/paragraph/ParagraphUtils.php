@@ -20,6 +20,12 @@
  */
 namespace goodsmemo\option\paragraph;
 
+use goodsmemo\option\field\TextFieldInfo;
+use goodsmemo\option\field\TextareaFieldInfo;
+
+require_once GOODS_MEMO_DIR . "option/field/TextFieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
+
 /**
  * Description of ParagraphUtils
  *
@@ -34,16 +40,27 @@ class ParagraphUtils {
 
 			$inputFieldID = $fieldInfo->getFieldID ();
 			if (isset ( $inputedValueMap [$inputFieldID] )) {
+				;
+			} else {
+				continue;
+			}
 
-				$inputedValue = $inputedValueMap [$inputFieldID];
+			$inputedValue = $inputedValueMap [$inputFieldID];
+			if ($fieldInfo instanceof TextareaFieldInfo) {
+
 				if ($fieldInfo->getHtmlSpecialcharsConversionEnabled ()) {
 					$inputedValue = htmlspecialchars ( $inputedValue );
 				}
 
 				// sanitize_textarea_field：textarea要素の正当な入力である改行、その他の空白を保持する。
+				$inputedValue = sanitize_textarea_field ( $inputedValue );
+			} elseif ($fieldInfo instanceof TextFieldInfo) {
+
 				// sanitize_text_field：改行、その他の空白も取り除く。文字エンコードUTF-8で無効な文字やHTML要素も取り除く。
-				$sanitizedValueMap [$inputFieldID] = sanitize_textarea_field ( $inputedValue );
+				$inputedValue = sanitize_text_field ( $inputedValue );
 			}
+
+			$sanitizedValueMap [$inputFieldID] = $inputedValue;
 		}
 	}
 
@@ -51,7 +68,11 @@ class ParagraphUtils {
 
 		foreach ( $fieldInfoArray as $fieldInfo ) {
 
-			if ($fieldInfo->getMoreThanZeroVerificationEnabled () === false) {
+			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo, TextareaFieldInfoの場合
+				if ($fieldInfo->getMoreThanZeroVerificationEnabled () === false) {
+					continue;
+				}
+			} else {
 				continue;
 			}
 
@@ -76,7 +97,11 @@ class ParagraphUtils {
 
 		foreach ( $fieldInfoArray as $fieldInfo ) {
 
-			if ($fieldInfo->getExistenceVerificationEnabled () === false) {
+			if ($fieldInfo instanceof TextFieldInfo) { // TextFieldInfo, TextareaFieldInfoの場合
+				if ($fieldInfo->getExistenceVerificationEnabled () === false) {
+					continue;
+				}
+			} else {
 				continue;
 			}
 

@@ -20,11 +20,13 @@
  */
 namespace goodsmemo\option\rakuten;
 
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\TextFieldInfo;
+use goodsmemo\option\field\TextareaFieldInfo;
 use goodsmemo\option\paragraph\ReviewParagraph;
 use goodsmemo\option\rakuten\RakutenSettingSection;
 
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextFieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/paragraph/ReviewParagraph.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/RakutenSettingSection.php";
 
@@ -42,20 +44,20 @@ class ReviewParagraphUtils {
 
 		$fieldInfoArray = array ();
 
-		$editorialReviewLengthFieldInfo = new FieldInfo ();
+		$editorialReviewLengthFieldInfo = new TextFieldInfo ();
 		$editorialReviewLengthFieldInfo->setFieldID ( ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID );
 		$editorialReviewLengthFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL );
 		$editorialReviewLengthFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE );
 		$editorialReviewLengthFieldInfo->enableMoreThanZeroVerification ();
 		array_push ( $fieldInfoArray, $editorialReviewLengthFieldInfo );
 
-		$arrayOfStringToDeleteFieldInfo = new FieldInfo ();
+		$arrayOfStringToDeleteFieldInfo = new TextareaFieldInfo ();
 		$arrayOfStringToDeleteFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID );
 		$arrayOfStringToDeleteFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL );
 		$arrayOfStringToDeleteFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE );
 		array_push ( $fieldInfoArray, $arrayOfStringToDeleteFieldInfo );
 
-		$arrayOfStringToBreakFieldInfo = new FieldInfo ();
+		$arrayOfStringToBreakFieldInfo = new TextareaFieldInfo ();
 		$arrayOfStringToBreakFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
 		$arrayOfStringToBreakFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL );
 		$arrayOfStringToBreakFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE );

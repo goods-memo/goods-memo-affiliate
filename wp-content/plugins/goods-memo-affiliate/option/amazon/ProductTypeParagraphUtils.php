@@ -20,10 +20,10 @@
  */
 namespace goodsmemo\option\amazon;
 
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\CheckboxFieldInfo;
 use goodsmemo\option\amazon\AmazonSettingSection;
 
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/CheckboxFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 
 /**
@@ -38,11 +38,9 @@ class ProductTypeParagraphUtils {
 
 		$fieldInfoArray = array ();
 
-		$adultProductFieldInfo = new FieldInfo ();
+		$adultProductFieldInfo = new CheckboxFieldInfo ();
 		$adultProductFieldInfo->setFieldID ( ProductTypeParagraphUtils::ADULT_PRODUCT_ID );
 		$adultProductFieldInfo->setFieldLabel ( 'アダルト商品（ItemInfo の ProductInfo の IsAdultProductで判断）' );
-		$adultProductFieldInfo->setDefaultFieldValue ( "" );
-		$adultProductFieldInfo->setExistenceVerificationEnabled ( false ); // チェックボックスでは値の存在検査をしない。
 		array_push ( $fieldInfoArray, $adultProductFieldInfo );
 
 		return $fieldInfoArray;

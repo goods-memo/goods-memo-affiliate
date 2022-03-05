@@ -21,10 +21,10 @@
 namespace goodsmemo\option\field;
 
 use goodsmemo\option\field\AbstractTextField;
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\TextareaFieldInfo;
 
 require_once GOODS_MEMO_DIR . "option/field/AbstractTextField.php";
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
 
 /**
  * Description of TextareaField
@@ -45,7 +45,7 @@ class TextareaField extends AbstractTextField {
 
 		$textareaID = $fieldInfo->getFieldID ();
 		$defaultValue = $fieldInfo->getDefaultFieldValue ();
-		$rows = $fieldInfo->getRows ();
+		$rows = $fieldInfo->getRows (); // TextareaFieldInfoクラスのメソッド
 
 		// 参考：URLの最大文字数は2083文字。アフィリエイトURLと「表示するHTML」を合わせて、最大5000文字とした。
 		// ブラウザでは、基本的に文字数の制限はないらしい。

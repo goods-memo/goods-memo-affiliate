@@ -20,11 +20,11 @@
  */
 namespace goodsmemo\option\amazon;
 
-use goodsmemo\option\field\FieldInfo;
+use goodsmemo\option\field\TextFieldInfo;
 use goodsmemo\option\paragraph\ItemHTMLParagraph;
 use goodsmemo\option\amazon\AmazonSettingSection;
 
-require_once GOODS_MEMO_DIR . "option/field/FieldInfo.php";
+require_once GOODS_MEMO_DIR . "option/field/TextFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/paragraph/ItemHTMLParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 
@@ -43,14 +43,14 @@ class ItemHTMLParagraphUtils {
 
 		$fieldInfoArray = array ();
 
-		$titleLengthFieldInfo = new FieldInfo ();
+		$titleLengthFieldInfo = new TextFieldInfo ();
 		$titleLengthFieldInfo->setFieldID ( ItemHTMLParagraphUtils::TITLE_LENGTH_ID );
 		$titleLengthFieldInfo->setFieldLabel ( ItemHTMLParagraph::DEFAULT_TITLE_LENGTH_LABEL );
 		$titleLengthFieldInfo->setDefaultFieldValue ( ItemHTMLParagraph::DEFAULT_TITLE_LENGTH_VALUE );
 		$titleLengthFieldInfo->enableMoreThanZeroVerification ();
 		array_push ( $fieldInfoArray, $titleLengthFieldInfo );
 
-		$cacheExpirationInSecondsFieldInfo = new FieldInfo ();
+		$cacheExpirationInSecondsFieldInfo = new TextFieldInfo ();
 		$cacheExpirationInSecondsFieldInfo->setFieldID ( ItemHTMLParagraphUtils::CACHE_EXPIRATION_IN_SECONDS_ID );
 		$cacheExpirationInSecondsFieldInfo->setFieldLabel ( ItemHTMLParagraph::DEFAULT_CACHE_EXPIRATION_IN_SECONDS_LABEL );
 		// Product Advertising APIの場合、初期リクエスト可能数 : 1日あたり 8,640リクエスト
