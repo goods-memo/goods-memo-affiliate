@@ -26,7 +26,7 @@ use goodsmemo\amazon\RESTParameter;
 use goodsmemo\amazon\ProductTypeOption;
 use goodsmemo\amazon\AmazonItemsHTMLInfoMaker;
 use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableOption;
-use goodsmemo\amazon\widget\SearchWidget;
+use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableUtils;
 use goodsmemo\item\ItemSearchOperation;
 use goodsmemo\item\html\ItemHTMLOption;
 use goodsmemo\item\html\ItemArrayHTMLMaking;
@@ -38,12 +38,9 @@ require_once GOODS_MEMO_DIR . "network/URLInfo.php";
 require_once GOODS_MEMO_DIR . "amazon/CommonRESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/ProductTypeOption.php";
-
 require_once GOODS_MEMO_DIR . "amazon/AmazonItemsHTMLInfoMaker.php";
-
 require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableOption.php";
-require_once GOODS_MEMO_DIR . "amazon/widget/SearchWidget.php";
-
+require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableUtils.php";
 require_once GOODS_MEMO_DIR . "item/ItemSearchOperation.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemArrayHTMLMaking.php";
@@ -82,15 +79,15 @@ class KeywordSearchOperation {
 		$displayHTMLAlwaysEnabled = $displayHTMLOption->getDisplayHTMLPAAPINotAvailableAlwaysEnabled ();
 		if ($displayHTMLAlwaysEnabled) {
 
-			$widgetHtml = SearchWidget::makeHtmlOfSearchWidget ( $commonParameter, $restParameter ); // var_dump($widgetHtml);
-			return $widgetHtml;
+			$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( $commonParameter, $restParameter, $displayHTMLOption );
+			return $displayHTML;
 		}
 
 		$itemsHTMLInfoMaker = new AmazonItemsHTMLInfoMaker ( $commonParameter, $restParameter, $productTypeOption );
 
-		$searchWidgetCache = SearchWidget::getSearchWidgetCache ( $itemHTMLOption, $itemsHTMLInfoMaker );
-		if ($searchWidgetCache !== false) {
-			return $searchWidgetCache;
+		$displayHTMLCache = DisplayHTMLPAAPINotAvailableUtils::geDisplayHTMLPAAPINotAvailableCache ( $itemHTMLOption, $itemsHTMLInfoMaker );
+		if ($displayHTMLCache !== false) {
+			return $displayHTMLCache;
 		}
 
 		try {
@@ -110,21 +107,21 @@ class KeywordSearchOperation {
 			 * A 503 error means that you are submitting requests too quickly and your requests are being throttled.
 			 * If this is the case, you need to reduce the number of requests you are sending per second.
 			 */
-			$searchWidgetEnabled;
+			$displayHTMLEnabled;
 			switch ($responseCode) {
 				case 429 :
 				case 503 :
-					$searchWidgetEnabled = TRUE;
+					$displayHTMLEnabled = TRUE;
 					break;
 				default :
-					$searchWidgetEnabled = FALSE;
+					$displayHTMLEnabled = FALSE;
 			}
 
-			if ($searchWidgetEnabled) {
+			if ($displayHTMLEnabled) {
 
-				$widgetHtml = SearchWidget::makeHtmlOfSearchWidget ( $commonParameter, $restParameter );
-				SearchWidget::setSearchWidgetCache ( $widgetHtml, $itemHTMLOption, $itemsHTMLInfoMaker );
-				return $widgetHtml;
+				$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( $commonParameter, $restParameter, $displayHTMLOption );
+				DisplayHTMLPAAPINotAvailableUtils::setDisplayHTMLPAAPINotAvailableCache ( $displayHTML, $itemHTMLOption, $itemsHTMLInfoMaker );
+				return $displayHTML;
 			} else {
 				throw $ex;
 			}

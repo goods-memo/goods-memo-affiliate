@@ -26,7 +26,6 @@ use goodsmemo\exception\IllegalArgumentException;
 use goodsmemo\exception\OptionException;
 use goodsmemo\exception\HttpRequestException;
 use goodsmemo\exception\HttpResponseException;
-use goodsmemo\exception\FileNotFoundException;
 
 require_once GOODS_MEMO_DIR . "amazon/AmazonAffiliate.php";
 require_once GOODS_MEMO_DIR . "rakuten/RakutenAffiliate.php";
@@ -34,7 +33,6 @@ require_once GOODS_MEMO_DIR . "exception/IllegalArgumentException.php";
 require_once GOODS_MEMO_DIR . "exception/OptionException.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 require_once GOODS_MEMO_DIR . "exception/HttpResponseException.php";
-require_once GOODS_MEMO_DIR . "exception/FileNotFoundException.php";
 
 /**
  * Description of Shortcode
@@ -110,10 +108,6 @@ class Shortcode {
 		} catch ( HttpResponseException $ex ) {
 
 			$message = '<p class="gma-error-message">HTTPレスポンスの例外：' . $ex->getMessage () . '</p>';
-			return $message;
-		} catch ( FileNotFoundException $ex ) {
-
-			$message = '<p class="gma-error-message">ファイルが見つからない例外：' . $ex->getMessage () . '</p>';
 			return $message;
 		} catch ( \Exception $ex ) {
 			// \Exceptionをキャッチすれば、WordPressの「サイトに技術的な問題が発生しています。」を防げるかも？？
