@@ -98,6 +98,9 @@ class KeywordSearchOperation {
 			$responseCode = $ex->getCode ();
 
 			/*
+			 * 401:InvalidSignature
+			 * ローカル環境(XAMPP)のみで発生した。原因は、わからない。
+			 *
 			 * APIリクエストが多すぎる場合
 			 * 429:Too Many Requests
 			 * The request was denied due to request throttling. Please verify the number of requests made per second to the Amazon Product Advertising API.
@@ -109,6 +112,7 @@ class KeywordSearchOperation {
 			 */
 			$displayHTMLEnabled;
 			switch ($responseCode) {
+				case 401 :
 				case 429 :
 				case 503 :
 					$displayHTMLEnabled = TRUE;
@@ -120,6 +124,10 @@ class KeywordSearchOperation {
 			if ($displayHTMLEnabled) {
 
 				$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( $commonParameter, $restParameter, $displayHTMLOption );
+
+				// エラー情報を、HTMLのコメントで出力する。401エラーのデバッグのため
+				$displayHTML .= "<!-- HTTPリクエストの例外：" . $ex->getMessage () . "。コード：" . $ex->getCode () . " -->";
+
 				DisplayHTMLPAAPINotAvailableUtils::setDisplayHTMLPAAPINotAvailableCache ( $displayHTML, $itemHTMLOption, $itemsHTMLInfoMaker );
 				return $displayHTML;
 			} else {
