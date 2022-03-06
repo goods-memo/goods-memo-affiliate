@@ -64,18 +64,18 @@ class RESTParagraphUtils {
 		 */
 		// JSON ではダブルクォーテーションのみ使える。
 		$searchItemsResources = '[
-			"Images.Primary.Large",
-			"Images.Primary.Medium",
-			"Images.Primary.Small",
-			"ItemInfo.ByLineInfo",
-			"ItemInfo.Classifications",
-			"ItemInfo.Features",
-			"ItemInfo.ProductInfo",
-			"ItemInfo.Title",
-			"Offers.Listings.MerchantInfo",
-			"Offers.Listings.Price",
-			"Offers.Summaries.LowestPrice"
-		]';
+"Images.Primary.Large",
+"Images.Primary.Medium",
+"Images.Primary.Small",
+"ItemInfo.ByLineInfo",
+"ItemInfo.Classifications",
+"ItemInfo.Features",
+"ItemInfo.ProductInfo",
+"ItemInfo.Title",
+"Offers.Listings.MerchantInfo",
+"Offers.Listings.Price",
+"Offers.Summaries.LowestPrice"
+]';
 		$searchItemsResourcesFieldInfo->setDefaultFieldValue ( $searchItemsResources );
 		array_push ( $fieldInfoArray, $searchItemsResourcesFieldInfo );
 
