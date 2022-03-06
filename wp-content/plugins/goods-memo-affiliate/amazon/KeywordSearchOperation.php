@@ -58,7 +58,7 @@ require_once GOODS_MEMO_DIR . "exception/IllegalArgumentException.php";
  */
 class KeywordSearchOperation {
 
-	public static function makeHTMLOfSearchOperation(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, ItemHTMLOption $itemHTMLOption, ProductTypeOption $productTypeOption, DisplayHTMLPAAPINotAvailableOption $displayHTMLPAAPINotAvailableOption) {
+	public static function makeHTMLOfSearchOperation(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, ItemHTMLOption $itemHTMLOption, ProductTypeOption $productTypeOption, DisplayHTMLPAAPINotAvailableOption $displayHTMLOption) {
 
 		$affiliateHTML;
 
@@ -66,7 +66,7 @@ class KeywordSearchOperation {
 		switch ($searchIndex) {
 			case RESTParagraphUtils::ALL_SEARCH_INDEX :
 
-				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchIndex ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLPAAPINotAvailableOption );
+				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchIndex ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLOption );
 				break;
 
 			default :
@@ -77,9 +77,9 @@ class KeywordSearchOperation {
 		return $affiliateHTML;
 	}
 
-	private static function makeHTMLOfSearchIndex(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, ItemHTMLOption $itemHTMLOption, ProductTypeOption $productTypeOption, DisplayHTMLPAAPINotAvailableOption $displayHTMLPAAPINotAvailableOption) {
+	private static function makeHTMLOfSearchIndex(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, ItemHTMLOption $itemHTMLOption, ProductTypeOption $productTypeOption, DisplayHTMLPAAPINotAvailableOption $displayHTMLOption) {
 
-		$displayHTMLAlwaysEnabled = $displayHTMLPAAPINotAvailableOption->getDisplayHTMLPAAPINotAvailableAlwaysEnabled ();
+		$displayHTMLAlwaysEnabled = $displayHTMLOption->getDisplayHTMLPAAPINotAvailableAlwaysEnabled ();
 		if ($displayHTMLAlwaysEnabled) {
 
 			$widgetHtml = SearchWidget::makeHtmlOfSearchWidget ( $commonParameter, $restParameter ); // var_dump($widgetHtml);

@@ -11,17 +11,17 @@ require_once GOODS_MEMO_DIR . "option/field/CheckboxFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 
 class DisplayHTMLPAAPINotAvailableParagraphUtils {
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_textarea_id";
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_checkbox_id";
+	const DISPLAY_HTML_TEXTAREA_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_textarea_id";
+	const DISPLAY_HTML_CHECKBOX_ID = AmazonSettingSection::ID_PREFIX . "_display_html_paapi_not_available_checkbox_id";
 
 	public static function makeFieldInfoArray() {
 
 		$fieldInfoArray = array ();
 
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo = new TextareaFieldInfo ();
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID );
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」" );
-		$displayHTMLPAAPINotAvailable = <<< EOD
+		$displayHTMLTextareaFieldInfo = new TextareaFieldInfo ();
+		$displayHTMLTextareaFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_TEXTAREA_ID );
+		$displayHTMLTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」" );
+		$displayHTML = <<< EOD
 		<p>
 		Product Advertising API 利用不可の時、表示するHTMLを、ここに設定します。<br>
 		Product Advertising API アソシエイトタグ：GOODS_MEMO_ASSOCIATE_TAG<br>
@@ -29,16 +29,16 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		URLエンコードされたキーワード：GOODS_MEMO_ENCODED_SEARCH_KEYWORD
 		</p>
 		EOD;
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setDefaultFieldValue ( $displayHTMLPAAPINotAvailable );
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setRows ( 10 );
+		$displayHTMLTextareaFieldInfo->setDefaultFieldValue ( $displayHTML );
+		$displayHTMLTextareaFieldInfo->setRows ( 10 );
 		// 特殊文字を HTML エンティティに変換する、を有効。例：< (小なり) を&lt;に変換する。
-		$displayHTMLPAAPINotAvailableTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
-		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableTextareaFieldInfo );
+		$displayHTMLTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
+		array_push ( $fieldInfoArray, $displayHTMLTextareaFieldInfo );
 
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo = new CheckboxFieldInfo ();
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID );
-		$displayHTMLPAAPINotAvailableCheckboxFieldInfo->setFieldLabel ( '「表示するHTML」の表示設定' );
-		array_push ( $fieldInfoArray, $displayHTMLPAAPINotAvailableCheckboxFieldInfo );
+		$displayHTMLCheckboxFieldInfo = new CheckboxFieldInfo ();
+		$displayHTMLCheckboxFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_CHECKBOX_ID );
+		$displayHTMLCheckboxFieldInfo->setFieldLabel ( '「表示するHTML」の表示設定' );
+		array_push ( $fieldInfoArray, $displayHTMLCheckboxFieldInfo );
 
 		return $fieldInfoArray;
 	}

@@ -111,10 +111,10 @@ class AmazonSettingSection extends AbstractSettingSection {
 		$restParagraph->initParagraph ( $pageInfo, $sectionInfo, $restFieldInfoArray );
 		parent::addParagraph ( $restParagraph );
 
-		$displayHTMLPAAPINotAvailableParagraph = new DisplayHTMLPAAPINotAvailableParagraph ();
-		$displayHTMLPAAPINotAvailableFieldInfoArray = DisplayHTMLPAAPINotAvailableParagraphUtils::makeFieldInfoArray ();
-		$displayHTMLPAAPINotAvailableParagraph->initParagraph ( $pageInfo, $sectionInfo, $displayHTMLPAAPINotAvailableFieldInfoArray );
-		parent::addParagraph ( $displayHTMLPAAPINotAvailableParagraph );
+		$displayHTMLParagraph = new DisplayHTMLPAAPINotAvailableParagraph ();
+		$displayHTMLFieldInfoArray = DisplayHTMLPAAPINotAvailableParagraphUtils::makeFieldInfoArray ();
+		$displayHTMLParagraph->initParagraph ( $pageInfo, $sectionInfo, $displayHTMLFieldInfoArray );
+		parent::addParagraph ( $displayHTMLParagraph );
 	}
 
 	public function printSectionInfo() {

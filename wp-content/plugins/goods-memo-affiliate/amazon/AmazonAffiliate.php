@@ -54,7 +54,7 @@ class AmazonAffiliate {
 		$restParameter = AmazonOptionUtils::makeRESTParameter ( $optionMap, $operationOfShortcode, $searchIndexOfShortcode, $keyword );
 		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $number );
 		$productTypeOption = AmazonOptionUtils::makeProductTypeOption ( $optionMap );
-		$displayHTMLPAAPINotAvailableOption = AmazonOptionUtils::makeDisplayHTMLPAAPINotAvailableOption ( $optionMap );
+		$displayHTMLOption = AmazonOptionUtils::makeDisplayHTMLPAAPINotAvailableOption ( $optionMap );
 
 		$affiliateHTML;
 
@@ -63,7 +63,7 @@ class AmazonAffiliate {
 			case RESTParagraphUtils::ITEM_SEARCH_OPERATION :
 
 				// 現時点では、「Operation="ItemSearch", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
-				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLPAAPINotAvailableOption );
+				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLOption );
 				break;
 
 			default :

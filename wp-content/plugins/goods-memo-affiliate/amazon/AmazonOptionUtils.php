@@ -114,21 +114,22 @@ class AmazonOptionUtils {
 
 	public static function makeDisplayHTMLPAAPINotAvailableOption($optionMap): DisplayHTMLPAAPINotAvailableOption {
 
-		$displayHTMLPAAPINotAvailableOption = new DisplayHTMLPAAPINotAvailableOption ();
+		$displayHTMLOption = new DisplayHTMLPAAPINotAvailableOption ();
 
-		$displayHTMLPAAPINotAvailable = $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_TEXTAREA_ID];
-		$displayHTMLPAAPINotAvailableOption->setDisplayHTMLPAAPINotAvailable ( $displayHTMLPAAPINotAvailable );
+		$convertedDisplayHTML = $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_TEXTAREA_ID];
+		$displayHTML = htmlspecialchars_decode ( $convertedDisplayHTML ); // 例：HTMLタグに戻す
+		$displayHTMLOption->setDisplayHTMLPAAPINotAvailable ( $displayHTML );
 
 		// 参考：チェックボックスがチェックされていなかった場合、
 		// チェックされていない状態を表す値（value=unchecked など）が送信されることはなく、
 		// 値はサーバーに全く送信されません。$optionMapの要素が存在しない。
-		if (isset ( $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID] )) {
+		if (isset ( $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_CHECKBOX_ID] )) {
 
-			$displayHTMLCheckedValue = $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKBOX_ID];
-			$displayHTMLEnabled = ($displayHTMLCheckedValue === DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKED_VALUE);
-			$displayHTMLPAAPINotAvailableOption->setDisplayHTMLPAAPINotAvailableAlwaysEnabled ( $displayHTMLEnabled );
+			$displayHTMLCheckedValue = $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_CHECKBOX_ID];
+			$displayHTMLEnabled = ($displayHTMLCheckedValue === DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_CHECKED_VALUE);
+			$displayHTMLOption->setDisplayHTMLPAAPINotAvailableAlwaysEnabled ( $displayHTMLEnabled );
 		}
 
-		return $displayHTMLPAAPINotAvailableOption;
+		return $displayHTMLOption;
 	}
 }

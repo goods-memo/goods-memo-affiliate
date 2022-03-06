@@ -23,8 +23,8 @@ require_once GOODS_MEMO_DIR . "option/field/CheckboxField.php";
  */
 class DisplayHTMLPAAPINotAvailableParagraph extends AbstractParagraph {
 	use AbstractTextParagraph;
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKED_VALUE = "displayHTMLPAAPINotAvailableChecked";
-	const DISPLAY_HTML_PAAPI_NOT_AVAILABLE_LABEL_FOR_CHECKBOX = "常に表示する。Product Advertising API を、常に使用しない場合（アクセス制限のため利用できない場合）";
+	const DISPLAY_HTML_CHECKED_VALUE = "displayHTMLPAAPINotAvailableChecked";
+	const DISPLAY_HTML_LABEL_FOR_CHECKBOX = "常に表示する。Product Advertising API を、常に使用しない場合（アクセス制限のため利用できない場合）";
 
 	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
 
@@ -32,13 +32,13 @@ class DisplayHTMLPAAPINotAvailableParagraph extends AbstractParagraph {
 		parent::setSectionTitle ( $sectionInfo->getSectionTitle () );
 		parent::setFieldInfoArray ( $fieldInfoArray );
 
-		$displayHTMLPAAPINotAvailableTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
-		parent::addField ( $pageInfo, $sectionInfo, $displayHTMLPAAPINotAvailableTextarea );
+		$displayHTMLTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
+		parent::addField ( $pageInfo, $sectionInfo, $displayHTMLTextarea );
 
-		$displayHTMLPAAPINotAvailableCheckboxField = new CheckboxField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1], //
-		DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_CHECKED_VALUE, //
-		DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_LABEL_FOR_CHECKBOX );
-		parent::addField ( $pageInfo, $sectionInfo, $displayHTMLPAAPINotAvailableCheckboxField );
+		$displayHTMLCheckboxField = new CheckboxField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1], //
+		DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_CHECKED_VALUE, //
+		DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_LABEL_FOR_CHECKBOX );
+		parent::addField ( $pageInfo, $sectionInfo, $displayHTMLCheckboxField );
 	}
 
 	public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {

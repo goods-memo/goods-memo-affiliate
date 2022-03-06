@@ -8,8 +8,8 @@ namespace goodsmemo\amazon\displayhtml;
  *        
  */
 class DisplayHTMLPAAPINotAvailableOption {
-	private string $displayHTMLPAAPINotAvailable = "";
-	private bool $displayHTMLPAAPINotAvailableAlwaysEnabled = false;
+	private string $displayHTML = "";
+	private bool $displayHTMLAlwaysEnabled = false;
 
 	/**
 	 *
@@ -22,11 +22,11 @@ class DisplayHTMLPAAPINotAvailableOption {
 
 	/**
 	 *
-	 * @param string $displayHTMLPAAPINotAvailable
+	 * @param string $displayHTML
 	 */
-	public function setDisplayHTMLPAAPINotAvailable(string $displayHTMLPAAPINotAvailable) {
+	public function setDisplayHTMLPAAPINotAvailable(string $displayHTML) {
 
-		$this->displayHTMLPAAPINotAvailable = $displayHTMLPAAPINotAvailable;
+		$this->displayHTMLPAAPINotAvailable = $displayHTML;
 	}
 
 	/**
@@ -40,11 +40,11 @@ class DisplayHTMLPAAPINotAvailableOption {
 
 	/**
 	 *
-	 * @param boolean $displayHTMLPAAPINotAvailableAlwaysEnabled
+	 * @param boolean $displayHTMLAlwaysEnabled
 	 */
-	public function setDisplayHTMLPAAPINotAvailableAlwaysEnabled(bool $displayHTMLPAAPINotAvailableAlwaysEnabled) {
+	public function setDisplayHTMLPAAPINotAvailableAlwaysEnabled(bool $displayHTMLAlwaysEnabled) {
 
-		$this->displayHTMLPAAPINotAvailableAlwaysEnabled = $displayHTMLPAAPINotAvailableAlwaysEnabled;
+		$this->displayHTMLPAAPINotAvailableAlwaysEnabled = $displayHTMLAlwaysEnabled;
 	}
 }
 
