@@ -17,7 +17,7 @@ class DisplayHTMLPAAPINotAvailableOption {
 	 */
 	public function getDisplayHTMLPAAPINotAvailable(): string {
 
-		return $this->displayHTMLPAAPINotAvailable;
+		return $this->displayHTML;
 	}
 
 	/**
@@ -26,7 +26,7 @@ class DisplayHTMLPAAPINotAvailableOption {
 	 */
 	public function setDisplayHTMLPAAPINotAvailable(string $displayHTML) {
 
-		$this->displayHTMLPAAPINotAvailable = $displayHTML;
+		$this->displayHTML = $displayHTML;
 	}
 
 	/**
@@ -35,7 +35,7 @@ class DisplayHTMLPAAPINotAvailableOption {
 	 */
 	public function getDisplayHTMLPAAPINotAvailableAlwaysEnabled(): bool {
 
-		return $this->displayHTMLPAAPINotAvailableAlwaysEnabled;
+		return $this->displayHTMLAlwaysEnabled;
 	}
 
 	/**
@@ -44,7 +44,7 @@ class DisplayHTMLPAAPINotAvailableOption {
 	 */
 	public function setDisplayHTMLPAAPINotAvailableAlwaysEnabled(bool $displayHTMLAlwaysEnabled) {
 
-		$this->displayHTMLPAAPINotAvailableAlwaysEnabled = $displayHTMLAlwaysEnabled;
+		$this->displayHTMLAlwaysEnabled = $displayHTMLAlwaysEnabled;
 	}
 }
 
