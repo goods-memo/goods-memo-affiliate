@@ -42,7 +42,7 @@ require_once GOODS_MEMO_DIR . "option/field/TextareaField.php";
 class ReviewParagraph extends AbstractParagraph {
 	use AbstractTextParagraph;
 	const DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL = "商品説明の表示文字数（目安の文字数）";
-	const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 200;
+	const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 120;
 	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL = "商品説明から削除する文字列の配列（JSON配列。空の配列[]）";
 	// 削除する文字列の配列。例：全角の＜＞
 	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞"]';
