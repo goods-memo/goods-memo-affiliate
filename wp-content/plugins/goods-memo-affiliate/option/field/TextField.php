@@ -47,7 +47,7 @@ class TextField extends AbstractTextField {
 		$defaultValue = $fieldInfo->getDefaultFieldValue ();
 
 		$format = <<< EOD
-		<input type="text" id="{$textFieldID}" name="{$optionNameOfDatabase}[{$textFieldID}]" size="50" maxlength="50" value="%s" />
+		<input type="text" id="{$textFieldID}" name="{$optionNameOfDatabase}[{$textFieldID}]" size="50" maxlength="200" value="%s" />
 		EOD;
 
 		parent::printInputField ( $format, $textFieldID, $defaultValue );
