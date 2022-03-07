@@ -33,11 +33,10 @@ require_once GOODS_MEMO_DIR . "option/field/AbstractFieldInfo.php";
  */
 abstract class AbstractField implements FieldPrinter {
 	private $optionNameOfDatabase;
-	//
+
 	// protected $optionMap;//superを使って、メンバ変数にアクセスできない。$this->optionMap;と書くらしい。
 	// parent::set()と書くことにした。
 	private $optionMap = array (); // 最初に「アフィリエイトの設定」画面を表示した際、OptionExceptionが通知される。その時、空の配列としておく。
-	                               //
 	private $fieldInfo;
 
 	public function __construct($optionNameOfDatabase, AbstractFieldInfo $fieldInfo) {
