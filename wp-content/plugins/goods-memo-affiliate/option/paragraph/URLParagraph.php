@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\paragraph;
 
 use goodsmemo\option\paragraph\AbstractParagraph;
@@ -44,25 +43,24 @@ class URLParagraph extends AbstractParagraph {
 
 	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
 
-		parent::setOptionGroup($pageInfo->getOptionGroup());
-		parent::setSectionTitle($sectionInfo->getSectionTitle());
-		parent::setFieldInfoArray($fieldInfoArray);
+		parent::setOptionGroup ( $pageInfo->getOptionGroup () );
+		parent::setSectionTitle ( $sectionInfo->getSectionTitle () );
+		parent::setFieldInfoArray ( $fieldInfoArray );
 
-		$hostnameTextField = new TextField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[0]);
-		parent::addField($pageInfo, $sectionInfo, $hostnameTextField);
+		$hostnameTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
+		parent::addField ( $pageInfo, $sectionInfo, $hostnameTextField );
 
-		if ($fieldInfoArray[1] != NULL) {
+		if (isset ( $fieldInfoArray [1] )) {
 
-			$pathTextField = new TextField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[1]);
-			parent::addField($pageInfo, $sectionInfo, $pathTextField);
+			$pathTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1] );
+			parent::addField ( $pageInfo, $sectionInfo, $pathTextField );
 		}
 	}
 
 	public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {
-		//sanitizedValueMap：変更するため、配列の参照渡しとする。
 
-		$this->validateExistence($inputedValueMap);
-		parent::sanitizeParagraphValue($inputedValueMap, $sanitizedValueMap);
+		// sanitizedValueMap：変更するため、配列の参照渡しとする。
+		$this->validateExistence ( $inputedValueMap );
+		parent::sanitizeParagraphValue ( $inputedValueMap, $sanitizedValueMap );
 	}
-
 }
