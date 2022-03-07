@@ -10,15 +10,14 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * MA 02110-1301 USA
  */
-
 namespace goodsmemo\option\paragraph;
 
 use goodsmemo\option\paragraph\AbstractParagraph;
@@ -41,31 +40,30 @@ require_once GOODS_MEMO_DIR . "option/field/TextField.php";
 class ItemHTMLParagraph extends AbstractParagraph {
 
 	use AbstractTextParagraph;
-
 	const DEFAULT_TITLE_LENGTH_LABEL = "商品名の表示文字数（目安の文字数）";
-	const DEFAULT_TITLE_LENGTH_VALUE = 80;
+	const DEFAULT_TITLE_LENGTH_VALUE = 60;
 	//
 	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_LABEL = "商品情報のキャッシュ時間（秒）";
-	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_VALUE = 86400; //例：3600秒=1時間。21600秒=6時間。86400秒=24時間。
+	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_VALUE = 86400;
 
+	// 例：3600秒=1時間。21600秒=6時間。86400秒=24時間。
 	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
 
-		parent::setOptionGroup($pageInfo->getOptionGroup());
-		parent::setSectionTitle($sectionInfo->getSectionTitle());
-		parent::setFieldInfoArray($fieldInfoArray);
+		parent::setOptionGroup ( $pageInfo->getOptionGroup () );
+		parent::setSectionTitle ( $sectionInfo->getSectionTitle () );
+		parent::setFieldInfoArray ( $fieldInfoArray );
 
-		$titleLengthTextField = new TextField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[0]);
-		parent::addField($pageInfo, $sectionInfo, $titleLengthTextField);
+		$titleLengthTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
+		parent::addField ( $pageInfo, $sectionInfo, $titleLengthTextField );
 
-		$cacheExpirationInSecondsTextField = new TextField($pageInfo->getOptionNameOfDatabase(), $fieldInfoArray[1]);
-		parent::addField($pageInfo, $sectionInfo, $cacheExpirationInSecondsTextField);
+		$cacheExpirationInSecondsTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1] );
+		parent::addField ( $pageInfo, $sectionInfo, $cacheExpirationInSecondsTextField );
 	}
 
 	public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {
-		//sanitizedValueMap：変更するため、配列の参照渡しとする。
 
-		$this->validateMoreThanZero($inputedValueMap);
-		parent::sanitizeParagraphValue($inputedValueMap, $sanitizedValueMap);
+		// sanitizedValueMap：変更するため、配列の参照渡しとする。
+		$this->validateMoreThanZero ( $inputedValueMap );
+		parent::sanitizeParagraphValue ( $inputedValueMap, $sanitizedValueMap );
 	}
-
 }
