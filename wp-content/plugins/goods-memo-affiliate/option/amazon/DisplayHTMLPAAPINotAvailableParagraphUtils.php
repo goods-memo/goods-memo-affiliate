@@ -20,7 +20,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 
 		$displayHTMLTextareaFieldInfo = new TextareaFieldInfo ();
 		$displayHTMLTextareaFieldInfo->setFieldID ( DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_TEXTAREA_ID );
-		$displayHTMLTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」" );
+		$displayHTMLTextareaFieldInfo->setFieldLabel ( "Product Advertising API 利用不可の時、「表示するHTML」（商品情報のキャッシュ時間（秒）が適用されます）" );
 		$displayHTML = <<< EOD
 		<p>
 		Product Advertising API 利用不可の時、表示するHTMLを、ここに設定します。<br>
