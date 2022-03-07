@@ -48,12 +48,16 @@ class ParagraphUtils {
 			$inputedValue = $inputedValueMap [$inputFieldID];
 			if ($fieldInfo instanceof TextareaFieldInfo) {
 
-				if ($fieldInfo->getHtmlSpecialcharsConversionEnabled ()) {
-					$inputedValue = htmlspecialchars ( $inputedValue );
-				}
+				if ($fieldInfo->getHtmlTagEnabled ()) {
 
-				// sanitize_textarea_field：textarea要素の正当な入力である改行、その他の空白を保持する。
-				$inputedValue = sanitize_textarea_field ( $inputedValue );
+					// 例：ここでsanitize_textarea_field()を使うと、
+					// アマゾンのアフィリエイトリンクの __mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A（カタカナ）が取り除かれてしまう。
+					$inputedValue = htmlspecialchars ( $inputedValue ); // HTMLタグだけ、無害化する
+				} else {
+
+					// sanitize_textarea_field：textarea要素の正当な入力である改行、その他の空白を保持する。文字エンコードUTF-8で無効な文字を取り除く。
+					$inputedValue = sanitize_textarea_field ( $inputedValue );
+				}
 			} else {
 
 				// sanitize_text_field：改行、その他の空白も取り除く。文字エンコードUTF-8で無効な文字やHTML要素も取り除く。

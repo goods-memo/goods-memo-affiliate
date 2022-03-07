@@ -14,7 +14,7 @@ require_once GOODS_MEMO_DIR . "option/field/TextFieldInfo.php";
 class TextareaFieldInfo extends TextFieldInfo {
 	// 例：textareaタグの行数
 	private int $rows = 3;
-	private bool $htmlSpecialcharsConversionEnabled = false;
+	private bool $htmlTagEnabled = false;
 
 	/**
 	 *
@@ -29,9 +29,9 @@ class TextareaFieldInfo extends TextFieldInfo {
 	 *
 	 * @return boolean
 	 */
-	public function getHtmlSpecialcharsConversionEnabled(): bool {
+	public function getHtmlTagEnabled(): bool {
 
-		return $this->htmlSpecialcharsConversionEnabled;
+		return $this->htmlTagEnabled;
 	}
 
 	/**
@@ -45,11 +45,11 @@ class TextareaFieldInfo extends TextFieldInfo {
 
 	/**
 	 *
-	 * @param boolean $htmlSpecialcharsConversionEnabled
+	 * @param boolean $htmlTagEnabled
 	 */
-	public function setHtmlSpecialcharsConversionEnabled(bool $htmlSpecialcharsConversionEnabled) {
+	public function setHtmlTagEnabled(bool $htmlTagEnabled) {
 
-		$this->htmlSpecialcharsConversionEnabled = $htmlSpecialcharsConversionEnabled;
+		$this->htmlTagEnabled = $htmlTagEnabled;
 	}
 }
 

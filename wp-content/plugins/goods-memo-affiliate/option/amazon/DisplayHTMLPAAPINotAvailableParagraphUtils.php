@@ -32,7 +32,7 @@ class DisplayHTMLPAAPINotAvailableParagraphUtils {
 		$displayHTMLTextareaFieldInfo->setDefaultFieldValue ( $displayHTML );
 		$displayHTMLTextareaFieldInfo->setRows ( 10 );
 		// 特殊文字を HTML エンティティに変換する、を有効。例：< (小なり) を&lt;に変換する。
-		$displayHTMLTextareaFieldInfo->setHtmlSpecialcharsConversionEnabled ( true );
+		$displayHTMLTextareaFieldInfo->setHtmlTagEnabled ( true );
 		array_push ( $fieldInfoArray, $displayHTMLTextareaFieldInfo );
 
 		$displayHTMLCheckboxFieldInfo = new CheckboxFieldInfo ();
