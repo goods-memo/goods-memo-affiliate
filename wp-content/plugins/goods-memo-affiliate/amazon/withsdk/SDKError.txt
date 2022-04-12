@@ -1,0 +1,95 @@
+XAMPPローカル環境
+amazon PA-API AWS SDK使用した場合
+401 InvalidSignatureエラーが起きた。
+しかしレンタルサーバーでは、正しく動いていた。
+
+SDKなしで署名する方法に、変更した。
+
+xampp pa-api 401 unauthorized
+amazon PA-API AWS SDK 401 Unauthorized
+▲原因不明 XAMPPのPHP
+HTTPリクエストの例外：Error calling PA-API 5.0! 
+Error Message: [401] 
+Client error: `POST https://webservices.amazon.co.jp/paapi5/searchitems` resulted in a `401 Unauthorized` 
+response: {"__type":"com.amazon.paapi5#InvalidSignatureException",
+"Errors":[{"Code":"InvalidSignature","Message":"The request has (truncated...) 
+Error host: https://webservices.amazon.co.jp 
+Error Type: InvalidSignature Error Message: The request has not been correctly signed. 
+If you are using an AWS SDK, requests are signed for you automatically; 
+otherwise, go to https://webservices.amazon.co.jp/paapi5/documentation/sending-request.html#signing. 。コード：401
+
+SDK
+
+payload=
+{
+    "ItemCount": 1,
+    "Keywords": "Harry Potter",
+    "PartnerTag": "goods-memo-22",
+    "PartnerType": "Associates",
+    "Resources": [
+        "Images.Primary.Large",
+        "Images.Primary.Medium",
+        "Images.Primary.Small",
+        "ItemInfo.ByLineInfo",
+        "ItemInfo.Classifications",
+        "ItemInfo.Features",
+        "ItemInfo.ProductInfo",
+        "ItemInfo.Title",
+        "Offers.Listings.MerchantInfo",
+        "Offers.Listings.Price",
+        "Offers.Summaries.LowestPrice"
+    ],
+    "SearchIndex": "All"
+}
+
+$canonicalURL=
+POST
+/paapi5/searchitems
+
+content-encoding:amz-1.0
+content-type:application/json
+host:webservices.amazon.co.jp
+x-amz-date:20220411T142510Z
+x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems
+
+content-encoding;content-type;host;x-amz-date;x-amz-target
+66b613837fedb0fe12163016d4e41a761ea1307bf2370969278846d1a48f2a98
+
+
+$stringToSign=
+AWS4-HMAC-SHA256
+20220411T135359Z
+20220411/us-west-2/ProductAdvertisingAPI/aws4_request
+8d94ae25ab232d3c16943c7045c51e9683e67e610c7e059eadb655a6270f5231
+
+$strHexSignature=
+1c88821b853bb6ffea77c00ac8d269c9cc78fb0271f690d61c9a46567aee2124
+
+
+SDK使わない
+
+payload=
+{ "Keywords": "ダイエットサプリ", "Resources": [  "BrowseNodeInfo.BrowseNodes",  "BrowseNodeInfo.BrowseNodes.Ancestor",  "BrowseNodeInfo.BrowseNodes.SalesRank",  "BrowseNodeInfo.WebsiteSalesRank",  "CustomerReviews.Count",  "CustomerReviews.StarRating",  "Images.Primary.Small",  "Images.Primary.Medium",  "Images.Primary.Large",  "Images.Variants.Small",  "Images.Variants.Medium",  "Images.Variants.Large",  "ItemInfo.ByLineInfo",  "ItemInfo.ContentInfo",  "ItemInfo.ContentRating",  "ItemInfo.Classifications",  "ItemInfo.ExternalIds",  "ItemInfo.Features",  "ItemInfo.ManufactureInfo",  "ItemInfo.ProductInfo",  "ItemInfo.TechnicalInfo",  "ItemInfo.Title",  "ItemInfo.TradeInInfo",  "Offers.Listings.Availability.MaxOrderQuantity",  "Offers.Listings.Availability.Message",  "Offers.Listings.Availability.MinOrderQuantity",  "Offers.Listings.Availability.Type",  "Offers.Listings.Condition",  "Offers.Listings.Condition.SubCondition",  "Offers.Listings.DeliveryInfo.IsAmazonFulfilled",  "Offers.Listings.DeliveryI
+
+$canonicalURL=
+POST
+/paapi5/searchitems
+
+content-encoding:amz-1.0
+content-type:application/json; charset=utf-8
+host:webservices.amazon.co.jp
+x-amz-date:20220411T141555Z
+x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems
+
+content-encoding;content-type;host;x-amz-date;x-amz-target
+5b13eb6f6824baf93eb80256d0b26b33f3e109b2b22e34673a049332fbd24174
+
+
+$stringToSign=
+AWS4-HMAC-SHA256
+20220411T135821Z
+20220411/us-west-2/ProductAdvertisingAPI/aws4_request
+ff94b9be4c89192a99c168f6f29ea68389c64ac5e237cad9082bebe6643578e5
+
+$strHexSignature=
+5d140c9d42f2b21f0c406f80b24473c5a3812bfcbee36a1193edb67f197ffc25

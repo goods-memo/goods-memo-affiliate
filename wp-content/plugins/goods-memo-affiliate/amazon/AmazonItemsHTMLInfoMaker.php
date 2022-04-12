@@ -66,7 +66,9 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 	public function makeItemArray($response, ItemHTMLOption $itemHTMLOption) {
 
 		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
-		$itemArray = AmazonResponse::makeItemArray ( $response, $numberToDisplay, $this->productTypeOption );
+		$adultProductEnable = $this->productTypeOption->getAdultProductEnabled ();
+
+		$itemArray = AmazonResponse::makeItemArray ( $response, $numberToDisplay, $adultProductEnable );
 		return $itemArray;
 	}
 

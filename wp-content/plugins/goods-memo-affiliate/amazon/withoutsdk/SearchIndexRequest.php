@@ -3,12 +3,14 @@
 namespace goodsmemo\amazon\withoutsdk;
 
 use goodsmemo\amazon\withoutsdk\SearchItemsRequest;
+use goodsmemo\amazon\withoutsdk\AwsV4;
 use goodsmemo\exception\HttpRequestException;
 
 require_once GOODS_MEMO_DIR . "amazon/withoutsdk/SearchItemsRequest.php";
+require_once GOODS_MEMO_DIR . "amazon/withoutsdk/AwsV4.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
-class RequestSearchIndex {
+class SearchIndexRequest {
 
 	public static function requestSearchIndex(string $partnerTag, string $keyword, string $searchIndex, $resources, string $hostname, string $accessKey, string $secretKey, string $regionName) {
 

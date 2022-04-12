@@ -4,13 +4,13 @@ namespace goodsmemo\amazon;
 
 use goodsmemo\amazon\CommonRESTParameter;
 use goodsmemo\amazon\RESTParameter;
-use goodsmemo\amazon\withoutsdk\RequestSearchIndex;
+use goodsmemo\amazon\withoutsdk\SearchIndexRequest;
 use goodsmemo\network\URLInfo;
 use goodsmemo\exception\HttpRequestException;
 
 require_once GOODS_MEMO_DIR . "amazon/CommonRESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
-require_once GOODS_MEMO_DIR . "amazon/withoutsdk/RequestSearchIndex.php";
+require_once GOODS_MEMO_DIR . "amazon/withoutsdk/SearchIndexRequest.php";
 require_once GOODS_MEMO_DIR . "network/URLInfo.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
@@ -38,8 +38,12 @@ class AmazonRequest {
 			}
 
 			try {
+				/*
+				 * ここでSDKあり・なしの分岐処理をするかもしれない。
+				 * SDKAmazonRequest::requestSearchIndex()
+				 */
 
-				$searchItemsResponse = RequestSearchIndex::requestSearchIndex ( $partnerTag, $keyword, $searchIndex, $resources, $hostname, $accessKey, $secretKey, $regionName );
+				$searchItemsResponse = SearchIndexRequest::requestSearchIndex ( $partnerTag, $keyword, $searchIndex, $resources, $hostname, $accessKey, $secretKey, $regionName );
 
 				return $searchItemsResponse;
 			} catch ( HttpRequestException $ex ) {
