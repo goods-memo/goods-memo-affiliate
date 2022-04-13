@@ -20,9 +20,9 @@
  */
 namespace goodsmemo\amazon\withsdk;
 
-use goodsmemo\amazon\ImageResponse;
-use goodsmemo\amazon\PriceResponse;
-use goodsmemo\amazon\ProductionResponse;
+use goodsmemo\amazon\withsdk\SDKImageResponse;
+use goodsmemo\amazon\withsdk\SDKPriceResponse;
+use goodsmemo\amazon\withsdk\SDKProductionResponse;
 use goodsmemo\amazon\ProductTypeOption;
 // use goodsmemo\item\Item;//PA-API v5 SDKに同名のクラスがある。
 use goodsmemo\item\ReviewItem;
@@ -31,9 +31,9 @@ use goodsmemo\date\DateTextMaking;
 
 // PA-API v5 SDK
 // use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item;
-require_once GOODS_MEMO_DIR . "amazon/ImageResponse.php";
-require_once GOODS_MEMO_DIR . "amazon/PriceResponse.php";
-require_once GOODS_MEMO_DIR . "amazon/ProductionResponse.php";
+require_once GOODS_MEMO_DIR . "amazon/withsdk/SDKImageResponse.php";
+require_once GOODS_MEMO_DIR . "amazon/withsdk/SDKPriceResponse.php";
+require_once GOODS_MEMO_DIR . "amazon/withsdk/SDKProductionResponse.php";
 require_once GOODS_MEMO_DIR . "amazon/ProductTypeOption.php";
 require_once GOODS_MEMO_DIR . "item/Item.php";
 require_once GOODS_MEMO_DIR . "item/ReviewItem.php";
@@ -117,13 +117,13 @@ class SDKAmazonResponse {
 		SDKAmazonResponse::setItemInfoTo ( $item, $searchItem );
 		SDKAmazonResponse::setOffersTo ( $item, $searchItem );
 
-		$imageItem = ImageResponse::makeImageItem ( $searchItem );
+		$imageItem = SDKImageResponse::makeImageItem ( $searchItem );
 		$item->setImageItem ( $imageItem );
 
-		$priceItem = PriceResponse::makePriceItem ( $searchItem, $priceTime );
+		$priceItem = SDKPriceResponse::makePriceItem ( $searchItem, $priceTime );
 		$item->setPriceItem ( $priceItem );
 
-		$productionItem = ProductionResponse::makeProductionItem ( $searchItem );
+		$productionItem = SDKProductionResponse::makeProductionItem ( $searchItem );
 		$item->setProductionItem ( $productionItem ); // var_dump($searchItem);
 
 		$reviewItem = SDKAmazonResponse::makeReviewItem ( $searchItem );

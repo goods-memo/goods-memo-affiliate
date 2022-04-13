@@ -2,10 +2,10 @@
 
 namespace goodsmemo\amazon\withoutsdk;
 
-use goodsmemo\amazon\ImageResponse;
-use goodsmemo\amazon\PriceResponse;
-use goodsmemo\amazon\ProductionResponse;
-use goodsmemo\amazon\ProductTypeOption;
+use goodsmemo\amazon\withoutsdk\ImageResponse;
+use goodsmemo\amazon\withoutsdk\PriceResponse;
+use goodsmemo\amazon\withoutsdk\ProductionResponse;
+
 // use goodsmemo\item\Item;//PA-API v5 SDKに同名のクラスがある。
 use goodsmemo\item\ReviewItem;
 use goodsmemo\item\html\HTMLUtils;
@@ -15,10 +15,9 @@ use goodsmemo\date\DateTextMaking;
  * PA-API v5 SDK
  * use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item;
  */
-require_once GOODS_MEMO_DIR . "amazon/ImageResponse.php";
-require_once GOODS_MEMO_DIR . "amazon/PriceResponse.php";
-require_once GOODS_MEMO_DIR . "amazon/ProductionResponse.php";
-require_once GOODS_MEMO_DIR . "amazon/ProductTypeOption.php";
+require_once GOODS_MEMO_DIR . "amazon/withoutsdk/ImageResponse.php";
+require_once GOODS_MEMO_DIR . "amazon/withoutsdk/PriceResponse.php";
+require_once GOODS_MEMO_DIR . "amazon/withoutsdk/ProductionResponse.php";
 require_once GOODS_MEMO_DIR . "item/Item.php";
 require_once GOODS_MEMO_DIR . "item/ReviewItem.php";
 require_once GOODS_MEMO_DIR . "item/html/HTMLUtils.php";
@@ -92,22 +91,26 @@ class SearchIndexResponse {
 		}
 
 		SearchIndexResponse::setItemInfoTo ( $item, $searchItem );
+
+		SearchIndexResponse::setOffersTo ( $item, $searchItem );
+
+		$imageItem = ImageResponse::makeImageItem ( $searchItem );
+		$item->setImageItem ( $imageItem );
+
+		$priceItem = PriceResponse::makePriceItem ( $searchItem, $priceTime );
+		$item->setPriceItem ( $priceItem );
+
 		/*
-		 *
-		 * SDKAmazonResponse::setOffersTo ( $item, $searchItem );
-		 *
-		 * $imageItem = ImageResponse::makeImageItem ( $searchItem );
-		 * $item->setImageItem ( $imageItem );
-		 *
-		 * $priceItem = PriceResponse::makePriceItem ( $searchItem, $priceTime );
-		 * $item->setPriceItem ( $priceItem );
 		 *
 		 * $productionItem = ProductionResponse::makeProductionItem ( $searchItem );
 		 * $item->setProductionItem ( $productionItem ); // var_dump($searchItem);
 		 *
-		 * $reviewItem = SDKAmazonResponse::makeReviewItem ( $searchItem );
-		 * $item->setReviewItem ( $reviewItem );
+		 *
+		 *
 		 */
+		$reviewItem = SearchIndexResponse::makeReviewItem ( $searchItem );
+		$item->setReviewItem ( $reviewItem );
+
 		return $item;
 	}
 
@@ -126,5 +129,66 @@ class SearchIndexResponse {
 			$titleValue = $itemInfo->Title->DisplayValue;
 			$item->setTitle ( HTMLUtils::makePlainText ( $titleValue ) );
 		}
+	}
+
+	private static function setOffersTo(\goodsmemo\item\Item &$item, $searchItem) {
+
+		if (isset ( $searchItem->Offers )) {
+			;
+		} else {
+			return;
+		}
+
+		$offers = $searchItem->Offers;
+
+		if (isset ( $offers->Listings ) and isset ( $offers->Listings [0] )) {
+
+			$listing = $offers->Listings [0];
+
+			if (isset ( $listing->DeliveryInfo ) and isset ( $listing->DeliveryInfo->IsPrimeEligible )) {
+
+				$isPrimeEligible = $listing->DeliveryInfo->IsPrimeEligible;
+				if ($isPrimeEligible) {
+					$item->setPreferentialMember ( HTMLUtils::makePlainText ( "&#10003;prime" ) ); // "✓prime"
+				}
+			}
+
+			if (isset ( $listing->MerchantInfo ) and isset ( $listing->MerchantInfo->Name )) {
+
+				$merchantName = $listing->MerchantInfo->Name;
+				$item->setShop ( HTMLUtils::makePlainText ( $merchantName ) );
+			}
+		}
+	}
+
+	private static function makeReviewItem($searchItem): ReviewItem {
+
+		$reviewItem = new ReviewItem ();
+
+		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->Features ) and isset ( $searchItem->ItemInfo->Features->DisplayValues )) {
+
+			$featuresValues = $searchItem->ItemInfo->Features->DisplayValues; // string[]
+
+			$featureArray = array ();
+			foreach ( $featuresValues as $value ) {
+
+				if ($value == NULL) {
+					continue;
+				}
+
+				$feature = HTMLUtils::makePlainText ( $value );
+				array_push ( $featureArray, $feature );
+			}
+
+			$reviewItem->setReviewLineArray ( $featureArray );
+		}
+
+		// TODO Check back later for updates
+		// if (isset($node->EditorialReviews->EditorialReview->Content)) {//Noticd: Trying to get property of non-objectエラーが起きた。
+		// $editorialReview = HTMLUtils::makePlainText($node->EditorialReviews->EditorialReview->Content);
+		// $reviewItem->setPlainTextReview($editorialReview);
+		// }
+
+		return $reviewItem;
 	}
 }

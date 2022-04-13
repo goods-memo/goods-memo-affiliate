@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301 USA
  */
-namespace goodsmemo\amazon;
+namespace goodsmemo\amazon\withsdk;
 
 use Exception;
 use goodsmemo\item\PriceItem;
@@ -36,11 +36,11 @@ require_once (__DIR__ . '/sdk/vendor/autoload.php');
 // change path as needed
 
 /**
- * Description of PriceResponse
+ * Description of SDKPriceResponse
  *
  * @author Goods Memo
  */
-class PriceResponse {
+class SDKPriceResponse {
 
 	public static function makePriceItem(\Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item $searchItem, float $priceTime): PriceItem {
 
@@ -70,22 +70,22 @@ class PriceResponse {
 
 		switch ($priceFlag) {
 			case 0b000 :
-				PriceResponse::setEmptyPriceTo ( $priceItem );
+				SDKPriceResponse::setEmptyPriceTo ( $priceItem );
 				break;
 			case 0b001 :
 			case 0b101 :
-				PriceResponse::setAmazonPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setAmazonPriceTo ( $priceItem, $offers );
 				break;
 			case 0b010 :
 			case 0b110 :
-				PriceResponse::setLowestPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setLowestPriceTo ( $priceItem, $offers );
 				break;
 			case 0b011 :
 			case 0b111 :
-				PriceResponse::setFitNewPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setFitNewPriceTo ( $priceItem, $offers );
 				break;
 			case 0b100 :
-				PriceResponse::setMerchantUsedPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setMerchantUsedPriceTo ( $priceItem, $offers );
 				break;
 			default :
 				throw new IllegalArgumentException ( "無効な価格フラグ値：" . decbin ( $priceFlag ) );
@@ -115,7 +115,7 @@ class PriceResponse {
 
 		$priceItem->setLabel ( "価格" ); // スマートフォンの画面幅が狭いため、文字数を短くした。「Amazon.co.jp 価格」
 
-		$amazonPrice = PriceResponse::makeAmazonPriceIfAmoutIsSet ( $offers );
+		$amazonPrice = SDKPriceResponse::makeAmazonPriceIfAmoutIsSet ( $offers );
 		$formattedPrice = PriceUtils::makeFormattedPrice ( $amazonPrice );
 		$priceItem->setPrice ( $formattedPrice );
 
@@ -126,7 +126,7 @@ class PriceResponse {
 
 		$priceItem->setLabel ( "最安価格" ); // 参考：PA-API v4の場合、新品価格
 
-		$lowestPrice = PriceResponse::makeLowestPriceIfAmoutIsSet ( $offers );
+		$lowestPrice = SDKPriceResponse::makeLowestPriceIfAmoutIsSet ( $offers );
 		$formattedPrice = PriceUtils::makeFormattedPrice ( $lowestPrice );
 		$priceItem->setPrice ( $formattedPrice );
 
@@ -149,20 +149,20 @@ class PriceResponse {
 	private static function setFitNewPriceTo(&$priceItem, $offers) {
 
 		// Fit：ちょうど良い
-		$amazonPrice = PriceResponse::makeAmazonPriceIfAmoutIsSet ( $offers );
-		$lowestPrice = PriceResponse::makeLowestPriceIfAmoutIsSet ( $offers );
+		$amazonPrice = SDKPriceResponse::makeAmazonPriceIfAmoutIsSet ( $offers );
+		$lowestPrice = SDKPriceResponse::makeLowestPriceIfAmoutIsSet ( $offers );
 
 		if (is_numeric ( $amazonPrice ) && is_numeric ( $lowestPrice )) { // var_dump(is_numeric($amazonPrice));//var_dump(is_numeric($merchantPrice));
 			$amazonPrice = intval ( $amazonPrice );
 			$lowestPrice = intval ( $lowestPrice );
 
 			if ($amazonPrice < $lowestPrice) {
-				PriceResponse::setAmazonPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setAmazonPriceTo ( $priceItem, $offers );
 			} else {
-				PriceResponse::setLowestPriceTo ( $priceItem, $offers );
+				SDKPriceResponse::setLowestPriceTo ( $priceItem, $offers );
 			}
 		} else {
-			PriceResponse::setEmptyPriceTo ( $priceItem );
+			SDKPriceResponse::setEmptyPriceTo ( $priceItem );
 		}
 	}
 
