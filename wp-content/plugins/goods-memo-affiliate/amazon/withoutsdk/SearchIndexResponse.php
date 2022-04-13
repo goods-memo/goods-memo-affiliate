@@ -100,14 +100,9 @@ class SearchIndexResponse {
 		$priceItem = PriceResponse::makePriceItem ( $searchItem, $priceTime );
 		$item->setPriceItem ( $priceItem );
 
-		/*
-		 *
-		 * $productionItem = ProductionResponse::makeProductionItem ( $searchItem );
-		 * $item->setProductionItem ( $productionItem ); // var_dump($searchItem);
-		 *
-		 *
-		 *
-		 */
+		$productionItem = ProductionResponse::makeProductionItem ( $searchItem );
+		$item->setProductionItem ( $productionItem );
+
 		$reviewItem = SearchIndexResponse::makeReviewItem ( $searchItem );
 		$item->setReviewItem ( $reviewItem );
 
