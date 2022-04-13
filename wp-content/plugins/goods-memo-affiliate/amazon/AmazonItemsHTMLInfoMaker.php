@@ -1,24 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
-
 namespace goodsmemo\amazon;
 
 use goodsmemo\item\ItemsHTMLInfoMaker;
@@ -47,13 +28,11 @@ require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
  * @author Goods Memo
  */
 class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
-
 	private $commonParameter;
 	private $restParameter;
 	private $productTypeOption;
 
-	public function __construct(CommonRESTParameter $commonParameter, RESTParameter $restParameter,
-		ProductTypeOption $productTypeOption) {
+	public function __construct(CommonRESTParameter $commonParameter, RESTParameter $restParameter, ProductTypeOption $productTypeOption) {
 
 		$this->commonParameter = $commonParameter;
 		$this->restParameter = $restParameter;
@@ -62,29 +41,29 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 
 	public function requestItemSearch(URLInfo $urlInfo, int $itemCount) {
 
-		$response = AmazonRequest::requestSearchIndex($urlInfo, $this->commonParameter, $this->restParameter,
-				$itemCount);
+		$response = AmazonRequest::requestSearchIndex ( $urlInfo, $this->commonParameter, $this->restParameter, $itemCount );
 		return $response;
 	}
 
 	public function makeItemArray($response, ItemHTMLOption $itemHTMLOption) {
 
-		$numberToDisplay = $itemHTMLOption->getNumberToDisplay();
-		$itemArray = AmazonResponse::makeItemArray($response, $numberToDisplay, $this->productTypeOption);
+		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
+		$adultProductEnable = $this->productTypeOption->getAdultProductEnabled ();
+
+		$itemArray = AmazonResponse::makeItemArray ( $response, $numberToDisplay, $adultProductEnable );
 		return $itemArray;
 	}
 
 	public function makeUniqueText(ItemHTMLOption $itemHTMLOption) {
 
-		$operation = $this->restParameter->getOperation();
-		$searchIndex = $this->restParameter->getSearchIndex();
-		$responseGroup = $this->restParameter->getSearchItemsResources();
-		$keyword = $this->restParameter->getKeyword();
-		$numberToDisplay = $itemHTMLOption->getNumberToDisplay();
-		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
+		$operation = $this->restParameter->getOperation ();
+		$searchIndex = $this->restParameter->getSearchIndex ();
+		$responseGroup = $this->restParameter->getSearchItemsResources ();
+		$keyword = $this->restParameter->getKeyword ();
+		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
+		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds ();
 
 		$uniqueText = AmazonSettingSection::ID_PREFIX . $operation . $searchIndex . $responseGroup . $keyword . $numberToDisplay . $cacheExpirationInSeconds;
 		return $uniqueText;
 	}
-
 }

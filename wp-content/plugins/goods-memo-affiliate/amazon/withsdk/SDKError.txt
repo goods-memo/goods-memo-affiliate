@@ -1,0 +1,19 @@
+XAMPPローカル環境
+amazon PA-API AWS SDK使用した場合
+401 InvalidSignatureエラーが起きた。
+しかしレンタルサーバーでは、正しく動いていた。
+
+SDKなしで署名する方法に、変更した。
+
+xampp pa-api 401 unauthorized
+amazon PA-API AWS SDK 401 Unauthorized
+▲原因不明 XAMPPのPHP
+HTTPリクエストの例外：Error calling PA-API 5.0! 
+Error Message: [401] 
+Client error: `POST https://webservices.amazon.co.jp/paapi5/searchitems` resulted in a `401 Unauthorized` 
+response: {"__type":"com.amazon.paapi5#InvalidSignatureException",
+"Errors":[{"Code":"InvalidSignature","Message":"The request has (truncated...) 
+Error host: https://webservices.amazon.co.jp 
+Error Type: InvalidSignature Error Message: The request has not been correctly signed. 
+If you are using an AWS SDK, requests are signed for you automatically; 
+otherwise, go to https://webservices.amazon.co.jp/paapi5/documentation/sending-request.html#signing. 。コード：401
