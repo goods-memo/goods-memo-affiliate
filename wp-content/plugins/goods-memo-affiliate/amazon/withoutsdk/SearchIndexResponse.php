@@ -68,7 +68,6 @@ class SearchIndexResponse {
 		 */
 
 		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->ProductInfo ) and isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct ) and isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct->DisplayValue )) {
-
 			;
 		} else {
 			return true; // アダルト商品の情報がない場合、有効とする。
@@ -161,7 +160,6 @@ class SearchIndexResponse {
 		$reviewItem = new ReviewItem ();
 
 		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->Features ) and isset ( $searchItem->ItemInfo->Features->DisplayValues )) {
-
 			$featuresValues = $searchItem->ItemInfo->Features->DisplayValues; // string[]
 
 			$featureArray = array ();

@@ -66,14 +66,15 @@ class SearchIndexRequest {
 		if (property_exists ( $jsonResponse, 'Errors' )) { // $jsonResponse内にerrorが含まれる場合
 
 			// 検索結果0件の場合、ここに来る。正常処理なので、throw new HttpRequestException()しなくて良い。
-			// string型。例："NoResults"という文字列が取得された。
+			// $errorCodeText: string型。例："NoResults"という文字列が取得された。
 			$errorCodeText = $jsonResponse->{'Errors'} [0]->{'Code'};
 			$errorMessage = $jsonResponse->{'Errors'} [0]->{'Message'};
 
 			// 検索結果0件以外の場合、Eclipseのデバッグでエラー内容を確認すること。
 			$jsonResponse = NULL; // エラー情報を削除した
-			                      // $errorCode=0;
-			                      // throw new HttpRequestException ( $errorMessage, $errorCode );
+
+			// $errorCode=0;
+			// throw new HttpRequestException ( $errorMessage, $errorCode );
 		}
 
 		return $jsonResponse;
