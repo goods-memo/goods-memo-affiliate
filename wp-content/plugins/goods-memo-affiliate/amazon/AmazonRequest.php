@@ -43,7 +43,7 @@ class AmazonRequest {
 				 * SDKAmazonRequest::requestSearchIndex()
 				 */
 
-				$searchItemsResponse = SearchIndexRequest::requestSearchIndex ( $partnerTag, $keyword, $searchIndex, $resources, $hostname, $accessKey, $secretKey, $regionName );
+				$searchItemsResponse = SearchIndexRequest::request ( $partnerTag, $keyword, $searchIndex, $resources, $hostname, $accessKey, $secretKey, $regionName );
 
 				return $searchItemsResponse;
 			} catch ( HttpRequestException $ex ) {
