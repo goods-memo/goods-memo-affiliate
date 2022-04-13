@@ -1,4 +1,4 @@
-XAMPPローカル環境
+XAMPPローカル環境 http://localhost/wp_test/
 amazon PA-API AWS SDK使用した場合
 401 InvalidSignatureエラーが起きた。
 しかしレンタルサーバーでは、正しく動いていた。
