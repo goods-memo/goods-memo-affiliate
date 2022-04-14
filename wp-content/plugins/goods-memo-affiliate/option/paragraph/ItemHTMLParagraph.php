@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\option\paragraph;
 
 use goodsmemo\option\paragraph\AbstractParagraph;
@@ -43,7 +25,7 @@ class ItemHTMLParagraph extends AbstractParagraph {
 	const DEFAULT_TITLE_LENGTH_LABEL = "商品名の表示文字数（目安の文字数）";
 	const DEFAULT_TITLE_LENGTH_VALUE = 60;
 	//
-	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_LABEL = "商品情報のキャッシュ時間（秒）";
+	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_LABEL = "商品情報のキャッシュ時間（秒）（0秒：キャッシュ無効）";
 	const DEFAULT_CACHE_EXPIRATION_IN_SECONDS_VALUE = 86400;
 
 	// 例：3600秒=1時間。21600秒=6時間。86400秒=24時間。

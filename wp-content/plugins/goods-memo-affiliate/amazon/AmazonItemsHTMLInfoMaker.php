@@ -22,11 +22,6 @@ require_once GOODS_MEMO_DIR . "amazon/AmazonResponse.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 
-/**
- * Description of AmazonItemsHTMLInfoMaker
- *
- * @author Goods Memo
- */
 class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 	private $commonParameter;
 	private $restParameter;

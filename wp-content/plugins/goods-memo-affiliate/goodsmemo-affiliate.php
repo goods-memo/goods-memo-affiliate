@@ -24,7 +24,6 @@ function addGoodsMemoAffiliateStyles() {
 
 	$styleSheetUniqueName = GOODS_MEMO_PREFIX . "-affiliateStyles";
 	$pluginCssURL = plugins_url ( 'gma-style.css', __FILE__ );
-	// var_dump($pluginCssURL);
 
 	wp_register_style ( $styleSheetUniqueName, $pluginCssURL );
 	wp_enqueue_style ( $styleSheetUniqueName );
