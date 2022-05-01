@@ -16,7 +16,7 @@ require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
 class AmazonRequest {
 
-	public static function requestSearchIndex(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, int $itemCount, $retryCount = 2) {
+	public static function requestSearchIndex(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, int $itemCount, $retryCount = 1) {
 
 		if ($itemCount <= 0) {
 			return NULL; // 表示する件数が０件なので、商品情報なしとする。
@@ -32,7 +32,7 @@ class AmazonRequest {
 		$regionName = $commonParameter->getRegion ();
 
 		$lastHttpRequestException;
-		for($i = 0; $i < $retryCount; $i ++) { // リトライ回数：2回 //TODO 設定画面で指定する
+		for($i = 0; $i < $retryCount; $i ++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
 			if ($i >= 1) {
 				sleep ( 1 ); // 再試行の待ち時間（1秒）
 			}

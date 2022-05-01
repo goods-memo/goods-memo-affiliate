@@ -53,7 +53,11 @@ class SearchIndexRequest {
 		$fp = @fopen ( 'https://' . $host . $path, 'rb', false, $stream );
 
 		if (! $fp) {
-			throw new HttpRequestException ( "fopen Exception Occured" );
+			$errorMessage = "fopen Exception Occured.";
+			// $http_response_header変数は、fopen実行後、PHPが自動的に設定する。
+			// URLが存在しない場合、変数は未定義らしい。未定義なら、HTTP Status 404 と判断して良さそう。
+			$errorMessage .= "response header:" . $http_response_header [0];
+			throw new HttpRequestException ( $errorMessage );
 		}
 
 		$response = @stream_get_contents ( $fp );
