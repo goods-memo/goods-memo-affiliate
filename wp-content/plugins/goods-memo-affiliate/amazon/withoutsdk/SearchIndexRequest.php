@@ -54,9 +54,16 @@ class SearchIndexRequest {
 
 		if (! $fp) {
 			$errorMessage = "fopen Exception Occured.";
-			// $http_response_header変数は、fopen実行後、PHPが自動的に設定する。
-			// URLが存在しない場合、変数は未定義らしい。未定義なら、HTTP Status 404 と判断して良さそう。
-			$errorMessage .= "response header:" . $http_response_header [0];
+
+			$httpStatus;
+			if (isset ( $http_response_header )) { // $http_response_header変数は、fopen実行後、PHPが自動的に設定する。
+				$httpStatus = $http_response_header [0];
+			} else {
+				// URLが存在しない場合、変数は未定義らしい。未定義なら、HTTP Status 404 と判断して良さそう。
+				$httpStatus = "Variable http_response_header is undefined.";
+			}
+
+			$errorMessage .= "http status:" . $httpStatus;
 			throw new HttpRequestException ( $errorMessage );
 		}
 
