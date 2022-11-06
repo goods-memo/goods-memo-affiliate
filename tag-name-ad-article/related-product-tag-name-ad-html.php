@@ -12,13 +12,13 @@ $firstTagName = gma_getFirstTagName ();
 if (gma_existsTagNameAdArticle ()) :
 	?>
 
-<div class="tag_name_ad_article_url">
+<div class="tag_name_ad_article_link_block">
 <a href="<?php
 
-	echo $tagNameAdArticleURL?>">「<?php
+	echo $tagNameAdArticleURL?>" class="tag_name_ad_article_link">「<?php
 
 	echo $firstTagName;
-	?>」の関連商品</a>
+	?>」の<br>関連商品はこちら</a>
 
 </div>
 <?php
