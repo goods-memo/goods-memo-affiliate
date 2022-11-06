@@ -102,9 +102,25 @@ if (! function_exists ( 'gma_existsTagNameAdArticle' )) :
 
 		$tagNameAdArticleURL = gma_createTagNameAdArticleURL ();
 
-		$headers = @get_headers ( $tagNameAdArticleURL );
-		// ステータスコード 200番台、300番台について、調べる
-		if (preg_match ( '/[2][0-9][0-9]|[3][0-9][0-9]/', $headers [0] )) {
+		$ch = curl_init ();
+		curl_setopt ( $ch, CURLOPT_URL, $tagNameAdArticleURL );
+		curl_setopt ( $ch, CURLOPT_HEADER, true ); // HTTP レスポンスのヘッダの内容を取得する
+		/* curl_exec()を実行時、返り値を文字列で返す。curl_exec() を実行すると、デフォルトではレスポンスを標準出力に出力する */
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt ( $ch, CURLOPT_NOBODY, true ); // リクエストメソッドがHEADになります。レスポンスヘッダのみが返される
+		$content = curl_exec ( $ch );
+
+		if (curl_errno ( $ch )) {
+			$httpCode = - 1;
+		} else {
+			// 取得した情報からHTTPステータスコードを取り出します。
+			$httpCode = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+		}
+		echo '<!-- CURLINFO_HTTP_CODE=' . $httpCode . ' -->';
+
+		curl_close ( $ch );
+
+		if ($httpCode == 200) {
 			// タグ名の広告記事ページがあります;
 			return TRUE;
 		} else {
