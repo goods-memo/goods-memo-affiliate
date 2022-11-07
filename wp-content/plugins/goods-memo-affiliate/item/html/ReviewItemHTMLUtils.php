@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\item\html;
 
 use goodsmemo\item\ReviewItem;
@@ -28,19 +10,17 @@ require_once GOODS_MEMO_DIR . "item/ReviewItem.php";
 require_once GOODS_MEMO_DIR . "item/html/ReviewItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 
-/**
- * Description of ReviewItemHTMLUtils
- *
- * @author Goods Memo
- */
 class ReviewItemHTMLUtils {
 
-	public static function makeReviewItemHTMLOption($optionMap, $editorialReviewLengthID, $arrayOfStringToDeleteID, $arrayOfStringToBreakID): ReviewItemHTMLOption {
+	public static function makeReviewItemHTMLOption($optionMap, $reviewLength, $editorialReviewLengthID, $arrayOfStringToDeleteID, $arrayOfStringToBreakID): ReviewItemHTMLOption {
 
 		$reviewItemHTMLOption = new ReviewItemHTMLOption ();
 
-		$reviewLength = $optionMap [$editorialReviewLengthID]; // var_dump($reviewLength);
-		$reviewItemHTMLOption->setReviewLength ( $reviewLength );
+		if ($reviewLength === "") { // ショートコードの属性が未指定なら。0と””を区別するには ===（厳密な比較） を使います。
+			$reviewItemHTMLOption->setReviewLength ( $optionMap [$editorialReviewLengthID] );
+		} else {
+			$reviewItemHTMLOption->setReviewLength ( $reviewLength );
+		}
 
 		$arrayOfStringToDelete = json_decode ( $optionMap [$arrayOfStringToDeleteID], true ); // true：連想配列に変換する
 		$reviewItemHTMLOption->setArrayOfStringToDelete ( $arrayOfStringToDelete ); // var_dump($arrayOfStringToDelete);

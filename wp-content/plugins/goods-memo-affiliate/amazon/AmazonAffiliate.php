@@ -10,6 +10,7 @@ use goodsmemo\network\URLUtils;
 use goodsmemo\option\AffiliateOptionUtils;
 use goodsmemo\option\amazon\URLParagraphUtils;
 use goodsmemo\option\amazon\RESTParagraphUtils;
+use goodsmemo\shortcode\ShortcodeAttribute;
 use goodsmemo\exception\IllegalArgumentException;
 
 require_once GOODS_MEMO_DIR . "amazon/KeywordSearchOperation.php";
@@ -20,21 +21,17 @@ require_once GOODS_MEMO_DIR . "network/URLUtils.php";
 require_once GOODS_MEMO_DIR . "option/AffiliateOptionUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/URLParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/RESTParagraphUtils.php";
+require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
 require_once GOODS_MEMO_DIR . "exception/IllegalArgumentException.php";
 
-/**
- * Description of Amazon
- *
- * @author Goods Memo
- */
 class AmazonAffiliate {
 
-	public static function makeHTML($operationOfShortcode, $searchIndexOfShortcode, $keyword, $number) {
+	public static function makeHTML(ShortcodeAttribute $shortcodeAttribute) {
 
 		$optionMap = AffiliateOptionUtils::getAffiliateOption (); // ここで一回だけデータベースを読み込む。
 
 		$commonParameter = AmazonOptionUtils::makeCommonRESTParameter ( $optionMap );
-		$restParameter = AmazonOptionUtils::makeRESTParameter ( $optionMap, $operationOfShortcode, $searchIndexOfShortcode, $keyword );
+		$restParameter = AmazonOptionUtils::makeRESTParameter ( $optionMap, $shortcodeAttribute );
 		$displayHTMLOption = AmazonOptionUtils::makeDisplayHTMLPAAPINotAvailableOption ( $optionMap );
 
 		$displayHTMLAlwaysEnabled = $displayHTMLOption->getDisplayHTMLPAAPINotAvailableAlwaysEnabled ();
@@ -45,7 +42,7 @@ class AmazonAffiliate {
 		}
 
 		$urlInfo = URLUtils::makeURLInfo ( $optionMap, URLParagraphUtils::HOSTNAME_ID );
-		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $number );
+		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $shortcodeAttribute );
 		$productTypeOption = AmazonOptionUtils::makeProductTypeOption ( $optionMap );
 
 		$affiliateHTML;

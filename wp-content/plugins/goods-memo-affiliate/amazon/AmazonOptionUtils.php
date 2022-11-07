@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\amazon;
 
 use goodsmemo\amazon\CommonRESTParameter;
@@ -30,6 +12,7 @@ use goodsmemo\option\amazon\ProductTypeParagraph;
 use goodsmemo\option\amazon\ProductTypeParagraphUtils;
 use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraph;
 use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraphUtils;
+use goodsmemo\shortcode\ShortcodeAttribute;
 
 require_once GOODS_MEMO_DIR . "amazon/CommonRESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
@@ -42,12 +25,8 @@ require_once GOODS_MEMO_DIR . "option/amazon/ProductTypeParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/ProductTypeParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraphUtils.php";
+require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
 
-/**
- * Description of AmazonOption
- *
- * @author Goods Memo
- */
 class AmazonOptionUtils {
 
 	public static function makeCommonRESTParameter($optionMap): CommonRESTParameter {
@@ -69,18 +48,20 @@ class AmazonOptionUtils {
 		return $parameter;
 	}
 
-	public static function makeRESTParameter($optionMap, $operationOfShortcode, $searchIndexOfShortcode, $keyword): RESTParameter {
+	public static function makeRESTParameter($optionMap, ShortcodeAttribute $shortcodeAttribute): RESTParameter {
 
 		$restParameter = new RESTParameter ();
 
 		// TODO get_option()から、値を取得する。
 
+		$operationOfShortcode = $shortcodeAttribute->getOperation ();
 		if ($operationOfShortcode) {
 			$restParameter->setOperation ( $operationOfShortcode );
 		} else {
 			$restParameter->setOperation ( RESTParagraphUtils::ITEM_SEARCH_OPERATION );
 		}
 
+		$searchIndexOfShortcode = $shortcodeAttribute->getSearchIndex ();
 		if ($searchIndexOfShortcode) {
 			$restParameter->setSearchIndex ( $searchIndexOfShortcode );
 		} else {
@@ -90,7 +71,7 @@ class AmazonOptionUtils {
 		$searchItemsResources = json_decode ( $optionMap [RESTParagraphUtils::SEARCH_ITEMS_RESOURCES_ID], true ); // true：連想配列に変換する
 		$restParameter->setSearchItemsResources ( $searchItemsResources );
 
-		$restParameter->setKeyword ( $keyword );
+		$restParameter->setKeyword ( $shortcodeAttribute->getKeyword () );
 
 		return $restParameter;
 	}
