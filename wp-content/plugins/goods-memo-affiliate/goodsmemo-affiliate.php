@@ -4,9 +4,9 @@
  * Plugin Name: Goods Memo Affiliate
  * Plugin URI:
  * Description: アフィリエイトの商品を表示します。
- * Version: 0.3.2
+ * Version: 0.3.3
  * Author:Goods Memo
- * Author URI: https://www.goods-memo.net/goods-memo-affiliate/
+ * Author URI: https://www.goods-memo.net/computers/goods-memo-affiliate/
  * License: GPL v2 or later
  */
 define ( "GOODS_MEMO_DIR", __DIR__ . "/" );
