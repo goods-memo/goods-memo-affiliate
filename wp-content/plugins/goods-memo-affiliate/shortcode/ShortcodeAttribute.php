@@ -3,12 +3,12 @@
 namespace goodsmemo\shortcode;
 
 class ShortcodeAttribute {
-	private string $operation;
-	private string $searchIndex;
-	private string $keyword;
-	private int $numberToDisplay;
-	private int $itemTitleLength;
-	private int $itemReviewLength;
+	private $operation;
+	private $searchIndex;
+	private $keyword;
+	private $numberToDisplay;
+	private $itemTitleLength;
+	private $itemReviewLength;
 
 	public function getOperation() {
 

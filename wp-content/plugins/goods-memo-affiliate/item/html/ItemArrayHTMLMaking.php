@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\item\html;
 
 use goodsmemo\item\Item;
@@ -40,16 +22,11 @@ require_once GOODS_MEMO_DIR . "item/html/FooterHTMLUtils.php";
 require_once GOODS_MEMO_DIR . "date/DateTextMaking.php";
 require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 
-/**
- * Description of HTMLMaking
- *
- * @author Goods Memo
- */
 class ItemArrayHTMLMaking {
-
 	const NO_APPLICABLE_PRODUCT = "該当する商品は、ありませんでした。";
 
-	public static function makeItemArrayHTML($itemArray, ItemHTMLOption $itemHTMLOption) {
+	public static function makeItemArrayHTML($itemArray,
+			ItemHTMLOption $itemHTMLOption) {
 
 		$_ = function ($s) {
 			return $s;
@@ -76,7 +53,8 @@ class ItemArrayHTMLMaking {
 		for($index = 0; $index < $itemCount; $index ++) {
 
 			$item = $itemArray [$index];
-			$oneItemHTML = ItemArrayHTMLMaking::makeOneItemHTML ( $item, $index, $itemHTMLOption, $footerID );
+			$oneItemHTML = ItemArrayHTMLMaking::makeOneItemHTML ( $item, $index,
+					$itemHTMLOption, $footerID );
 			$itemArrayHTML .= $oneItemHTML;
 		}
 
@@ -87,7 +65,8 @@ class ItemArrayHTMLMaking {
 		return $itemArrayHTML;
 	}
 
-	private static function makeOneItemHTML(Item $item, $index, ItemHTMLOption $itemHTMLOption, $footerID) {
+	private static function makeOneItemHTML(Item $item, $index,
+			ItemHTMLOption $itemHTMLOption, $footerID) {
 
 		$idIndex = $index + 1; // １から始まる値にする。
 		$idPrefix = $itemHTMLOption->getIdPrefix ();
@@ -115,7 +94,8 @@ class ItemArrayHTMLMaking {
 		$pointRateEndTime = $pointItem->getPointRateEndTime ();
 
 		$productionItem = $item->getProductionItem ();
-		$contributorText = ItemArrayHTMLMaking::makeContributorText ( $productionItem );
+		$contributorText = ItemArrayHTMLMaking::makeContributorText ( 
+				$productionItem );
 		$manufacturerLabel = $productionItem->getManufacturerLabel ();
 		$manufacturer = $productionItem->getManufacturer ();
 		$binding = $productionItem->getBinding ();
@@ -123,7 +103,8 @@ class ItemArrayHTMLMaking {
 		$preferentialMember = $item->getPreferentialMember ();
 		$shop = $item->getShop ();
 
-		$reviewText = ItemArrayHTMLMaking::makeReviewText ( $item, $itemHTMLOption );
+		$reviewText = ItemArrayHTMLMaking::makeReviewText ( $item,
+				$itemHTMLOption );
 
 		$_ = function ($s) {
 			return $s;
@@ -133,7 +114,7 @@ class ItemArrayHTMLMaking {
 			if (is_numeric ( $value )) {
 				return "";
 			}
-			if (empty ( $value )) {
+			if ($value === "") {
 				return 'style="display: none;"';
 			} else {
 				return "";
@@ -243,7 +224,8 @@ class ItemArrayHTMLMaking {
 	private static function makePriceTimeText(PriceItem $priceItem) {
 
 		$priceTime = $priceItem->getPriceTime ();
-		$priceTimeText = DateTextMaking::makeTimeText ( DateTextMaking::TIME_TEXT_FORMAT, $priceTime );
+		$priceTimeText = DateTextMaking::makeTimeText ( 
+				DateTextMaking::TIME_TEXT_FORMAT, $priceTime );
 		return $priceTimeText;
 	}
 
@@ -254,11 +236,13 @@ class ItemArrayHTMLMaking {
 		return $contributorText;
 	}
 
-	private static function makeReviewText(Item $item, ItemHTMLOption $itemHTMLOption) {
+	private static function makeReviewText(Item $item,
+			ItemHTMLOption $itemHTMLOption) {
 
 		$reviewItem = $item->getReviewItem ();
 		$reviewItemHTMLOption = $itemHTMLOption->getReviewItemHTMLOption ();
-		$reviewText = ReviewItemHTMLUtils::makeFitReviewText ( $reviewItem, $reviewItemHTMLOption );
+		$reviewText = ReviewItemHTMLUtils::makeFitReviewText ( $reviewItem,
+				$reviewItemHTMLOption );
 		return $reviewText;
 	}
 }

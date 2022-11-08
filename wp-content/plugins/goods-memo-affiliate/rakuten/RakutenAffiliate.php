@@ -4,7 +4,7 @@ namespace goodsmemo\rakuten;
 
 use goodsmemo\rakuten\KeywordSearchOperation;
 use goodsmemo\rakuten\RakutenOptionUtils;
-use goodsmemo\rakuten\ItemHTMLUtils;
+use goodsmemo\rakuten\RakutenItemHTMLUtils;
 use goodsmemo\network\URLUtils;
 use goodsmemo\option\AffiliateOptionUtils;
 use goodsmemo\option\rakuten\URLParagraphUtils;
@@ -14,7 +14,7 @@ use goodsmemo\exception\IllegalArgumentException;
 
 require_once GOODS_MEMO_DIR . "rakuten/KeywordSearchOperation.php";
 require_once GOODS_MEMO_DIR . "rakuten/RakutenOptionUtils.php";
-require_once GOODS_MEMO_DIR . "rakuten/ItemHTMLUtils.php";
+require_once GOODS_MEMO_DIR . "rakuten/RakutenItemHTMLUtils.php";
 require_once GOODS_MEMO_DIR . "network/URLUtils.php";
 require_once GOODS_MEMO_DIR . "option/AffiliateOptionUtils.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/URLParagraphUtils.php";
@@ -32,7 +32,7 @@ class RakutenAffiliate {
 		$commonParameter = RakutenOptionUtils::makeCommonRESTParameter ( $optionMap );
 		$restParameter = RakutenOptionUtils::makeRESTParameter ( $optionMap, $shortcodeAttribute->getKeyword () );
 		$searchOption = RakutenOptionUtils::makeSearchOption ( $optionMap, $shortcodeAttribute->getOperation () );
-		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $shortcodeAttribute );
+		$itemHTMLOption = RakutenItemHTMLUtils::makeItemHTMLOption ( $optionMap, $shortcodeAttribute );
 
 		$affiliateHTML;
 

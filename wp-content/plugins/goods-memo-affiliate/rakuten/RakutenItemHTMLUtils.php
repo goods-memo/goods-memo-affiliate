@@ -3,6 +3,7 @@
 namespace goodsmemo\rakuten;
 
 use goodsmemo\item\html\ItemHTMLOption;
+use goodsmemo\item\html\ItemHTMLUtils;
 use goodsmemo\item\html\ImageItemHTMLOption;
 use goodsmemo\item\html\PriceItemHTMLOption;
 use goodsmemo\item\html\ReviewItemHTMLUtils;
@@ -14,6 +15,7 @@ use goodsmemo\option\rakuten\ReviewParagraphUtils;
 use goodsmemo\shortcode\ShortcodeAttribute;
 
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
+require_once GOODS_MEMO_DIR . "item/html/ItemHTMLUtils.php";
 require_once GOODS_MEMO_DIR . "item/html/ImageItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "item/html/PriceItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "item/html/ReviewItemHTMLUtils.php";
@@ -24,7 +26,7 @@ require_once GOODS_MEMO_DIR . "option/rakuten/PriceParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/ReviewParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
 
-class ItemHTMLUtils {
+class RakutenItemHTMLUtils {
 
 	public static function makeItemHTMLOption($optionMap, ShortcodeAttribute $shortcodeAttribute): ItemHTMLOption {
 
@@ -34,27 +36,22 @@ class ItemHTMLUtils {
 
 		$option->setIdPrefix ( RakutenSettingSection::ID_PREFIX );
 
-		$number = $shortcodeAttribute->getNumberToDisplay ();
-		if (is_numeric ( $number )) { // ゼロも有効とした。
-			$option->setNumberToDisplay ( $number );
-		} else {
-			$option->setNumberToDisplay ( ItemHTMLParagraphUtils::DEFAULT_NUMBER_TO_DISPLAY );
-		}
+		ItemHTMLUtils::setNumberToDisplayTo ( $option, $shortcodeAttribute, ItemHTMLParagraphUtils::DEFAULT_NUMBER_TO_DISPLAY );
 
-		$titleLength = $shortcodeAttribute->getItemTitleLength ();
-		if ($titleLength === "") { // ショートコードの属性が未指定なら。0と””を区別するには ===（厳密な比較） を使います。
-			$option->setTitleLength ( $optionMap [ItemHTMLParagraphUtils::TITLE_LENGTH_ID] );
-		} else {
-			$option->setTitleLength ( $titleLength );
-		}
+		$titleLengthOfOptionMap = $optionMap [ItemHTMLParagraphUtils::TITLE_LENGTH_ID];
+		ItemHTMLUtils::setTitleLengthTo ( $option, $shortcodeAttribute, $titleLengthOfOptionMap );
 
-		$imageItemHTMLOption = ItemHTMLUtils::makeImageItemHTMLOption ( $optionMap );
+		$imageItemHTMLOption = RakutenItemHTMLUtils::makeImageItemHTMLOption ( $optionMap );
 		$option->setImageItemHTMLOption ( $imageItemHTMLOption );
 
-		$priceItemHTMLOption = ItemHTMLUtils::makePriceItemHTMLOption ( $optionMap );
+		$priceItemHTMLOption = RakutenItemHTMLUtils::makePriceItemHTMLOption ( $optionMap );
 		$option->setPriceItemHTMLOption ( $priceItemHTMLOption );
 
-		$reviewItemHTMLOption = ReviewItemHTMLUtils::makeReviewItemHTMLOption ( $optionMap, $shortcodeAttribute->getItemReviewLength (), ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID, ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID, ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
+		$reviewItemHTMLOption = ReviewItemHTMLUtils::makeReviewItemHTMLOption ( //
+		$optionMap, $shortcodeAttribute->getItemReviewLength (), //
+		ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID, //
+		ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID, //
+		ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
 		$option->setReviewItemHTMLOption ( $reviewItemHTMLOption );
 
 		$cacheExpirationInSeconds = $optionMap [ItemHTMLParagraphUtils::CACHE_EXPIRATION_IN_SECONDS_ID];

@@ -4,7 +4,7 @@ namespace goodsmemo\amazon;
 
 use goodsmemo\amazon\KeywordSearchOperation;
 use goodsmemo\amazon\AmazonOptionUtils;
-use goodsmemo\amazon\ItemHTMLUtils;
+use goodsmemo\amazon\AmazonItemHTMLUtils;
 use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableUtils;
 use goodsmemo\network\URLUtils;
 use goodsmemo\option\AffiliateOptionUtils;
@@ -15,7 +15,7 @@ use goodsmemo\exception\IllegalArgumentException;
 
 require_once GOODS_MEMO_DIR . "amazon/KeywordSearchOperation.php";
 require_once GOODS_MEMO_DIR . "amazon/AmazonOptionUtils.php";
-require_once GOODS_MEMO_DIR . "amazon/ItemHTMLUtils.php";
+require_once GOODS_MEMO_DIR . "amazon/AmazonItemHTMLUtils.php";
 require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableUtils.php";
 require_once GOODS_MEMO_DIR . "network/URLUtils.php";
 require_once GOODS_MEMO_DIR . "option/AffiliateOptionUtils.php";
@@ -42,7 +42,7 @@ class AmazonAffiliate {
 		}
 
 		$urlInfo = URLUtils::makeURLInfo ( $optionMap, URLParagraphUtils::HOSTNAME_ID );
-		$itemHTMLOption = ItemHTMLUtils::makeItemHTMLOption ( $optionMap, $shortcodeAttribute );
+		$itemHTMLOption = AmazonItemHTMLUtils::makeItemHTMLOption ( $optionMap, $shortcodeAttribute );
 		$productTypeOption = AmazonOptionUtils::makeProductTypeOption ( $optionMap );
 
 		$affiliateHTML;
