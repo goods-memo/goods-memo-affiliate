@@ -1,6 +1,6 @@
 <!-- 
-タグ名の広告記事
-アマゾンの関連商品
+タグ名の関連商品
+アマゾンの商品
 -->
 
 <?php
@@ -21,7 +21,8 @@ Amazon.co.jp
 </h2>
 
 <?php
-	$shortcodeText = '[goodsmemo_affiliate service="amazon" keyword="' . $firstTagName . '" number="' . $fitItemNumber . '"]';
+	$shortcodeText = '[goodsmemo_affiliate service="amazon" keyword="' . $firstTagName . '" number="' .
+			$fitItemNumber . '" item_title_length="100" item_review_length="400"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>

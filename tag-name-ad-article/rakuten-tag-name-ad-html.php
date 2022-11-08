@@ -1,6 +1,6 @@
 <!-- 
-タグ名の広告記事
-楽天市場の関連商品
+タグ名の関連商品
+楽天市場の商品
 -->
 
 <?php
@@ -21,7 +21,8 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 </h2>
 
 <?php
-	$shortcodeText = '[goodsmemo_affiliate service="rakuten" keyword="' . $firstTagName . '" number="' . $fitItemNumber . '"]';
+	$shortcodeText = '[goodsmemo_affiliate service="rakuten" keyword="' . $firstTagName . '" number="' .
+			$fitItemNumber . '" item_title_length="100" item_review_length="400"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>

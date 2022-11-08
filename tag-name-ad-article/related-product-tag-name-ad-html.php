@@ -1,8 +1,7 @@
 <!-- 
 ブログ記事下
-関連商品
+タグ名の関連商品・リンク
 -->
-
 <?php
 $tagNameAdArticleURL = gma_createTagNameAdArticleURL ();
 $firstTagName = gma_getFirstTagName ();
@@ -28,6 +27,10 @@ if (gma_existsTagNameAdArticle ()) :
 
 ?>
 
+<!-- 
+ブログ記事下
+タグ名の関連商品
+-->
 <?php
 $fitItemNumber = gma_getFitItemNumber ();
 ?>
@@ -51,7 +54,8 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 </p>
 
 <?php
-	$shortcodeText = '[goodsmemo_affiliate service="amazon" keyword="' . $firstTagName . '" number="' . $fitItemNumber . '"]';
+	$shortcodeText = '[goodsmemo_affiliate service="amazon" keyword="' .
+			$firstTagName . '" number="' . $fitItemNumber . '"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>
@@ -61,7 +65,8 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 </p>
 
 <?php
-	$shortcodeText = '[goodsmemo_affiliate service="rakuten" keyword="' . $firstTagName . '" number="' . $fitItemNumber . '"]';
+	$shortcodeText = '[goodsmemo_affiliate service="rakuten" keyword="' .
+			$firstTagName . '" number="' . $fitItemNumber . '"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>
