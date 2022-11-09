@@ -2,18 +2,21 @@
 ブログ記事下
 タグ名の関連商品・リンク
 -->
+<?php
+$firstTag = gma_getFirstTag ();
+$tagAdArticleURL = gma_createTagAdArticleURL ( $firstTag );
+?>
 
 <?php
-if (gma_existsTagNameAdArticle ()) :
+if (gma_existsTagAdArticle ( $tagAdArticleURL )) :
 	?>
 
 <div class="tag_name_ad_article_link_block">
 <a href="<?php
 
-	$tagNameAdArticleURL = gma_createTagNameAdArticleURL ();
-	echo $tagNameAdArticleURL?>" class="tag_name_ad_article_link">「<?php
+	echo $tagAdArticleURL?>" class="tag_name_ad_article_link">「<?php
 
-	$firstTagName = gma_getFirstTagName ();
+	$firstTagName = gma_getTagName ( $firstTag );
 	echo $firstTagName;
 	?>」の<br>関連商品はこちら</a>
 
@@ -30,7 +33,7 @@ if (gma_existsTagNameAdArticle ()) :
 タグ名の関連商品
 -->
 <?php
-$firstTagName = gma_getFirstTagName ();
+$firstTagName = gma_getTagName ( $firstTag );
 $fitItemNumber = gma_getFitItemNumber ();
 ?>
 

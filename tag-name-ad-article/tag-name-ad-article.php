@@ -32,17 +32,16 @@ if (! function_exists ( 'gma_getFirstTag' )) :
 endif;
 
 	/*
- * print_r ( gma_getFirstTag() );
+ * $firstTag = gma_getFirstTag();
+ * print_r ($firstTag );
  */
 
 	/* */
-if (! function_exists ( 'gma_getFirstTagName' )) :
+if (! function_exists ( 'gma_getTagName' )) :
 
-	function gma_getFirstTagName() {
+	function gma_getTagName($tagObject) {
 
 		$tagName = '';
-
-		$tagObject = gma_getFirstTag ();
 
 		if (isset ( $tagObject )) {
 			$tagName = $tagObject->name;
@@ -53,17 +52,15 @@ if (! function_exists ( 'gma_getFirstTagName' )) :
 endif;
 
 	/*
- * echo 'gma_getFirstTagName()='.gma_getFirstTagName();
+ * echo 'gma_getTagName()='.gma_getTagName($firstTag);
  */
 
 	/* */
-if (! function_exists ( 'gma_getFirstTagURL' )) :
+if (! function_exists ( 'gma_getTagURL' )) :
 
-	function gma_getFirstTagURL() {
+	function gma_getTagURL($tagObject) {
 
 		$tagURL = '';
-
-		$tagObject = gma_getFirstTag ();
 
 		if (isset ( $tagObject )) {
 			$tagURL = esc_url ( get_term_link ( $tagObject ) );
@@ -74,36 +71,35 @@ if (! function_exists ( 'gma_getFirstTagURL' )) :
 endif;
 
 	/*
- * echo 'gma_getFirstTagURL()='.gma_getFirstTagURL();
+ * echo 'gma_getTagURL()='.gma_getTagURL($firstTag);
  */
 
 	/* */
-if (! function_exists ( 'gma_createTagNameAdArticleURL' )) :
+if (! function_exists ( 'gma_createTagAdArticleURL' )) :
 
-	function gma_createTagNameAdArticleURL() {
+	function gma_createTagAdArticleURL($tagObject) {
 
 		// 例：http://localhost/wp_test/tag/beautiful-skin-water/
-		$firstTagNameURL = gma_getFirstTagURL ();
+		$tagURL = gma_getTagURL ( $tagObject );
 
 		// 例：http://localhost/wp_test/advertisement/beautiful-skin-water/
-		$adArticleURL = str_replace ( '/tag/', '/advertisement/', $firstTagNameURL );
+		$adArticleURL = str_replace ( '/tag/', '/advertisement/', $tagURL );
 		return $adArticleURL;
 	}
 endif;
 
 	/*
- * echo 'gma_createTagNameAdArticleURL()='.gma_createTagNameAdArticleURL();
+ * $tagAdArticleURL=gma_createTagAdArticleURL($firstTag);
+ * echo 'gma_createTagAdArticleURL()='.$tagAdArticleURL;
  */
 
 	/* タグ名の広告記事の存在を確認する */
-if (! function_exists ( 'gma_existsTagNameAdArticle' )) :
+if (! function_exists ( 'gma_existsTagAdArticle' )) :
 
-	function gma_existsTagNameAdArticle() {
-
-		$tagNameAdArticleURL = gma_createTagNameAdArticleURL ();
+	function gma_existsTagAdArticle($tagAdArticleURL) {
 
 		$ch = curl_init ();
-		curl_setopt ( $ch, CURLOPT_URL, $tagNameAdArticleURL );
+		curl_setopt ( $ch, CURLOPT_URL, $tagAdArticleURL );
 		curl_setopt ( $ch, CURLOPT_HEADER, true ); // HTTP レスポンスのヘッダの内容を取得する
 		/* curl_exec()を実行時、返り値を文字列で返す。curl_exec() を実行すると、デフォルトではレスポンスを標準出力に出力する */
 		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -132,7 +128,7 @@ if (! function_exists ( 'gma_existsTagNameAdArticle' )) :
 endif;
 
 	/*
- * echo 'gma_existsTagNameAdArticle()='.gma_existsTagNameAdArticle();
+ * echo 'gma_existsTagAdArticle()='.gma_existsTagAdArticle($tagAdArticleURL);
  */
 
 	/* 商品個数を取得する */

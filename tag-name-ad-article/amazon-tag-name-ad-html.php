@@ -4,7 +4,8 @@
 -->
 
 <?php
-$firstTagName = gma_getFirstTagName ();
+$firstTag = gma_getFirstTag ();
+$firstTagName = gma_getTagName ( $firstTag );
 $fitItemNumber = 3;
 ?>
 
