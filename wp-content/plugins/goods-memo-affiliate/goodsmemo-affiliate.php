@@ -4,7 +4,7 @@
  * Plugin Name: Goods Memo Affiliate
  * Plugin URI:
  * Description: アフィリエイトの商品を表示します。
- * Version: 0.3.3
+ * Version: 0.3.4
  * Author:Goods Memo
  * Author URI: https://www.goods-memo.net/computers/goods-memo-affiliate/
  * License: GPL v2 or later
@@ -43,10 +43,11 @@ if (is_admin ()) {
 	// add_shortcode(GOODS_MEMO_PREFIX . "_affiliate", "\goodsmemo\shortcode\Shortcode::makeAffiliateHTML");
 	//
 	// 以下の書き方にしてみる。参考：http://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/add_shortcode
-	add_shortcode ( GOODS_MEMO_PREFIX . "_affiliate", array (
-			'goodsmemo\shortcode\Shortcode',
-			'makeAffiliateHTML'
-	) );
+	add_shortcode ( GOODS_MEMO_PREFIX . "_affiliate",
+			array (
+					'goodsmemo\shortcode\Shortcode',
+					'makeAffiliateHTML'
+			) );
 
 	// ヘッダにCSSを追加する
 	add_action ( 'wp_enqueue_scripts', 'addGoodsMemoAffiliateStyles' );
