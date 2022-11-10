@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\option\paragraph;
 
 use goodsmemo\option\paragraph\AbstractParagraph;
@@ -34,21 +16,25 @@ require_once GOODS_MEMO_DIR . "option/SectionInfo.php";
 require_once GOODS_MEMO_DIR . "option/field/TextField.php";
 require_once GOODS_MEMO_DIR . "option/field/TextareaField.php";
 
-/**
- * Description of ReviewParagraph
- *
- * @author Goods Memo
- */
 class ReviewParagraph extends AbstractParagraph {
 	use AbstractTextParagraph;
 	const DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL = "商品説明の表示文字数（目安の文字数）";
 	const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 120;
-	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL = "商品説明から削除する文字列の配列（JSON配列。空の配列[]）";
+	const DEFAULT_STRING_TO_DELETE_JSON_ARRAY_LABEL = "商品説明から削除する文字列のJSON配列（空の配列[]）";
 	// 削除する文字列の配列。例：全角の＜＞
-	const DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞"]';
-	const DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL = "商品説明で改行する文字の配列（JSON配列。空の配列[]）";
+	const DEFAULT_STRING_TO_DELETE_JSON_ARRAY_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞"]';
+	const DEFAULT_STRING_TO_BREAK_JSON_OBJECT_LABEL = "商品説明で改行する文字のJSONオブジェクト（空のオブジェクト{}）";
 	// 改行する文字列の配列
-	const DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE = '["●","■","◆","★","【"]';
+	const DEFAULT_STRING_TO_BREAK_JSON_OBJECT_VALUE = <<< EOD
+	{
+	"●":"<br>●",
+	"■":"<br>■",
+	"◆":"<br>◆",
+	"★":"<br>★",
+	"【":"<br>【",
+	"。":"。<br>"
+	}
+	EOD;
 
 	public function initParagraph(PageInfo $pageInfo, SectionInfo $sectionInfo, $fieldInfoArray) {
 
@@ -56,14 +42,17 @@ class ReviewParagraph extends AbstractParagraph {
 		parent::setSectionTitle ( $sectionInfo->getSectionTitle () );
 		parent::setFieldInfoArray ( $fieldInfoArray );
 
-		$editorialReviewLengthTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [0] );
+		$editorialReviewLengthTextField = new TextField ( $pageInfo->getOptionNameOfDatabase (),
+				$fieldInfoArray [0] );
 		parent::addField ( $pageInfo, $sectionInfo, $editorialReviewLengthTextField );
 
-		$arrayOfStringToDeleteTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [1] );
-		parent::addField ( $pageInfo, $sectionInfo, $arrayOfStringToDeleteTextarea );
+		$stringToDeleteTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (),
+				$fieldInfoArray [1] );
+		parent::addField ( $pageInfo, $sectionInfo, $stringToDeleteTextarea );
 
-		$arrayOfStringToBreakTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (), $fieldInfoArray [2] );
-		parent::addField ( $pageInfo, $sectionInfo, $arrayOfStringToBreakTextarea );
+		$stringToBreakTextarea = new TextareaField ( $pageInfo->getOptionNameOfDatabase (),
+				$fieldInfoArray [2] );
+		parent::addField ( $pageInfo, $sectionInfo, $stringToBreakTextarea );
 	}
 
 	public function sanitizeParagraphValue($inputedValueMap, &$sanitizedValueMap) {

@@ -36,7 +36,8 @@ class RakutenItemHTMLUtils {
 
 		$option->setIdPrefix ( RakutenSettingSection::ID_PREFIX );
 
-		ItemHTMLUtils::setNumberToDisplayTo ( $option, $shortcodeAttribute, ItemHTMLParagraphUtils::DEFAULT_NUMBER_TO_DISPLAY );
+		ItemHTMLUtils::setNumberToDisplayTo ( $option, $shortcodeAttribute,
+				ItemHTMLParagraphUtils::DEFAULT_NUMBER_TO_DISPLAY );
 
 		$titleLengthOfOptionMap = $optionMap [ItemHTMLParagraphUtils::TITLE_LENGTH_ID];
 		ItemHTMLUtils::setTitleLengthTo ( $option, $shortcodeAttribute, $titleLengthOfOptionMap );
@@ -49,9 +50,9 @@ class RakutenItemHTMLUtils {
 
 		$reviewItemHTMLOption = ReviewItemHTMLUtils::makeReviewItemHTMLOption ( //
 		$optionMap, $shortcodeAttribute->getItemReviewLength (), //
-		ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID, //
-		ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID, //
-		ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
+				ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID, //
+				ReviewParagraphUtils::STRING_TO_DELETE_JSON_ARRAY_ID, //
+				ReviewParagraphUtils::STRING_TO_BREAK_JSON_OBJECT_ID );
 		$option->setReviewItemHTMLOption ( $reviewItemHTMLOption );
 
 		$cacheExpirationInSeconds = $optionMap [ItemHTMLParagraphUtils::CACHE_EXPIRATION_IN_SECONDS_ID];

@@ -43,8 +43,8 @@ class AmazonItemHTMLUtils {
 		$reviewItemHTMLOption = ReviewItemHTMLUtils::makeReviewItemHTMLOption ( //
 		$optionMap, $shortcodeAttribute->getItemReviewLength (), //
 		ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID, //
-		ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID, //
-		ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
+		ReviewParagraphUtils::STRING_TO_DELETE_JSON_ARRAY_ID, //
+		ReviewParagraphUtils::STRING_TO_BREAK_JSON_OBJECT_ID );
 		$option->setReviewItemHTMLOption ( $reviewItemHTMLOption );
 
 		$cacheExpirationInSeconds = $optionMap [ItemHTMLParagraphUtils::CACHE_EXPIRATION_IN_SECONDS_ID];

@@ -18,7 +18,7 @@ if (gma_existsTagAdArticle ( $tagAdArticleURL )) :
 
 	$firstTagName = gma_getTagName ( $firstTag );
 	echo $firstTagName;
-	?>」の<br>関連商品はこちら</a>
+	?>」の<br>関連商品を探す</a>
 
 </div>
 <?php

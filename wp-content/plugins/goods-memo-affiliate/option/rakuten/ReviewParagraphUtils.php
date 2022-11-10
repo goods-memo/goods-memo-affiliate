@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA
- */
 namespace goodsmemo\option\rakuten;
 
 use goodsmemo\option\field\TextFieldInfo;
@@ -30,15 +12,10 @@ require_once GOODS_MEMO_DIR . "option/field/TextareaFieldInfo.php";
 require_once GOODS_MEMO_DIR . "option/paragraph/ReviewParagraph.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/RakutenSettingSection.php";
 
-/**
- * Description of ReviewParagraphUtils
- *
- * @author Goods Memo
- */
 class ReviewParagraphUtils {
 	const EDITORIAL_REVIEW_LENGTH_ID = RakutenSettingSection::ID_PREFIX . "_editorial_review_length_id";
-	const ARRAY_OF_STRING_TO_DELETE_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_delete_id";
-	const ARRAY_OF_STRING_TO_BREAK_ID = RakutenSettingSection::ID_PREFIX . "_array_of_string_to_break_id";
+	const STRING_TO_DELETE_JSON_ARRAY_ID = RakutenSettingSection::ID_PREFIX . "_string_to_delete_json_array_id";
+	const STRING_TO_BREAK_JSON_OBJECT_ID = RakutenSettingSection::ID_PREFIX . "_string_to_break_json_object_id";
 
 	public static function makeFieldInfoArray() {
 
@@ -46,22 +23,30 @@ class ReviewParagraphUtils {
 
 		$editorialReviewLengthFieldInfo = new TextFieldInfo ();
 		$editorialReviewLengthFieldInfo->setFieldID ( ReviewParagraphUtils::EDITORIAL_REVIEW_LENGTH_ID );
-		$editorialReviewLengthFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL );
-		$editorialReviewLengthFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE );
+		$editorialReviewLengthFieldInfo->setFieldLabel ( 
+				ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_LABEL );
+		$editorialReviewLengthFieldInfo->setDefaultFieldValue ( 
+				ReviewParagraph::DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE );
 		$editorialReviewLengthFieldInfo->enableMoreThanZeroVerification ();
 		array_push ( $fieldInfoArray, $editorialReviewLengthFieldInfo );
 
-		$arrayOfStringToDeleteFieldInfo = new TextareaFieldInfo ();
-		$arrayOfStringToDeleteFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_DELETE_ID );
-		$arrayOfStringToDeleteFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_LABEL );
-		$arrayOfStringToDeleteFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_DELETE_VALUE );
-		array_push ( $fieldInfoArray, $arrayOfStringToDeleteFieldInfo );
+		$stringToDeleteFieldInfo = new TextareaFieldInfo ();
+		$stringToDeleteFieldInfo->setFieldID ( ReviewParagraphUtils::STRING_TO_DELETE_JSON_ARRAY_ID );
+		$stringToDeleteFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_STRING_TO_DELETE_JSON_ARRAY_LABEL );
+		$stringToDeleteFieldInfo->setDefaultFieldValue ( 
+				ReviewParagraph::DEFAULT_STRING_TO_DELETE_JSON_ARRAY_VALUE );
+		$stringToDeleteFieldInfo->setRows ( 10 );
+		array_push ( $fieldInfoArray, $stringToDeleteFieldInfo );
 
-		$arrayOfStringToBreakFieldInfo = new TextareaFieldInfo ();
-		$arrayOfStringToBreakFieldInfo->setFieldID ( ReviewParagraphUtils::ARRAY_OF_STRING_TO_BREAK_ID );
-		$arrayOfStringToBreakFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_LABEL );
-		$arrayOfStringToBreakFieldInfo->setDefaultFieldValue ( ReviewParagraph::DEFAULT_ARRAY_OF_STRING_TO_BREAK_VALUE );
-		array_push ( $fieldInfoArray, $arrayOfStringToBreakFieldInfo );
+		$stringToBreakFieldInfo = new TextareaFieldInfo ();
+		$stringToBreakFieldInfo->setFieldID ( ReviewParagraphUtils::STRING_TO_BREAK_JSON_OBJECT_ID );
+		$stringToBreakFieldInfo->setFieldLabel ( ReviewParagraph::DEFAULT_STRING_TO_BREAK_JSON_OBJECT_LABEL );
+		$stringToBreakFieldInfo->setDefaultFieldValue ( 
+				ReviewParagraph::DEFAULT_STRING_TO_BREAK_JSON_OBJECT_VALUE );
+		$stringToBreakFieldInfo->setRows ( 10 );
+		// 特殊文字を HTML エンティティに変換する、を有効。例：< (小なり) を&lt;に変換する。
+		$stringToBreakFieldInfo->setHtmlTagEnabled ( true );
+		array_push ( $fieldInfoArray, $stringToBreakFieldInfo );
 
 		return $fieldInfoArray;
 	}
