@@ -4,8 +4,8 @@ namespace goodsmemo\item\html;
 
 class ReviewItemHTMLOption {
 	private $reviewLength;
-	private $arrayOfStringToDelete;
-	private $arrayOfStringToBreak;
+	private $stringToDeleteJSONArray;
+	private $stringToBreakJSONArray;
 
 	public function getReviewLength() {
 
@@ -17,23 +17,23 @@ class ReviewItemHTMLOption {
 		$this->reviewLength = $reviewLength;
 	}
 
-	public function getArrayOfStringToDelete() {
+	public function getStringToDeleteJSONArray() {
 
-		return $this->arrayOfStringToDelete;
+		return $this->stringToDeleteJSONArray;
 	}
 
-	public function setArrayOfStringToDelete($arrayOfStringToDelete) {
+	public function setStringToDeleteJSONArray($stringToDeleteJSONArray) {
 
-		$this->arrayOfStringToDelete = $arrayOfStringToDelete;
+		$this->stringToDeleteJSONArray = $stringToDeleteJSONArray;
 	}
 
-	public function getArrayOfStringToBreak() {
+	public function getStringToBreakJSONArray() {
 
-		return $this->arrayOfStringToBreak;
+		return $this->stringToBreakJSONArray;
 	}
 
-	public function setArrayOfStringToBreak($arrayOfStringToBreak) {
+	public function setStringToBreakJSONArray($stringToBreakJSONArray) {
 
-		$this->arrayOfStringToBreak = $arrayOfStringToBreak;
+		$this->stringToBreakJSONArray = $stringToBreakJSONArray;
 	}
 }
