@@ -23,7 +23,7 @@ Amazon.co.jp
 
 <?php
 	$shortcodeText = '[goodsmemo_affiliate service="amazon" keyword="' . $firstTagName . '" number="' .
-			$fitItemNumber . '" item_title_length="100" item_review_length="400"]';
+			$fitItemNumber . '" item_title_length="100" item_review_length="600"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>

@@ -23,7 +23,7 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 
 <?php
 	$shortcodeText = '[goodsmemo_affiliate service="rakuten" keyword="' . $firstTagName . '" number="' .
-			$fitItemNumber . '" item_title_length="100" item_review_length="400"]';
+			$fitItemNumber . '" item_title_length="100" item_review_length="600"]';
 
 	echo apply_shortcodes ( $shortcodeText );
 	?>
