@@ -16,9 +16,9 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 	
 <h2>
 Amazon.co.jp
-「 <?php
+「<?php
 	echo $firstTagName;
-	?> 」の関連商品
+	?>」の関連商品
 </h2>
 
 <?php

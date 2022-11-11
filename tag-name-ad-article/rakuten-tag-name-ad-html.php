@@ -16,9 +16,9 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 	
 <h2>
 楽天市場
-「 <?php
+「<?php
 	echo $firstTagName;
-	?> 」の関連商品
+	?>」の関連商品
 </h2>
 
 <?php
