@@ -56,7 +56,8 @@ class ReviewItemHTMLUtils {
 		$reviewText = str_replace ( $stringToDeleteJSONArray, "", $reviewText ); // 表示したくない文字列を削除する。
 
 		$stringToBreakJSONArray = $reviewItemHTMLOption->getStringToBreakJSONArray ();
-		$reviewText = ReviewItemHTMLUtils::addLineBreakTo ( $reviewText, $stringToBreakJSONArray ); // 文字列の手前に、改行タグを追加する。
+		// 文字列の前または後ろに、改行タグを追加する。
+		$reviewText = ReviewItemHTMLUtils::addLineBreakTo ( $reviewText, $stringToBreakJSONArray );
 
 		return $reviewText;
 	}
@@ -93,9 +94,23 @@ class ReviewItemHTMLUtils {
 
 		$LINE_BREAK_TAG = "<br>";
 
-		$stringToBreakArray = array_keys ( $stringToBreakJSONArray );
 		// 例："●■◆★。"「●箇条書き」の本文でない文字たち、または句点
-		$NON_SENTENCE_CHARACTERS = implode ( $stringToBreakArray );
+		$NON_SENTENCE_CHARACTERS = "";
+
+		foreach ( $stringToBreakJSONArray as $stringToBreak => $replaceText ) {
+			$stringToBreakLength = mb_strlen ( $stringToBreak, "UTF-8" );
+			if ($stringToBreakLength == 1) {
+
+				$NON_SENTENCE_CHARACTERS .= $stringToBreak;
+			}
+		}
+
+		$NON_SENTENCE_CHARACTERS_PATTERN;
+		if ($NON_SENTENCE_CHARACTERS) {
+			$NON_SENTENCE_CHARACTERS_PATTERN = '[^' . $NON_SENTENCE_CHARACTERS . ']+?';
+		} else {
+			$NON_SENTENCE_CHARACTERS_PATTERN = '.*?';
+		}
 
 		$newReviewText = $reviewText;
 
@@ -106,7 +121,7 @@ class ReviewItemHTMLUtils {
 			// ●の後に、「●」または「◆」または「。」でない文字列。
 			// この文字列は、「●箇条書き」の本文、または句点のこと。
 			// +? 最短一致。UTF-8でpreg系を使う場合は、パターン修飾子として"u"を指定する。
-			$pattern = '/' . $stringToBreak . '([^' . $NON_SENTENCE_CHARACTERS . ']+?)/u';
+			$pattern = '/' . $stringToBreak . '(' . $NON_SENTENCE_CHARACTERS_PATTERN . ')/u';
 
 			$replace = $replaceText . '\1'; // 例：<br>●\1。\1は箇条書きの本文。
 			$newReviewText = preg_replace ( $pattern, $replace, $newReviewText );
