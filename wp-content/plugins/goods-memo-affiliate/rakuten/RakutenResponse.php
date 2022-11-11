@@ -1,24 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
-
 namespace goodsmemo\rakuten;
 
 use goodsmemo\rakuten\ReviewResponse;
@@ -52,101 +33,110 @@ require_once GOODS_MEMO_DIR . "arrayutils/ArrayUtils.php";
  */
 class RakutenResponse {
 
-    public static function makeItemArray($response, ItemHTMLOption $itemHTMLOption) {
+	public static function makeItemArray($response, ItemHTMLOption $itemHTMLOption) {
 
-	$itemArray = array();
+		$itemArray = array ();
 
-	$json = json_decode($response);
-	$itemCount = intval($json->{'count'});
-	if ($itemCount <= 0) {
-	    return $itemArray; //商品情報なし
+		$json = json_decode ( $response );
+		if (is_null ( $json )) {
+			return $itemArray; // 商品情報なし
+		}
+
+		$itemCount = intval ( $json->{'count'} );
+		if ($itemCount <= 0) {
+			return $itemArray; // 商品情報なし
+		}
+		// var_dump($xml->Items->Item[0]);//print_r($xml->Items->Item[0]);
+
+		$imageItemHTMLOption = $itemHTMLOption->getImageItemHTMLOption ();
+		$priceTime = DateTextMaking::getUnixTimeMillSecond ();
+
+		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
+		$count = min ( $itemCount, $numberToDisplay );
+		for($i = 0; $i < $count; $i ++) {
+
+			$node = $json->{'Items'} [$i]->{'Item'};
+
+			$item = RakutenResponse::makeItem ( $node, $imageItemHTMLOption, $priceTime );
+			array_push ( $itemArray, $item );
+		}
+
+		return $itemArray;
 	}
-	//var_dump($xml->Items->Item[0]);//print_r($xml->Items->Item[0]);
 
-	$imageItemHTMLOption = $itemHTMLOption->getImageItemHTMLOption();
-	$priceTime = DateTextMaking::getUnixTimeMillSecond();
+	private static function makeItem($node, ImageItemHTMLOption $imageItemHTMLOption, float $priceTime) {
 
-	$numberToDisplay = $itemHTMLOption->getNumberToDisplay();
-	$count = min($itemCount, $numberToDisplay);
-	for ($i = 0; $i < $count; $i++) {
+		$item = new Item ();
 
-	    $node = $json->{'Items'}[$i]->{'Item'};
+		$item->setPageURL ( esc_url ( $node->{'affiliateUrl'} ) );
 
-	    $item = RakutenResponse::makeItem($node, $imageItemHTMLOption, $priceTime);
-	    array_push($itemArray, $item);
+		$imageItem = RakutenResponse::makeImageItem ( $node, $imageItemHTMLOption );
+		$item->setImageItem ( $imageItem );
+
+		$item->setTitle ( HTMLUtils::makePlainText ( $node->{'itemName'} ) );
+
+		$priceItem = RakutenResponse::makePriceItem ( $node, $priceTime );
+		$item->setPriceItem ( $priceItem );
+
+		$pointItem = PointResponse::makePointItem ( $node, $priceTime );
+		$item->setPointItem ( $pointItem );
+
+		$item->setShop ( HTMLUtils::makePlainText ( $node->{'shopName'} ) );
+
+		$reviewItem = ReviewResponse::makeReviewItem ( $node );
+		$item->setReviewItem ( $reviewItem );
+
+		return $item;
 	}
 
-	return $itemArray;
-    }
+	private static function makeImageItem($node, ImageItemHTMLOption $imageItemHTMLOption): ImageItem {
 
-    private static function makeItem($node, ImageItemHTMLOption $imageItemHTMLOption, float $priceTime) {
+		$imageItem = new ImageItem ();
 
-	$item = new Item();
+		// 最大3枚の画像（画像サイズ128px*128px）を imageUrl の配列で返却
+		// httpsではじまる商品画像128x128のURL
+		$mediumImageUrls = $node->{'mediumImageUrls'};
 
-	$item->setPageURL(esc_url($node->{'affiliateUrl'}));
+		$imageUrl = $mediumImageUrls ['0']->{'imageUrl'};
+		$imageItem->setImageURL ( esc_url ( $imageUrl ) );
 
-	$imageItem = RakutenResponse::makeImageItem($node, $imageItemHTMLOption);
-	$item->setImageItem($imageItem);
+		$imageWidth = $imageItemHTMLOption->getImageWidth (); // 楽天APIから値を取得できないため、データベースの値を使う。
+		$imageItem->setImageWidth ( $imageWidth );
 
-	$item->setTitle(HTMLUtils::makePlainText($node->{'itemName'}));
+		$imageHeight = $imageItemHTMLOption->getImageHeight (); // 楽天APIから値を取得できないため、データベースの値を使う。
+		$imageItem->setImageHeight ( $imageHeight );
 
-	$priceItem = RakutenResponse::makePriceItem($node, $priceTime);
-	$item->setPriceItem($priceItem);
+		return $imageItem;
+	}
 
-	$pointItem = PointResponse::makePointItem($node, $priceTime);
-	$item->setPointItem($pointItem);
+	private static function makePriceItem($node, float $priceTime): PriceItem {
 
-	$item->setShop(HTMLUtils::makePlainText($node->{'shopName'}));
+		$priceItem = new PriceItem ();
 
-	$reviewItem = ReviewResponse::makeReviewItem($node);
-	$item->setReviewItem($reviewItem);
+		$priceItem->setLabel ( "価格" );
 
-	return $item;
-    }
+		$itemPrice = HTMLUtils::makePlainText ( $node->{'itemPrice'} );
+		$priceText = PriceUtils::makeFormattedPrice ( $itemPrice );
+		$priceItem->setPrice ( $priceText );
 
-    private static function makeImageItem($node, ImageItemHTMLOption $imageItemHTMLOption): ImageItem {
+		$TAG_FLAG_MAP = array (
+				'0' => '［税込］',
+				'1' => '［税別］'
+		);
+		$taxFlag = HTMLUtils::makePlainText ( $node->{'taxFlag'} );
+		$taxText = ArrayUtils::getValueIfKeyExists ( $taxFlag, $TAG_FLAG_MAP );
+		$priceItem->setPriceAddition ( $taxText );
 
-	$imageItem = new ImageItem();
+		$priceItem->setPriceTime ( $priceTime );
 
-	//最大3枚の画像（画像サイズ128px*128px）を imageUrl の配列で返却
-	//httpsではじまる商品画像128x128のURL
-	$mediumImageUrls = $node->{'mediumImageUrls'};
+		$POSTAGE_FLAG_MAP = array (
+				'0' => '送料込',
+				'1' => '送料別'
+		);
+		$postageFlag = HTMLUtils::makePlainText ( $node->{'postageFlag'} );
+		$postageText = ArrayUtils::getValueIfKeyExists ( $postageFlag, $POSTAGE_FLAG_MAP );
+		$priceItem->setPostageText ( $postageText );
 
-	$imageUrl = $mediumImageUrls['0']->{'imageUrl'};
-	$imageItem->setImageURL(esc_url($imageUrl));
-
-	$imageWidth = $imageItemHTMLOption->getImageWidth(); //楽天APIから値を取得できないため、データベースの値を使う。
-	$imageItem->setImageWidth($imageWidth);
-
-	$imageHeight = $imageItemHTMLOption->getImageHeight(); //楽天APIから値を取得できないため、データベースの値を使う。
-	$imageItem->setImageHeight($imageHeight);
-
-	return $imageItem;
-    }
-
-    private static function makePriceItem($node, float $priceTime): PriceItem {
-
-	$priceItem = new PriceItem();
-
-	$priceItem->setLabel("価格");
-
-	$itemPrice = HTMLUtils::makePlainText($node->{'itemPrice'});
-	$priceText = PriceUtils::makeFormattedPrice($itemPrice);
-	$priceItem->setPrice($priceText);
-
-	$TAG_FLAG_MAP = array('0' => '［税込］', '1' => '［税別］');
-	$taxFlag = HTMLUtils::makePlainText($node->{'taxFlag'});
-	$taxText = ArrayUtils::getValueIfKeyExists($taxFlag, $TAG_FLAG_MAP);
-	$priceItem->setPriceAddition($taxText);
-
-	$priceItem->setPriceTime($priceTime);
-
-	$POSTAGE_FLAG_MAP = array('0' => '送料込', '1' => '送料別');
-	$postageFlag = HTMLUtils::makePlainText($node->{'postageFlag'});
-	$postageText = ArrayUtils::getValueIfKeyExists($postageFlag, $POSTAGE_FLAG_MAP);
-	$priceItem->setPostageText($postageText);
-
-	return $priceItem;
-    }
-
+		return $priceItem;
+	}
 }

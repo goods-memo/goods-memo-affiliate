@@ -23,11 +23,11 @@ class ReviewItemHTMLUtils {
 			$reviewItemHTMLOption->setReviewLength ( $reviewLength );
 		}
 
-		$stringToDeleteJSONArray = json_decode ( $optionMap [$stringToDeleteID], true ); // true：連想配列に変換する
+		$stringToDeleteJSONArray = TextUtils::decodeJSONTextToArray ( $optionMap [$stringToDeleteID] );
 		$reviewItemHTMLOption->setStringToDeleteJSONArray ( $stringToDeleteJSONArray );
 
 		$stringToBreakJSONObjectText = htmlspecialchars_decode ( $optionMap [$stringToBreakID] );
-		$stringToBreakJSONArray = json_decode ( $stringToBreakJSONObjectText, true ); // true：JSONオブジェクトを、連想配列に変換する
+		$stringToBreakJSONArray = TextUtils::decodeJSONTextToArray ( $stringToBreakJSONObjectText );
 		$reviewItemHTMLOption->setStringToBreakJSONArray ( $stringToBreakJSONArray );
 
 		return $reviewItemHTMLOption;

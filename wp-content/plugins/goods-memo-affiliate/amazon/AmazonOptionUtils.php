@@ -13,6 +13,7 @@ use goodsmemo\option\amazon\ProductTypeParagraphUtils;
 use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraph;
 use goodsmemo\option\amazon\DisplayHTMLPAAPINotAvailableParagraphUtils;
 use goodsmemo\shortcode\ShortcodeAttribute;
+use goodsmemo\text\TextUtils;
 
 require_once GOODS_MEMO_DIR . "amazon/CommonRESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
@@ -26,6 +27,7 @@ require_once GOODS_MEMO_DIR . "option/amazon/ProductTypeParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraph.php";
 require_once GOODS_MEMO_DIR . "option/amazon/DisplayHTMLPAAPINotAvailableParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
+require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 
 class AmazonOptionUtils {
 
@@ -68,7 +70,8 @@ class AmazonOptionUtils {
 			$restParameter->setSearchIndex ( RESTParagraphUtils::ALL_SEARCH_INDEX );
 		}
 
-		$searchItemsResources = json_decode ( $optionMap [RESTParagraphUtils::SEARCH_ITEMS_RESOURCES_ID], true ); // true：連想配列に変換する
+		$searchItemsResources = TextUtils::decodeJSONTextToArray ( 
+				$optionMap [RESTParagraphUtils::SEARCH_ITEMS_RESOURCES_ID] );
 		$restParameter->setSearchItemsResources ( $searchItemsResources );
 
 		$restParameter->setKeyword ( $shortcodeAttribute->getKeyword () );
@@ -86,7 +89,8 @@ class AmazonOptionUtils {
 		if (isset ( $optionMap [ProductTypeParagraphUtils::ADULT_PRODUCT_ID] )) {
 
 			$adultProductCheckedValue = $optionMap [ProductTypeParagraphUtils::ADULT_PRODUCT_ID];
-			$adultProductEnabled = ($adultProductCheckedValue === ProductTypeParagraph::ADULT_PRODUCT_CHECKED_VALUE);
+			$adultProductEnabled = ($adultProductCheckedValue ===
+					ProductTypeParagraph::ADULT_PRODUCT_CHECKED_VALUE);
 			$productTypeOption->setAdultProductEnabled ( $adultProductEnabled );
 		}
 
@@ -107,7 +111,8 @@ class AmazonOptionUtils {
 		if (isset ( $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_CHECKBOX_ID] )) {
 
 			$displayHTMLCheckedValue = $optionMap [DisplayHTMLPAAPINotAvailableParagraphUtils::DISPLAY_HTML_CHECKBOX_ID];
-			$displayHTMLEnabled = ($displayHTMLCheckedValue === DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_CHECKED_VALUE);
+			$displayHTMLEnabled = ($displayHTMLCheckedValue ===
+					DisplayHTMLPAAPINotAvailableParagraph::DISPLAY_HTML_CHECKED_VALUE);
 			$displayHTMLOption->setDisplayHTMLPAAPINotAvailableAlwaysEnabled ( $displayHTMLEnabled );
 		}
 

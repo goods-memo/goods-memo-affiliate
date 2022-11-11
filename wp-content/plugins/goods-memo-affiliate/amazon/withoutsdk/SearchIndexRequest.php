@@ -12,7 +12,8 @@ require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
 class SearchIndexRequest {
 
-	public static function request(string $partnerTag, string $keyword, string $searchIndex, $resources, string $hostname, string $accessKey, string $secretKey, string $regionName) {
+	public static function request(string $partnerTag, string $keyword, string $searchIndex, $resources,
+			string $hostname, string $accessKey, string $secretKey, string $regionName) {
 
 		$searchItemRequest = new SearchItemsRequest ();
 		$searchItemRequest->PartnerType = "Associates";
@@ -73,6 +74,9 @@ class SearchIndexRequest {
 		}
 
 		$jsonResponse = json_decode ( $response );
+		if (is_null ( $jsonResponse )) {
+			return NULL;
+		}
 
 		if (property_exists ( $jsonResponse, 'Errors' )) { // $jsonResponse内にerrorが含まれる場合
 
