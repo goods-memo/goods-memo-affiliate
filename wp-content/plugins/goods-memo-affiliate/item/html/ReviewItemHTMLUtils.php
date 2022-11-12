@@ -30,6 +30,9 @@ class ReviewItemHTMLUtils {
 		$stringToBreakJSONArray = TextUtils::decodeJSONTextToArray ( $stringToBreakJSONObjectText );
 		$reviewItemHTMLOption->setStringToBreakJSONArray ( $stringToBreakJSONArray );
 
+		$SENTENCE_SYMBOLS = ReviewItemHTMLUtils::makeSentenceSymbols ( $stringToBreakJSONArray );
+		$reviewItemHTMLOption->setLatestSentenceSymbols ( $SENTENCE_SYMBOLS );
+
 		return $reviewItemHTMLOption;
 	}
 
@@ -57,7 +60,9 @@ class ReviewItemHTMLUtils {
 
 		$stringToBreakJSONArray = $reviewItemHTMLOption->getStringToBreakJSONArray ();
 		// 文字列の前または後ろに、改行タグを追加する。
-		$reviewText = ReviewItemHTMLUtils::addLineBreakTo ( $reviewText, $stringToBreakJSONArray );
+		$SENTENCE_SYMBOLS = $reviewItemHTMLOption->getLatestSentenceSymbols ();
+		$reviewText = ReviewItemHTMLUtils::addLineBreakTo ( $reviewText, $stringToBreakJSONArray,
+				$SENTENCE_SYMBOLS );
 
 		return $reviewText;
 	}
@@ -90,24 +95,14 @@ class ReviewItemHTMLUtils {
 		return $fitReviewLinesText;
 	}
 
-	private static function addLineBreakTo($reviewText, $stringToBreakJSONArray) {
+	private static function addLineBreakTo($reviewText, $stringToBreakJSONArray, $SENTENCE_SYMBOLS) {
 
 		$LINE_BREAK_TAG = "<br>";
 
-		// 例："●■◆★。"「●箇条書き」の本文でない文字たち、または句点
-		$NON_SENTENCE_CHARACTERS = "";
-
-		foreach ( $stringToBreakJSONArray as $stringToBreak => $replaceText ) {
-			$stringToBreakLength = mb_strlen ( $stringToBreak, "UTF-8" );
-			if ($stringToBreakLength == 1) {
-
-				$NON_SENTENCE_CHARACTERS .= $stringToBreak;
-			}
-		}
-
 		$NON_SENTENCE_CHARACTERS_PATTERN;
-		if ($NON_SENTENCE_CHARACTERS) {
-			$NON_SENTENCE_CHARACTERS_PATTERN = '[^' . $NON_SENTENCE_CHARACTERS . ']+?';
+		// $SENTENCE_SYMBOLSの例："●■◆★。"「●箇条書き」の記号文字たち、または句点
+		if ($SENTENCE_SYMBOLS) {
+			$NON_SENTENCE_CHARACTERS_PATTERN = '[^' . $SENTENCE_SYMBOLS . ']+?';
 		} else {
 			$NON_SENTENCE_CHARACTERS_PATTERN = '.*?';
 		}
@@ -141,5 +136,22 @@ class ReviewItemHTMLUtils {
 		$newReviewText = preg_replace ( $pattern, $LINE_BREAK_TAG, $newReviewText );
 
 		return $newReviewText;
+	}
+
+	public static function makeSentenceSymbols($stringToBreakJSONArray) {
+
+		// 例："●■◆★。"「●箇条書き」の記号文字たち、または句点
+		$SENTENCE_SYMBOLS = "";
+
+		$stringToBreakArray = array_keys ( $stringToBreakJSONArray );
+		foreach ( $stringToBreakArray as $stringToBreak ) {
+			$stringToBreakLength = mb_strlen ( $stringToBreak, "UTF-8" );
+			if ($stringToBreakLength == 1) {
+
+				$SENTENCE_SYMBOLS .= $stringToBreak;
+			}
+		}
+
+		return $SENTENCE_SYMBOLS;
 	}
 }

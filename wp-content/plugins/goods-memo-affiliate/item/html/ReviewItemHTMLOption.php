@@ -6,6 +6,8 @@ class ReviewItemHTMLOption {
 	private $reviewLength;
 	private $stringToDeleteJSONArray;
 	private $stringToBreakJSONArray;
+	// 最新の「●箇条書き」の記号文字
+	private $latestSentenceSymbols;
 
 	public function getReviewLength() {
 
@@ -35,5 +37,15 @@ class ReviewItemHTMLOption {
 	public function setStringToBreakJSONArray($stringToBreakJSONArray) {
 
 		$this->stringToBreakJSONArray = $stringToBreakJSONArray;
+	}
+
+	public function getLatestSentenceSymbols() {
+
+		return $this->latestSentenceSymbols;
+	}
+
+	public function setLatestSentenceSymbols($latestSentenceSymbols) {
+
+		$this->latestSentenceSymbols = $latestSentenceSymbols;
 	}
 }
