@@ -1,38 +1,9 @@
 <!-- 
 ブログ記事下
-タグ名の関連商品・リンク
--->
-<?php
-$firstTag = gma_getFirstTag ();
-$tagAdArticleURL = gma_createTagAdArticleURL ( $firstTag );
-?>
-
-<?php
-if (gma_existsTagAdArticle ( $tagAdArticleURL )) :
-	?>
-
-<div class="tag_name_ad_article_link_block">
-<a href="<?php
-
-	echo $tagAdArticleURL?>" class="tag_name_ad_article_link">「<?php
-
-	$firstTagName = gma_getTagName ( $firstTag );
-	echo $firstTagName;
-	?>」の<br>関連商品を探す</a>
-
-</div>
-<?php
-	return;
-	?>
-<?php endif;
-
-?>
-
-<!-- 
-ブログ記事下
 タグ名の関連商品
 -->
 <?php
+$firstTag = gma_getFirstTag ();
 $firstTagName = gma_getTagName ( $firstTag );
 $fitItemNumber = gma_getFitItemNumber ();
 ?>
