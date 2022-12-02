@@ -22,7 +22,7 @@ class ReviewParagraph extends AbstractParagraph {
 	const DEFAULT_EDITORIAL_REVIEW_LENGTH_VALUE = 120;
 	const DEFAULT_STRING_TO_DELETE_JSON_ARRAY_LABEL = "商品説明から削除する文字列のJSON配列（空の配列[]）";
 	// 削除する文字列の配列。例：全角の＜＞
-	const DEFAULT_STRING_TO_DELETE_JSON_ARRAY_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞"]';
+	const DEFAULT_STRING_TO_DELETE_JSON_ARRAY_VALUE = '["＜p＞","＜/p＞","＜b＞","＜br＞","＜br /＞"]';
 	const DEFAULT_STRING_TO_BREAK_JSON_OBJECT_LABEL = "商品説明で改行する文字のJSONオブジェクト（空のオブジェクト{}）";
 	// 改行する文字列の配列
 	const DEFAULT_STRING_TO_BREAK_JSON_OBJECT_VALUE = <<< EOD
