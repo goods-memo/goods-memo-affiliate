@@ -13,13 +13,14 @@ $fitItemNumber = gma_getFitItemNumber ();
 if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 	?>
 
-<aside class="goods_memo_ad">
+<aside id="goods_memo_ad_related_product" class="goods_memo_ad">
 
 <h4>
-【広告】「 <span class="marker_pink"><?php
-
+【広告】「 <span class="marker_pink">
+<?php
 	echo $firstTagName;
-	?></span> 」の関連商品
+	?>
+</span> 」の関連商品
 </h4>
 
 <p class="goods_memo_ad">
