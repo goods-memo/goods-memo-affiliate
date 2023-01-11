@@ -17,13 +17,11 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 <aside class="goods_memo_ad">
 	
 <div class="goods_memo_ad">
-<p class="goods_memo_ad">
 「 <span class="marker_pink">
 <?php
 	echo $firstTagName;
 	?>
 </span> 」の関連商品を、<a href="#goods_memo_ad_related_product">記事下で紹介しています</a>。
-</p>
 </div>
 	
 </aside>
