@@ -21,7 +21,7 @@ if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 <?php
 	echo $firstTagName;
 	?>
-</span> 」の関連商品を、<a href="#goods_memo_ad_related_product">記事下で紹介しています</a>。
+</span> 」の関連商品を、<a href="#goods_memo_ad_related_product">記事下でお知らせしています</a>。
 </div>
 	
 </aside>
