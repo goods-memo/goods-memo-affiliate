@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Plugin Name: Goods Memo Affiliate
+ * Plugin Name: Affiliate product display wordpress plugin
  * Plugin URI:
- * Description: アフィリエイトの商品を表示します。
+ * Description: Amazonや楽天市場の商品を、アフィリエイト対象の商品として表示します。
  * Version: 0.3.8
  * Author:Goods Memo
- * Author URI: https://www.goods-memo.net/computers/goods-memo-affiliate/
+ * Author URI: https://programming.goods-memo.net/affiliate-product-display-wordpress-plugin/
  * License: GPL v2 or later
  */
 define ( "GOODS_MEMO_DIR", __DIR__ . "/" );
