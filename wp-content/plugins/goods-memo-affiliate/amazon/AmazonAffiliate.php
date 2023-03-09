@@ -37,7 +37,8 @@ class AmazonAffiliate {
 		$displayHTMLAlwaysEnabled = $displayHTMLOption->getDisplayHTMLPAAPINotAvailableAlwaysEnabled ();
 		if ($displayHTMLAlwaysEnabled) {
 
-			$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( $commonParameter, $restParameter, $displayHTMLOption );
+			$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( 
+					$commonParameter, $restParameter, $displayHTMLOption );
 			return $displayHTML;
 		}
 
@@ -51,8 +52,10 @@ class AmazonAffiliate {
 		switch ($operation) {
 			case RESTParagraphUtils::ITEM_SEARCH_OPERATION :
 
-				// 現時点では、「Operation="ItemSearch", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
-				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo, $commonParameter, $restParameter, $itemHTMLOption, $productTypeOption, $displayHTMLOption );
+				// 現時点では、「Operation="SearchItems", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
+				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo,
+						$commonParameter, $restParameter, $itemHTMLOption, $productTypeOption,
+						$displayHTMLOption );
 				break;
 
 			default :
