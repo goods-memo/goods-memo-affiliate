@@ -27,7 +27,8 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 	private $restParameter;
 	private $productTypeOption;
 
-	public function __construct(CommonRESTParameter $commonParameter, RESTParameter $restParameter, ProductTypeOption $productTypeOption) {
+	public function __construct(CommonRESTParameter $commonParameter, RESTParameter $restParameter,
+			ProductTypeOption $productTypeOption) {
 
 		$this->commonParameter = $commonParameter;
 		$this->restParameter = $restParameter;
@@ -36,7 +37,8 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 
 	public function requestItemSearch(URLInfo $urlInfo, int $itemCount) {
 
-		$response = AmazonRequest::requestSearchIndex ( $urlInfo, $this->commonParameter, $this->restParameter, $itemCount );
+		$response = AmazonRequest::requestSearchIndex ( $urlInfo, $this->commonParameter,
+				$this->restParameter, $itemCount );
 		return $response;
 	}
 
@@ -45,7 +47,8 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
 		$adultProductEnable = $this->productTypeOption->getAdultProductEnabled ();
 
-		$itemArray = AmazonResponse::makeItemArray ( $response, $numberToDisplay, $adultProductEnable );
+		$itemArray = AmazonResponse::makeItemArray ( $response, $numberToDisplay,
+				$adultProductEnable );
 		return $itemArray;
 	}
 
@@ -53,12 +56,16 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker {
 
 		$operation = $this->restParameter->getOperation ();
 		$searchIndex = $this->restParameter->getSearchIndex ();
-		$responseGroup = $this->restParameter->getSearchItemsResources ();
+
+		$searchItemsResourcesArray = $this->restParameter->getSearchItemsResources ();
+		$searchItemsResourcesText = implode ( $searchItemsResourcesArray ); // 配列から文字列を作る
+
 		$keyword = $this->restParameter->getKeyword ();
 		$numberToDisplay = $itemHTMLOption->getNumberToDisplay ();
 		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds ();
 
-		$uniqueText = AmazonSettingSection::ID_PREFIX . $operation . $searchIndex . $responseGroup . $keyword . $numberToDisplay . $cacheExpirationInSeconds;
+		$uniqueText = AmazonSettingSection::ID_PREFIX . $operation . $searchIndex .
+				$searchItemsResourcesText . $keyword . $numberToDisplay . $cacheExpirationInSeconds;
 		return $uniqueText;
 	}
 }
