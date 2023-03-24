@@ -12,8 +12,8 @@ require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
 class SearchIndexRequest {
 
-	public static function request(string $partnerTag, string $keyword, string $searchIndex, $resources,
-			string $hostname, string $accessKey, string $secretKey, string $regionName) {
+	public static function request(string $partnerTag, string $keyword, string $searchIndex,
+			$resources, string $hostname, string $accessKey, string $secretKey, string $regionName) {
 
 		$searchItemRequest = new SearchItemsRequest ();
 		$searchItemRequest->PartnerType = "Associates";
@@ -36,17 +36,15 @@ class SearchIndexRequest {
 		$awsv4->addHeader ( 'content-encoding', 'amz-1.0' );
 		$awsv4->addHeader ( 'content-type', 'application/json; charset=utf-8' );
 		$awsv4->addHeader ( 'host', $host );
-		$awsv4->addHeader ( 'x-amz-target', 'com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems' );
+		$awsv4->addHeader ( 'x-amz-target',
+				'com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems' );
 		$headers = $awsv4->getHeaders ();
 		$headerString = "";
 		foreach ( $headers as $key => $value ) {
 			$headerString .= $key . ': ' . $value . "\r\n";
 		}
 		$params = array (
-				'http' => array (
-						'header' => $headerString,
-						'method' => 'POST',
-						'content' => $payload
+				'http' => array ('header' => $headerString,'method' => 'POST','content' => $payload
 				)
 		);
 		$stream = stream_context_create ( $params );
@@ -68,30 +66,30 @@ class SearchIndexRequest {
 			throw new HttpRequestException ( $errorMessage );
 		}
 
-		$response = @stream_get_contents ( $fp );
-		if ($response === false) {
+		$responseJSON = @stream_get_contents ( $fp );
+		if ($responseJSON === false) {
 			throw new HttpRequestException ( "stream_get_contents Exception Occured" );
 		}
 
-		$jsonResponse = json_decode ( $response );
-		if (is_null ( $jsonResponse )) {
+		$responseObject = json_decode ( $responseJSON );
+		if (is_null ( $responseObject )) {
 			return NULL;
 		}
 
-		if (property_exists ( $jsonResponse, 'Errors' )) { // $jsonResponse内にerrorが含まれる場合
+		if (property_exists ( $responseObject, 'Errors' )) { // $jsonResponse内にerrorが含まれる場合
 
 			// 検索結果0件の場合、ここに来る。正常処理なので、throw new HttpRequestException()しなくて良い。
 			// $errorCodeText: string型。例："NoResults"という文字列が取得された。
-			$errorCodeText = $jsonResponse->{'Errors'} [0]->{'Code'};
-			$errorMessage = $jsonResponse->{'Errors'} [0]->{'Message'};
+			$errorCodeText = $responseObject->{'Errors'} [0]->{'Code'};
+			$errorMessage = $responseObject->{'Errors'} [0]->{'Message'};
 
 			// 検索結果0件以外の場合、Eclipseのデバッグでエラー内容を確認すること。
-			$jsonResponse = NULL; // エラー情報を削除した
+			$responseObject = NULL; // エラー情報を削除した
 
 			// $errorCode=0;
 			// throw new HttpRequestException ( $errorMessage, $errorCode );
 		}
 
-		return $jsonResponse;
+		return $responseObject;
 	}
 }
