@@ -5,16 +5,11 @@ namespace goodsmemo\amazon\withoutsdk;
 use goodsmemo\amazon\withoutsdk\ImageResponse;
 use goodsmemo\amazon\withoutsdk\PriceResponse;
 use goodsmemo\amazon\withoutsdk\ProductionResponse;
-
-// use goodsmemo\item\Item;//PA-API v5 SDKに同名のクラスがある。
+use goodsmemo\item\Item;
 use goodsmemo\item\ReviewItem;
 use goodsmemo\item\html\HTMLUtils;
 use goodsmemo\date\DateTextMaking;
 
-/*
- * PA-API v5 SDK
- * use Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item;
- */
 require_once GOODS_MEMO_DIR . "amazon/withoutsdk/ImageResponse.php";
 require_once GOODS_MEMO_DIR . "amazon/withoutsdk/PriceResponse.php";
 require_once GOODS_MEMO_DIR . "amazon/withoutsdk/ProductionResponse.php";
@@ -25,11 +20,14 @@ require_once GOODS_MEMO_DIR . "date/DateTextMaking.php";
 
 class SearchIndexResponse {
 
-	public static function makeItemArray($searchItemsResponse, int $numberToDisplay, bool $adultProductEnable) {
+	public static function makeItemArray($searchItemsResponse, int $numberToDisplay,
+			bool $adultProductEnable) {
 
 		$itemArray = array ();
 
-		if (empty ( $searchItemsResponse ) or ! property_exists ( $searchItemsResponse, 'SearchResult' ) or ! property_exists ( $searchItemsResponse->SearchResult, 'Items' )) {
+		if (empty ( $searchItemsResponse ) or
+				! property_exists ( $searchItemsResponse, 'SearchResult' ) or
+				! property_exists ( $searchItemsResponse->SearchResult, 'Items' )) {
 
 			return $itemArray; // 商品情報なし
 		}
@@ -67,7 +65,9 @@ class SearchIndexResponse {
 		 * 以下、アダルト商品が無効と指定されている場合について
 		 */
 
-		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->ProductInfo ) and isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct ) and isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct->DisplayValue )) {
+		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->ProductInfo ) and
+				isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct ) and
+				isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct->DisplayValue )) {
 			;
 		} else {
 			return true; // アダルト商品の情報がない場合、有効とする。
@@ -81,9 +81,9 @@ class SearchIndexResponse {
 		}
 	}
 
-	private static function makeItem($searchItem, float $priceTime): \goodsmemo\item\Item {
+	private static function makeItem($searchItem, float $priceTime): Item {
 
-		$item = new \goodsmemo\item\Item ();
+		$item = new Item ();
 
 		if (isset ( $searchItem->DetailPageURL )) {
 			$item->setPageURL ( esc_url ( $searchItem->DetailPageURL ) );
@@ -108,7 +108,7 @@ class SearchIndexResponse {
 		return $item;
 	}
 
-	private static function setItemInfoTo(\goodsmemo\item\Item &$item, $searchItem) {
+	private static function setItemInfoTo(Item &$item, $searchItem) {
 
 		if (isset ( $searchItem->ItemInfo )) {
 			;
@@ -125,7 +125,7 @@ class SearchIndexResponse {
 		}
 	}
 
-	private static function setOffersTo(\goodsmemo\item\Item &$item, $searchItem) {
+	private static function setOffersTo(Item &$item, $searchItem) {
 
 		if (isset ( $searchItem->Offers )) {
 			;
@@ -139,7 +139,8 @@ class SearchIndexResponse {
 
 			$listing = $offers->Listings [0];
 
-			if (isset ( $listing->DeliveryInfo ) and isset ( $listing->DeliveryInfo->IsPrimeEligible )) {
+			if (isset ( $listing->DeliveryInfo ) and
+					isset ( $listing->DeliveryInfo->IsPrimeEligible )) {
 
 				$isPrimeEligible = $listing->DeliveryInfo->IsPrimeEligible;
 				if ($isPrimeEligible) {
@@ -159,7 +160,8 @@ class SearchIndexResponse {
 
 		$reviewItem = new ReviewItem ();
 
-		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->Features ) and isset ( $searchItem->ItemInfo->Features->DisplayValues )) {
+		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->Features ) and
+				isset ( $searchItem->ItemInfo->Features->DisplayValues )) {
 			$featuresValues = $searchItem->ItemInfo->Features->DisplayValues; // string[]
 
 			$featureArray = array ();
