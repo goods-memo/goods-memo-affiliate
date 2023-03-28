@@ -44,9 +44,7 @@ if (is_admin ()) {
 	//
 	// 以下の書き方にしてみる。参考：http://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/add_shortcode
 	add_shortcode ( GOODS_MEMO_PREFIX . "_affiliate",
-			array (
-					'goodsmemo\shortcode\Shortcode',
-					'makeAffiliateHTML'
+			array ('goodsmemo\shortcode\Shortcode','makeAffiliateHTML'
 			) );
 
 	// ヘッダにCSSを追加する
@@ -57,5 +55,14 @@ if (is_admin ()) {
  * デバッグの例：
  * var_dump($val);
  * print_r($val);
+ *
+ * ファイルに出力する。htdocs/wp_test/print_r1.txt
+ * ob_start ();
+ * print_r ( $responseJSON );
+ * $buf = ob_get_contents ();
+ * ob_end_clean ();
+ * $fp = fopen ( 'print_r1.txt', 'w' );
+ * fputs ( $fp, $buf );
+ * fclose ( $fp );
  */
 ?>
