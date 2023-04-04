@@ -31,11 +31,15 @@ class PriceResponse {
 
 		$priceFlag = 0b000;
 
-		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and isset ( $offers->Listings [0]->Price ) and isset ( $offers->Listings [0]->Price->Amount )) {
+		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and
+				isset ( $offers->Listings [0]->Price ) and
+				isset ( $offers->Listings [0]->Price->Amount )) {
 			$priceFlag = $priceFlag | 0b001; // 「Amazon.co.jp 価格」が存在する。
 		}
 
-		if (isset ( $offers ) and isset ( $offers->Summaries ) and isset ( $offers->Summaries [0] ) and isset ( $offers->Summaries [0]->LowestPrice ) and isset ( $offers->Summaries [0]->LowestPrice->Amount )) {
+		if (isset ( $offers ) and isset ( $offers->Summaries ) and isset ( $offers->Summaries [0] ) and
+				isset ( $offers->Summaries [0]->LowestPrice ) and
+				isset ( $offers->Summaries [0]->LowestPrice->Amount )) {
 			$priceFlag = $priceFlag | 0b010; // 「価格（最安値）」が存在する。
 		}
 
@@ -66,7 +70,9 @@ class PriceResponse {
 				throw new IllegalArgumentException ( "無効な価格フラグ値：" . decbin ( $priceFlag ) );
 		}
 
-		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and isset ( $offers->Listings [0]->DeliveryInfo ) and isset ( $offers->Listings [0]->DeliveryInfo->IsFreeShippingEligible )) {
+		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and
+				isset ( $offers->Listings [0]->DeliveryInfo ) and
+				isset ( $offers->Listings [0]->DeliveryInfo->IsFreeShippingEligible )) {
 
 			$isFreeShippingEligible = $offers->Listings [0]->DeliveryInfo->IsFreeShippingEligible;
 			if ($isFreeShippingEligible) {
@@ -143,7 +149,9 @@ class PriceResponse {
 
 	private static function makeAmazonPriceIfAmoutIsSet($offers) {
 
-		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and isset ( $offers->Listings [0]->Price ) and isset ( $offers->Listings [0]->Price->Amount )) {
+		if (isset ( $offers ) and isset ( $offers->Listings ) and isset ( $offers->Listings [0] ) and
+				isset ( $offers->Listings [0]->Price ) and
+				isset ( $offers->Listings [0]->Price->Amount )) {
 
 			$priceAmount = $offers->Listings [0]->Price->Amount;
 			return HTMLUtils::makePlainText ( ( string ) $priceAmount );
@@ -154,7 +162,9 @@ class PriceResponse {
 
 	private static function makeLowestPriceIfAmoutIsSet($offers) {
 
-		if (isset ( $offers ) and isset ( $offers->Summaries ) and isset ( $offers->Summaries [0] ) and isset ( $offers->Summaries [0]->LowestPrice ) and isset ( $offers->Summaries [0]->LowestPrice->Amount )) {
+		if (isset ( $offers ) and isset ( $offers->Summaries ) and isset ( $offers->Summaries [0] ) and
+				isset ( $offers->Summaries [0]->LowestPrice ) and
+				isset ( $offers->Summaries [0]->LowestPrice->Amount )) {
 
 			$lowestPriceAmount = $offers->Summaries [0]->LowestPrice->Amount;
 			return HTMLUtils::makePlainText ( ( string ) $lowestPriceAmount );
