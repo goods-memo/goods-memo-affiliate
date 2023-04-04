@@ -57,7 +57,15 @@ class ImageResponse {
 		if (isset ( $imageSize->URL )) {
 
 			$imageItem->setImageURL ( esc_url ( $imageSize->URL ) );
+		}
+
+		if (isset ( $imageSize->Width )) {
+
 			$imageItem->setImageWidth ( $imageSize->Width );
+		}
+
+		if (isset ( $imageSize->Height )) {
+
 			$imageItem->setImageHeight ( $imageSize->Height );
 		}
 	}
