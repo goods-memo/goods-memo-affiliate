@@ -18,7 +18,12 @@ class PriceResponse {
 	public static function makePriceItem($searchItem, float $priceTime): PriceItem {
 
 		$priceItem = new PriceItem ();
-		$offers = $searchItem->Offers;
+
+		if (isset ( $searchItem->Offers )) {
+			$offers = $searchItem->Offers;
+		} else {
+			$offers = NULL;
+		}
 
 		// 参考：PA-API v4
 		// 定価 価格：「ItemAttributes->ListPrice->Amount」「ItemAttributes->ListPrice->FormattedPrice」
