@@ -10,11 +10,9 @@ require_once GOODS_MEMO_DIR . "item/html/HTMLUtils.php";
 
 class ProductionResponse {
 	// str_replace()用 検索文字列と置換文字列
-	const MANUFACTURER_LABEL_SEARCH = array (
-			"Manufacturer"
+	const MANUFACTURER_LABEL_SEARCH = array ("Manufacturer"
 	);
-	const MANUFACTURER_LABEL_REPLACE = array (
-			"製造元"
+	const MANUFACTURER_LABEL_REPLACE = array ("製造元"
 	);
 
 	public static function makeProductionItem($searchItem): ProductionItem {
@@ -29,7 +27,8 @@ class ProductionResponse {
 
 		$itemInfo = $searchItem->ItemInfo;
 
-		if (isset ( $itemInfo->Classifications ) and isset ( $itemInfo->Classifications->Binding ) and isset ( $itemInfo->Classifications->Binding->DisplayValue )) {
+		if (isset ( $itemInfo->Classifications ) and isset ( $itemInfo->Classifications->Binding ) and
+				isset ( $itemInfo->Classifications->Binding->DisplayValue )) {
 
 			$bindingValue = $itemInfo->Classifications->Binding->DisplayValue;
 			$productionItem->setBinding ( HTMLUtils::makePlainText ( $bindingValue ) );
@@ -45,7 +44,8 @@ class ProductionResponse {
 				$contributorArray = array ();
 				foreach ( $contributors as $contributor ) {
 
-					if (isset ( $contributor ) and isset ( $contributor->Role ) and isset ( $contributor->Name )) {
+					if (isset ( $contributor ) and isset ( $contributor->Role ) and
+							isset ( $contributor->Name )) {
 						;
 					} else {
 						continue;
@@ -56,7 +56,8 @@ class ProductionResponse {
 					$contributorValue = $name . "(" . $role . ")";
 					array_push ( $contributorArray, $contributorValue );
 
-					if (strcmp ( $role, "著" ) == 0 and empty ( $productionItem->getManufacturerLabel () )) {
+					if (strcmp ( $role, "著" ) == 0 and
+							empty ( $productionItem->getManufacturerLabel () )) {
 						$productionItem->setManufacturerLabel ( "出版社" );
 					}
 				}
@@ -64,13 +65,17 @@ class ProductionResponse {
 				$productionItem->setContributorArray ( $contributorArray );
 			}
 
-			if (isset ( $byLineInfo->Manufacturer ) and isset ( $byLineInfo->Manufacturer->DisplayValue )) {
+			if (isset ( $byLineInfo->Manufacturer ) and
+					isset ( $byLineInfo->Manufacturer->DisplayValue )) {
 
 				$manufacturer = $byLineInfo->Manufacturer;
-				if (isset ( $manufacturer->Label ) and empty ( $productionItem->getManufacturerLabel () )) {
+				if (isset ( $manufacturer->Label ) and
+						empty ( $productionItem->getManufacturerLabel () )) {
 
 					$manufacturerLabel = HTMLUtils::makePlainText ( $manufacturer->Label );
-					$manufacturerLabel = str_replace ( ProductionResponse::MANUFACTURER_LABEL_SEARCH, ProductionResponse::MANUFACTURER_LABEL_REPLACE, $manufacturerLabel );
+					$manufacturerLabel = str_replace ( 
+							ProductionResponse::MANUFACTURER_LABEL_SEARCH,
+							ProductionResponse::MANUFACTURER_LABEL_REPLACE, $manufacturerLabel );
 					$productionItem->setManufacturerLabel ( $manufacturerLabel );
 				}
 
