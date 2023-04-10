@@ -4,10 +4,8 @@ namespace goodsmemo\item;
 
 class ProductionItem {
 	private $contributorArray = array (); // 空のオブジェクト作成に対応するため、空の配列を設定する。
-	                                      //
 	private $manufacturerLabel = "";
 	private $manufacturer = ""; // 製造元、メーカー
-	                            //
 	private $binding = "";
 
 	// 装丁、形式、種別
