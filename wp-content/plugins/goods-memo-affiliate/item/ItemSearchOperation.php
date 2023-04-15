@@ -63,7 +63,7 @@ class ItemSearchOperation {
 			 */
 			$binaryItemArray = serialize ( $itemArray ); // バイナリ文字列。データベースのBLOB型に保存できる。longtext型に保存できない場合があった。//var_dump($binaryItemArray);
 			$transientItemArray = base64_encode ( $binaryItemArray ); // 64種類の印字可能な英数字の文字列。データベースのlongtext型に保存できる。
-			                                                          // 一時的にデータベースに商品情報を保存する。有効期限後、削除される。
+			/* 一時的にデータベースに商品情報を保存する。有効期限後、削除される。 */
 			set_transient ( $transientID, $transientItemArray, $cacheExpirationInSeconds ); // 失敗したら、falseを返した。
 		}
 
