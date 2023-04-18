@@ -60,7 +60,7 @@ class AmazonOptionUtils {
 		if ($operationOfShortcode) {
 			$restParameter->setOperation ( $operationOfShortcode );
 		} else {
-			$restParameter->setOperation ( RESTParagraphUtils::ITEM_SEARCH_OPERATION );
+			$restParameter->setOperation ( RESTParagraphUtils::SEARCH_ITEMS_OPERATION );
 		}
 
 		$searchIndexOfShortcode = $shortcodeAttribute->getSearchIndex ();

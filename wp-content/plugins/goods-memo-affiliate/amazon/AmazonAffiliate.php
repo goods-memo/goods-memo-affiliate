@@ -50,7 +50,7 @@ class AmazonAffiliate {
 
 		$operation = $restParameter->getOperation ();
 		switch ($operation) {
-			case RESTParagraphUtils::ITEM_SEARCH_OPERATION :
+			case RESTParagraphUtils::SEARCH_ITEMS_OPERATION :
 
 				// 現時点では、「Operation="SearchItems", SearchIndex="all"の組み合わせ」で、キーワード検索する処理だけ行なう。
 				$affiliateHTML = KeywordSearchOperation::makeHTMLOfSearchOperation ( $urlInfo,
