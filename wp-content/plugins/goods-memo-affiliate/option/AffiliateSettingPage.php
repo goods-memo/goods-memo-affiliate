@@ -38,13 +38,9 @@ class AffiliateSettingPage {
 		$rakutenSettingSelection = new RakutenSettingSection ();
 		array_push ( $this->sectionArray, $rakutenSettingSelection );
 
-		add_action ( 'admin_menu', array (
-				$this,
-				'add_plugin_page'
+		add_action ( 'admin_menu', array ($this,'add_plugin_page'
 		) );
-		add_action ( 'admin_init', array (
-				$this,
-				'init_page'
+		add_action ( 'admin_init', array ($this,'init_page'
 		) );
 	}
 
@@ -55,12 +51,10 @@ class AffiliateSettingPage {
 
 		// This page will be under "Settings" 設定のサブメニューとしてメニューを追加する
 		add_options_page ( 'アフィリエイトの設定', // メニューで選択したページのタイトルタグに表示されるテキスト
-		'グッズメモ アフィリエイト', // メニューに使用されるテキスト
+		'アフィリエイト商品表示（グッズ・メモランダム作成）', // メニューに使用されるテキスト
 		'manage_options', // 権限 ( 'manage_options' や 'administrator' など)
 		AffiliateSettingPage::SETTING_MENU_SLUG, // スラッグ名
-		array (
-				$this,
-				'output_affiliate_page'
+		array ($this,'output_affiliate_page'
 		) // The function to be called to output the content for this page.
 		);
 	}
@@ -71,11 +65,9 @@ class AffiliateSettingPage {
 	public function init_page() {
 
 		register_setting ( AffiliateSettingPage::OPTION_GROUP, // option group
-		AffiliateSettingPage::OPTION_NAME_OF_DATABASE, // option name データベースに保存するオプションの名前
-		array (
-				$this,
-				'sanitize'
-		) // オプションの値を無害化するコールバック関数。
+				AffiliateSettingPage::OPTION_NAME_OF_DATABASE, // option name データベースに保存するオプションの名前
+				array ($this,'sanitize'
+				) // オプションの値を無害化するコールバック関数。
 		);
 
 		$pageInfo = new PageInfo ();
