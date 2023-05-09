@@ -6,7 +6,8 @@
 <?php
 $firstTag = gma_getFirstTag ();
 $firstTagName = gma_getTagName ( $firstTag );
-$fitItemNumber = gma_getFitItemNumber ();
+$theContent = get_the_content ();
+$fitItemNumber = gma_getFitItemNumber ( $theContent );
 ?>
 
 <?php
