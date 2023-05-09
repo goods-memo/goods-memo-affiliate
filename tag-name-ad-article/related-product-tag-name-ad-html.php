@@ -40,6 +40,15 @@ if ($existsH2LinkToSummaryArticle == FALSE) {
 }
 ?>
 
+<!-- 
+関連商品の内部リンクの移動先
+-->
+<div id="goods_memo_ad_related_product"></div>
+
+<!-- 
+ここに、ASPの関連商品が表示される。
+-->
+
 <?php
 $firstTag = gma_getFirstTag ();
 $firstTagName = gma_getTagName ( $firstTag );
@@ -51,7 +60,7 @@ $fitItemNumber = gma_getFitItemNumber ( $theContent );
 if (mb_strlen ( $firstTagName ) > 0 and $fitItemNumber > 0) :
 	?>
 
-<aside id="goods_memo_ad_related_product" class="goods_memo_ad">
+<aside class="goods_memo_ad">
 
 <h4>
 【広告】「 <span class="marker_pink">
