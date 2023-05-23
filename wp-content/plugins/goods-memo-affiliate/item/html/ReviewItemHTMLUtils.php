@@ -141,7 +141,7 @@ class ReviewItemHTMLUtils {
 		return $newReviewText;
 	}
 
-	public static function makeSentenceSymbols($stringToBreakJSONArray) {
+	private static function makeSentenceSymbols($stringToBreakJSONArray) {
 
 		// 例："●■◆★。"「●箇条書き」の記号文字たち、または句点
 		$SENTENCE_SYMBOLS = "";
