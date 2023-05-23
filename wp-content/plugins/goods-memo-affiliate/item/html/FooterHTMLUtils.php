@@ -1,24 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
-
 namespace goodsmemo\item\html;
 
 use goodsmemo\date\DateTextMaking;
@@ -31,48 +12,42 @@ require_once GOODS_MEMO_DIR . "item/html/FooterHTMLInfo.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "item/html/PriceItemHTMLOption.php";
 
-/**
- * Description of FooterHTMLUtils
- *
- * @author Goods Memo
- */
 class FooterHTMLUtils {
 
-    public static function makeFooterHTMLInfo(ItemHTMLOption $itemHTMLOption): FooterHTMLInfo {
+	public static function makeFooterHTMLInfo(ItemHTMLOption $itemHTMLOption): FooterHTMLInfo {
 
-	$footerID;
-	$footerDiv; //今の所、価格詳細専用のフッターとなっている。
+		$footerID;
+		$footerDiv; // 今の所、価格詳細専用のフッターとなっている。
 
-	$priceItemHTMLOption = $itemHTMLOption->getPriceItemHTMLOption();
-	$priceFooterText = $priceItemHTMLOption->getPriceFooterText();
+		$priceItemHTMLOption = $itemHTMLOption->getPriceItemHTMLOption ();
+		$priceFooterText = $priceItemHTMLOption->getPriceFooterText ();
 
-	if ($priceFooterText) {
+		if ($priceFooterText) {
 
-	    $idPrefix = $itemHTMLOption->getIdPrefix();
-	    $footerDisplayTime = DateTextMaking::getUnixTimeMillSecond(); //フッターが表示された時間
-	    $footerTimeText = DateTextMaking::makeUnixTimeIDText(DateTextMaking::UNIX_TIME_ID_FORMAT,
-			    $footerDisplayTime);
+			$idPrefix = $itemHTMLOption->getIdPrefix ();
+			$footerDisplayTime = DateTextMaking::getUnixTimeMillSecond (); // フッターが表示された時間
+			$footerTimeText = DateTextMaking::makeUnixTimeIDText ( 
+					DateTextMaking::UNIX_TIME_ID_FORMAT, $footerDisplayTime );
 
-	    $footerID = GOODS_MEMO_PREFIX . "-" . $idPrefix . "-items-footer-" . $footerTimeText; //念のため、ページ内にフッターが２個以上ある場合に対応
-	    $footerDiv = <<< EOD
-<div id="{$footerID}" class="footer">{$priceFooterText}</div>
-EOD;
+			$footerID = GOODS_MEMO_PREFIX . "-" . $idPrefix . "-items-footer-" . $footerTimeText; // 念のため、ページ内にフッターが２個以上ある場合に対応
+			$footerDiv = <<< EOD
+			<div id="{$footerID}" class="footer">{$priceFooterText}</div>
+			EOD;
 
-	    $showState = $priceItemHTMLOption->getPriceTimeLinkVisible();
-	    if ($showState === false) {
-		$footerID = ""; //価格時刻の「詳細はこちら」リンクを非表示にする。
-	    }
-	} else {
+			$showState = $priceItemHTMLOption->getPriceTimeLinkVisible ();
+			if ($showState === false) {
+				$footerID = ""; // 価格時刻の「詳細はこちら」リンクを非表示にする。
+			}
+		} else {
 
-	    $footerID = "";
-	    $footerDiv = "";
+			$footerID = "";
+			$footerDiv = "";
+		}
+
+		$footerHTMLInfo = new FooterHTMLInfo ();
+		$footerHTMLInfo->setFooterID ( $footerID );
+		$footerHTMLInfo->setFooterDiv ( $footerDiv );
+
+		return $footerHTMLInfo;
 	}
-
-	$footerHTMLInfo = new FooterHTMLInfo();
-	$footerHTMLInfo->setFooterID($footerID);
-	$footerHTMLInfo->setFooterDiv($footerDiv);
-
-	return $footerHTMLInfo;
-    }
-
 }

@@ -12,8 +12,8 @@ require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 
 class ReviewItemHTMLUtils {
 
-	public static function makeReviewItemHTMLOption($optionMap, $reviewLength, $editorialReviewLengthID,
-			$stringToDeleteID, $stringToBreakID): ReviewItemHTMLOption {
+	public static function makeReviewItemHTMLOption($optionMap, $reviewLength,
+			$editorialReviewLengthID, $stringToDeleteID, $stringToBreakID): ReviewItemHTMLOption {
 
 		$reviewItemHTMLOption = new ReviewItemHTMLOption ();
 
@@ -23,7 +23,8 @@ class ReviewItemHTMLUtils {
 			$reviewItemHTMLOption->setReviewLength ( $reviewLength );
 		}
 
-		$stringToDeleteJSONArray = TextUtils::decodeJSONTextToArray ( $optionMap [$stringToDeleteID] );
+		$stringToDeleteJSONArray = TextUtils::decodeJSONTextToArray ( 
+				$optionMap [$stringToDeleteID] );
 		$reviewItemHTMLOption->setStringToDeleteJSONArray ( $stringToDeleteJSONArray );
 
 		$stringToBreakJSONObjectText = htmlspecialchars_decode ( $optionMap [$stringToBreakID] );
@@ -47,7 +48,8 @@ class ReviewItemHTMLUtils {
 		$reviewLineArray = $reviewItem->getReviewLineArray ();
 		if (count ( $reviewLineArray ) > 0) {
 
-			$reviewText = ReviewItemHTMLUtils::makeFitReviewLinesText ( $reviewLineArray, $reviewLength );
+			$reviewText = ReviewItemHTMLUtils::makeFitReviewLinesText ( $reviewLineArray,
+					$reviewLength );
 		} else {
 
 			$plainTextReview = $reviewItem->getPlainTextReview ();
@@ -83,7 +85,8 @@ class ReviewItemHTMLUtils {
 			$stringWidth = mb_strwidth ( $fitReviewLinesText . $BR_TAG, "UTF-8" ); // 文字幅（見た目の長さ） //var_dump($stringWidth);
 			if ($stringWidth >= $reviewLength) {
 
-				$fitReviewLinesText = TextUtils::mb_strimwidth ( $fitReviewLinesText, 0, $reviewLength, "…" );
+				$fitReviewLinesText = TextUtils::mb_strimwidth ( $fitReviewLinesText, 0,
+						$reviewLength, "…" );
 				break;
 			}
 
