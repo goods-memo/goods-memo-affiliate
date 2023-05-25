@@ -26,7 +26,7 @@ require_once GOODS_MEMO_DIR . "option/rakuten/PriceParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/ReviewParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
 
-class RakutenItemHTMLUtils
+class RakutenItemHTMLOptionUtils
 {
 
 	public static function makeItemHTMLOption($optionMap, ShortcodeAttribute $shortcodeAttribute): ItemHTMLOption
@@ -47,10 +47,10 @@ class RakutenItemHTMLUtils
 		$titleLengthOfOptionMap = $optionMap[ItemHTMLParagraphUtils::TITLE_LENGTH_ID];
 		ItemHTMLUtils::setTitleLengthTo($option, $shortcodeAttribute, $titleLengthOfOptionMap);
 
-		$imageItemHTMLOption = RakutenItemHTMLUtils::makeImageItemHTMLOption($optionMap);
+		$imageItemHTMLOption = RakutenItemHTMLOptionUtils::makeImageItemHTMLOption($optionMap);
 		$option->setImageItemHTMLOption($imageItemHTMLOption);
 
-		$priceItemHTMLOption = RakutenItemHTMLUtils::makePriceItemHTMLOption($optionMap);
+		$priceItemHTMLOption = RakutenItemHTMLOptionUtils::makePriceItemHTMLOption($optionMap);
 		$option->setPriceItemHTMLOption($priceItemHTMLOption);
 
 		$reviewItemHTMLOption = ReviewItemHTMLOptionUtils::makeReviewItemHTMLOption( //

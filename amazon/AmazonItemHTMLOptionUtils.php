@@ -22,7 +22,7 @@ require_once GOODS_MEMO_DIR . "option/amazon/PriceParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/ReviewParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "shortcode/ShortcodeAttribute.php";
 
-class AmazonItemHTMLUtils
+class AmazonItemHTMLOptionUtils
 {
 
 	public static function makeItemHTMLOption($optionMap, ShortcodeAttribute $shortcodeAttribute): ItemHTMLOption
@@ -39,7 +39,7 @@ class AmazonItemHTMLUtils
 		$titleLengthOfOptionMap = $optionMap[ItemHTMLParagraphUtils::TITLE_LENGTH_ID];
 		ItemHTMLUtils::setTitleLengthTo($option, $shortcodeAttribute, $titleLengthOfOptionMap);
 
-		$priceItemHTMLOption = AmazonItemHTMLUtils::makePriceItemHTMLOption($optionMap);
+		$priceItemHTMLOption = AmazonItemHTMLOptionUtils::makePriceItemHTMLOption($optionMap);
 		$option->setPriceItemHTMLOption($priceItemHTMLOption);
 
 		$reviewItemHTMLOption = ReviewItemHTMLOptionUtils::makeReviewItemHTMLOption( //
