@@ -2,49 +2,58 @@
 
 namespace goodsmemo\item\html;
 
-class ReviewItemHTMLOption {
+class ReviewItemHTMLOption
+{
 	private $reviewLength;
 	private $stringToDeleteJSONArray;
 	private $stringToBreakJSONArray;
-	// 最新の「●箇条書き」の記号文字
+	// 最新の「●箇条書き」の記号文字、または句点
 	private $latestSentenceSymbols;
 
-	public function getReviewLength() {
+	public function getReviewLength()
+	{
 
 		return $this->reviewLength;
 	}
 
-	public function setReviewLength($reviewLength) {
+	public function setReviewLength($reviewLength)
+	{
 
 		$this->reviewLength = $reviewLength;
 	}
 
-	public function getStringToDeleteJSONArray() {
+	public function getStringToDeleteJSONArray()
+	{
 
 		return $this->stringToDeleteJSONArray;
 	}
 
-	public function setStringToDeleteJSONArray($stringToDeleteJSONArray) {
+	public function setStringToDeleteJSONArray($stringToDeleteJSONArray)
+	{
 
 		$this->stringToDeleteJSONArray = $stringToDeleteJSONArray;
 	}
 
-	public function getStringToBreakJSONArray() {
+	public function getStringToBreakJSONArray()
+	{
 
 		return $this->stringToBreakJSONArray;
 	}
 
-	public function setStringToBreakJSONArray($stringToBreakJSONArray) {
+	public function setStringToBreakJSONArray($stringToBreakJSONArray)
+	{
 
 		$this->stringToBreakJSONArray = $stringToBreakJSONArray;
 	}
 
-	public function getLatestSentenceSymbols() {
+	public function getLatestSentenceSymbols()
+	{
 
 		return $this->latestSentenceSymbols;
 	}
 
-	public function setLatestSentenceSymbols($latestSentenceSymbols) {
+	public function setLatestSentenceSymbols($latestSentenceSymbols)
+	{
 
 		$this->latestSentenceSymbols = $latestSentenceSymbols;
 	}
