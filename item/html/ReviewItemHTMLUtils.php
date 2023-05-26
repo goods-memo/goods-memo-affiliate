@@ -103,7 +103,7 @@ class ReviewItemHTMLUtils
 
 		foreach ($stringToBreakJSONArray as $stringToBreak => $replaceText) {
 
-			// 例：'/●([^●◆]+?)/u'
+			// 例：'/●([^●◆。]+?)/u'
 			// 例：●●●の場合、●●<br>●と置き換える。
 			// ●の後に、「●」または「◆」または「。」でない文字列。
 			// この文字列は、「●箇条書き」の本文、または句点のこと。
