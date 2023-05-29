@@ -43,7 +43,7 @@ class ReviewItemHTMLUtils
 		$stringToBreakJSONArray = $reviewItemHTMLOption->getStringToBreakJSONArray();
 		// 文字列の前または後ろに、改行タグを追加する。
 		$SENTENCE_SYMBOLS = $reviewItemHTMLOption->getLatestSentenceSymbols();
-		$reviewText = ReviewItemHTMLUtils::addLineBreakTo(
+		$reviewText = ReviewItemHTMLUtils::makeReviewTextWithLineBreakAdded(
 			$reviewText,
 			$stringToBreakJSONArray,
 			$SENTENCE_SYMBOLS
@@ -86,7 +86,9 @@ class ReviewItemHTMLUtils
 		return $fitReviewLinesText;
 	}
 
-	private static function addLineBreakTo($reviewText, $stringToBreakJSONArray, $SENTENCE_SYMBOLS)
+	//レビュー文字列を改行を追加した状態で作成する。
+	//＜付帯状況＞を表すwith。with＋名詞＋状況を表す語句で、「名詞が～の状態で」
+	private static function makeReviewTextWithLineBreakAdded($reviewText, $stringToBreakJSONArray, $SENTENCE_SYMBOLS)
 	{
 
 		$LINE_BREAK_TAG = "<br>";
