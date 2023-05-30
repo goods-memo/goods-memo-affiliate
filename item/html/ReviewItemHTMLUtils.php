@@ -13,12 +13,12 @@ require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 class ReviewItemHTMLUtils
 {
 
+	// 「ちょうどいい」の単語で「fit」を選んだ。
 	public static function makeFitReviewText(
 		ReviewItem $reviewItem,
 		ReviewItemHTMLOption $reviewItemHTMLOption
 	) {
 
-		// 「ちょうどいい」の単語で「fit」を選んだ。
 		$reviewLength = $reviewItemHTMLOption->getReviewLength();
 
 		$reviewText;
