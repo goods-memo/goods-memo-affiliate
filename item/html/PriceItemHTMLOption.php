@@ -6,8 +6,8 @@ namespace goodsmemo\item\html;
 class PriceItemHTMLOption
 {
 
-    private $priceFooterText;
-    private $priceTimeLinkVisible;
+    private $priceFooterText = "";
+    private $priceTimeLinkVisible = false;
 
     public function getPriceFooterText()
     {
