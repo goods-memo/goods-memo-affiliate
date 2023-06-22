@@ -42,7 +42,7 @@ class RakutenAffiliate
 		switch ($operation) {
 			case SearchParagraphUtils::ICHIBA_ITEM_SEARCH_OPERATION:
 
-				// 現時点では、Operation="ItemSearch"で、キーワード検索する処理だけ行なう。
+				// 現時点では、Operation="IchibaItemSearch"で、楽天市場商品をキーワード検索する処理だけ行う。
 				$affiliateHTML = KeywordSearchOperation::makeHTMLOfIchibaItemSearch($urlInfo, $commonParameter, $restParameter, $searchOption, $itemHTMLOption);
 				break;
 
