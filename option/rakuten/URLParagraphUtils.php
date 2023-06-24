@@ -20,13 +20,13 @@ class URLParagraphUtils
 
 		$hostnameFieldInfo = new TextFieldInfo();
 		$hostnameFieldInfo->setFieldID(URLParagraphUtils::HOSTNAME_ID);
-		$hostnameFieldInfo->setFieldLabel('楽天商品検索API ホスト名');
+		$hostnameFieldInfo->setFieldLabel('楽天市場商品検索API ホスト名');
 		$hostnameFieldInfo->setDefaultFieldValue("app.rakuten.co.jp");
 		array_push($fieldInfoArray, $hostnameFieldInfo);
 
 		$pathFieldInfo = new TextFieldInfo();
 		$pathFieldInfo->setFieldID(URLParagraphUtils::PATH_ID);
-		$pathFieldInfo->setFieldLabel('楽天商品検索API リクエストURLのパス');
+		$pathFieldInfo->setFieldLabel('楽天市場商品検索API リクエストURLのパス');
 		$pathFieldInfo->setDefaultFieldValue("services/api/IchibaItem/Search/20220601");
 		array_push($fieldInfoArray, $pathFieldInfo);
 
