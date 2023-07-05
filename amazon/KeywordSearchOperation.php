@@ -30,18 +30,28 @@ require_once GOODS_MEMO_DIR . "option/amazon/RESTParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 require_once GOODS_MEMO_DIR . "exception/IllegalArgumentException.php";
 
-class KeywordSearchOperation {
+class KeywordSearchOperation
+{
 
-	public static function makeHTMLOfSearchOperation(URLInfo $urlInfo,
-			CommonRESTParameter $commonParameter, RESTParameter $restParameter,
-			ItemHTMLOption $itemHTMLOption, ProductTypeOption $productTypeOption,
-			DisplayHTMLPAAPINotAvailableOption $displayHTMLOption) {
+	public static function makeHTMLOfSearchOperation(
+		URLInfo $urlInfo,
+		CommonRESTParameter $commonParameter,
+		RESTParameter $restParameter,
+		ItemHTMLOption $itemHTMLOption,
+		ProductTypeOption $productTypeOption,
+		DisplayHTMLPAAPINotAvailableOption $displayHTMLOption
+	) {
 
-		$itemsHTMLInfoMaker = new AmazonItemsHTMLInfoMaker ( $commonParameter, $restParameter,
-				$productTypeOption );
+		$itemsHTMLInfoMaker = new AmazonItemsHTMLInfoMaker(
+			$commonParameter,
+			$restParameter,
+			$productTypeOption
+		);
 
-		$displayHTMLCache = DisplayHTMLPAAPINotAvailableUtils::geDisplayHTMLPAAPINotAvailableCache ( 
-				$itemHTMLOption, $itemsHTMLInfoMaker );
+		$displayHTMLCache = DisplayHTMLPAAPINotAvailableUtils::getDisplayHTMLPAAPINotAvailableCache(
+			$itemHTMLOption,
+			$itemsHTMLInfoMaker
+		);
 		if ($displayHTMLCache !== false) {
 			return $displayHTMLCache;
 		}
@@ -49,31 +59,40 @@ class KeywordSearchOperation {
 		try {
 			$affiliateHTML;
 
-			$searchIndex = $restParameter->getSearchIndex ();
+			$searchIndex = $restParameter->getSearchIndex();
 			switch ($searchIndex) {
-				case RESTParagraphUtils::ALL_SEARCH_INDEX :
+				case RESTParagraphUtils::ALL_SEARCH_INDEX:
 
-					$affiliateHTML = ItemSearchOperation::makeItemsHTML ( $urlInfo, $itemHTMLOption,
-							$itemsHTMLInfoMaker );
+					$affiliateHTML = ItemSearchOperation::makeItemsHTML(
+						$urlInfo,
+						$itemHTMLOption,
+						$itemsHTMLInfoMaker
+					);
 					break;
 
-				default :
+				default:
 
-					throw new IllegalArgumentException ( "無効なサーチインデックス：" . $searchIndex );
+					throw new IllegalArgumentException("無効なサーチインデックス：" . $searchIndex);
 			}
 
 			return $affiliateHTML;
-		} catch ( HttpRequestException $ex ) {
+		} catch (HttpRequestException $ex) {
 
-			$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable ( 
-					$commonParameter, $restParameter, $displayHTMLOption );
+			$displayHTML = DisplayHTMLPAAPINotAvailableUtils::makeDisplayHTMLPAAPINotAvailable(
+				$commonParameter,
+				$restParameter,
+				$displayHTMLOption
+			);
 
 			// HTTP Statusのエラー情報を、HTMLのコメントで出力する。下記コメント文を参照。
-			$displayHTML .= "<!-- HTTPリクエストの例外：" . $ex->getMessage () . "。コード：" . $ex->getCode () .
-					" -->";
+			$displayHTML .= "<!-- HTTPリクエストの例外：" . $ex->getMessage() . "。コード：" . $ex->getCode() .
+				" -->";
 
-			DisplayHTMLPAAPINotAvailableUtils::setDisplayHTMLPAAPINotAvailableCache ( $displayHTML,
-					$itemHTMLOption, $itemsHTMLInfoMaker );
+			DisplayHTMLPAAPINotAvailableUtils::setDisplayHTMLPAAPINotAvailableCache(
+				$displayHTML,
+				$itemHTMLOption,
+				$itemsHTMLInfoMaker
+			);
 			return $displayHTML;
 		}
 	}
