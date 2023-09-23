@@ -7,12 +7,14 @@ use goodsmemo\amazon\RESTParameter;
 use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableOption;
 use goodsmemo\amazon\AmazonItemsHTMLInfoMaker;
 use goodsmemo\item\html\ItemHTMLOption;
+use goodsmemo\database\TransientUtils;
 
 require_once GOODS_MEMO_DIR . "amazon/CommonRESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableOption.php";
 require_once GOODS_MEMO_DIR . "amazon/AmazonItemsHTMLInfoMaker.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
+require_once GOODS_MEMO_DIR . "database\TransientUtils.php";
 
 class DisplayHTMLPAAPINotAvailableUtils
 {
@@ -76,7 +78,7 @@ class DisplayHTMLPAAPINotAvailableUtils
 		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
 
 		// 一時的にデータベースに「Product Advertising API 利用不可の時、表示するHTML」を保存する。有効期限後、削除される。
-		set_transient($transientID, $displayHTML, $cacheExpirationInSeconds);
+		TransientUtils::setTransient($transientID, $displayHTML, $cacheExpirationInSeconds);
 	}
 
 	private static function makeTransientID(
