@@ -14,7 +14,7 @@ require_once GOODS_MEMO_DIR . "amazon/RESTParameter.php";
 require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableOption.php";
 require_once GOODS_MEMO_DIR . "amazon/AmazonItemsHTMLInfoMaker.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
-require_once GOODS_MEMO_DIR . "database\TransientUtils.php";
+require_once GOODS_MEMO_DIR . "database/TransientUtils.php";
 
 class DisplayHTMLPAAPINotAvailableUtils
 {

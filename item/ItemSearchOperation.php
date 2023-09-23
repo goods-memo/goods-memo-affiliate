@@ -12,7 +12,7 @@ require_once GOODS_MEMO_DIR . "network/URLInfo.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
 require_once GOODS_MEMO_DIR . "item/ItemsHTMLInfoMaker.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemArrayHTMLMaking.php";
-require_once GOODS_MEMO_DIR . "database\TransientUtils.php";
+require_once GOODS_MEMO_DIR . "database/TransientUtils.php";
 
 class ItemSearchOperation
 {
