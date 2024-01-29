@@ -36,17 +36,9 @@ class AmazonItemsHTMLInfoMaker implements ItemsHTMLInfoMaker
 		$this->productTypeOption = $productTypeOption;
 	}
 
-	public function requestItemSearch(URLInfo $urlInfo, int $numberToDisplay)
+	public function requestItemSearch(URLInfo $urlInfo)
 	{
-		if ($numberToDisplay <= 0) {
-			return NULL; // 表示する件数が０件なので、商品情報なしとする。
-		}
-
-		$response = AmazonRequest::requestSearchIndex(
-			$urlInfo,
-			$this->commonParameter,
-			$this->restParameter
-		);
+		$response = AmazonRequest::requestSearchIndex($urlInfo, $this->commonParameter, $this->restParameter);
 		return $response;
 	}
 

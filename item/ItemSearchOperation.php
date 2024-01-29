@@ -26,10 +26,7 @@ class ItemSearchOperation
 
 		if ($cacheExpirationInSeconds <= 0) {
 
-			$response = $itemsHTMLInfoMaker->requestItemSearch(
-				$urlInfo,
-				$itemHTMLOption->getNumberToDisplay()
-			);
+			$response = $itemsHTMLInfoMaker->requestItemSearch($urlInfo);
 			$itemArray = $itemsHTMLInfoMaker->makeItemArray($response, $itemHTMLOption);
 			$itemsHtml = ItemArrayHTMLMaking::makeItemArrayHTML($itemArray, $itemHTMLOption);
 			return $itemsHtml;
@@ -57,10 +54,7 @@ class ItemSearchOperation
 
 		if (is_null($itemArray)) {
 
-			$response = $itemsHTMLInfoMaker->requestItemSearch(
-				$urlInfo,
-				$itemHTMLOption->getNumberToDisplay()
-			);
+			$response = $itemsHTMLInfoMaker->requestItemSearch($urlInfo);
 			$itemArray = $itemsHTMLInfoMaker->makeItemArray($response, $itemHTMLOption); // var_dump($itemArray);
 
 			/**
