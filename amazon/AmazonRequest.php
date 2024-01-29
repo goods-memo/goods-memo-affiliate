@@ -14,27 +14,29 @@ require_once GOODS_MEMO_DIR . "amazon/withoutsdk/SearchIndexRequest.php";
 require_once GOODS_MEMO_DIR . "network/URLInfo.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 
-class AmazonRequest {
+class AmazonRequest
+{
 
-	public static function requestSearchIndex(URLInfo $urlInfo, CommonRESTParameter $commonParameter, RESTParameter $restParameter, int $itemCount, $retryCount = 1) {
-
-		if ($itemCount <= 0) {
-			return NULL; // 表示する件数が０件なので、商品情報なしとする。
-		}
-
-		$partnerTag = $commonParameter->getAssociateTag ();
-		$keyword = $restParameter->getKeyword ();
-		$searchIndex = $restParameter->getSearchIndex ();
-		$resources = $restParameter->getSearchItemsResources ();
-		$hostname = $urlInfo->getHostname ();
-		$accessKey = $commonParameter->getAccessKey ();
-		$secretKey = $commonParameter->getSecretKey ();
-		$regionName = $commonParameter->getRegion ();
+	public static function requestSearchIndex(
+		URLInfo $urlInfo,
+		CommonRESTParameter $commonParameter,
+		RESTParameter $restParameter,
+		$retryCount = 1
+	) {
+		$partnerTag = $commonParameter->getAssociateTag();
+		$keyword = $restParameter->getKeyword();
+		$searchIndex = $restParameter->getSearchIndex();
+		$resources = $restParameter->getSearchItemsResources();
+		$hostname = $urlInfo->getHostname();
+		$accessKey = $commonParameter->getAccessKey();
+		$secretKey = $commonParameter->getSecretKey();
+		$regionName = $commonParameter->getRegion();
 
 		$lastHttpRequestException;
-		for($i = 0; $i < $retryCount; $i ++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
+		for ($i = 0; $i < $retryCount; $i++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
+
 			if ($i >= 1) {
-				sleep ( 1 ); // 再試行の待ち時間（1秒）
+				sleep(1); // 再試行の待ち時間（1秒）
 			}
 
 			try {
@@ -43,10 +45,19 @@ class AmazonRequest {
 				 * SDKAmazonRequest::requestSearchIndex()
 				 */
 
-				$searchItemsResponse = SearchIndexRequest::request ( $partnerTag, $keyword, $searchIndex, $resources, $hostname, $accessKey, $secretKey, $regionName );
+				$searchItemsResponse = SearchIndexRequest::request(
+					$partnerTag,
+					$keyword,
+					$searchIndex,
+					$resources,
+					$hostname,
+					$accessKey,
+					$secretKey,
+					$regionName
+				);
 
 				return $searchItemsResponse;
-			} catch ( HttpRequestException $ex ) {
+			} catch (HttpRequestException $ex) {
 				$lastHttpRequestException = $ex;
 			}
 		}
@@ -54,4 +65,3 @@ class AmazonRequest {
 		throw $lastHttpRequestException;
 	}
 }
-	

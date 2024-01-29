@@ -25,7 +25,6 @@ class DisplayHTMLPAAPINotAvailableUtils
 		RESTParameter $restParameter,
 		DisplayHTMLPAAPINotAvailableOption $displayHTMLOption
 	) {
-
 		$displayHTML = $displayHTMLOption->getDisplayHTMLPAAPINotAvailable();
 
 		$searchArray = array(
@@ -35,10 +34,10 @@ class DisplayHTMLPAAPINotAvailableUtils
 
 		$associateTag = $commonParameter->getAssociateTag();
 		$keyword = $restParameter->getKeyword();
-		$encoded_keyword = rawurlencode($keyword);
+		$encodedKeyword = rawurlencode($keyword);
 
 		$replaceArray = array(
-			$associateTag, $keyword, $encoded_keyword
+			$associateTag, $keyword, $encodedKeyword
 		);
 
 		$newDisplayHTML = str_replace($searchArray, $replaceArray, $displayHTML);
@@ -47,17 +46,15 @@ class DisplayHTMLPAAPINotAvailableUtils
 	}
 
 	public static function getDisplayHTMLPAAPINotAvailableCache(
-		ItemHTMLOption $itemHTMLOption,
+		int $cacheExpirationInSeconds,
 		AmazonItemsHTMLInfoMaker $itemsHTMLInfoMaker
 	) {
-
-		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
 		if ($cacheExpirationInSeconds <= 0) {
 			return false;
 		}
 
 		$transientID = DisplayHTMLPAAPINotAvailableUtils::makeTransientID(
-			$itemHTMLOption,
+			$cacheExpirationInSeconds,
 			$itemsHTMLInfoMaker
 		);
 		$displayHTMLCache = get_transient($transientID);
@@ -67,26 +64,24 @@ class DisplayHTMLPAAPINotAvailableUtils
 
 	public static function setDisplayHTMLPAAPINotAvailableCache(
 		string $displayHTML,
-		ItemHTMLOption $itemHTMLOption,
+		int $cacheExpirationInSeconds,
 		AmazonItemsHTMLInfoMaker $itemsHTMLInfoMaker
 	) {
-
 		$transientID = DisplayHTMLPAAPINotAvailableUtils::makeTransientID(
-			$itemHTMLOption,
+			$cacheExpirationInSeconds,
 			$itemsHTMLInfoMaker
 		);
-		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
 
 		// 一時的にデータベースに「Product Advertising API 利用不可の時、表示するHTML」を保存する。有効期限後、削除される。
 		TransientUtils::setTransient($transientID, $displayHTML, $cacheExpirationInSeconds);
 	}
 
 	private static function makeTransientID(
-		ItemHTMLOption $itemHTMLOption,
+		int $cacheExpirationInSeconds,
 		AmazonItemsHTMLInfoMaker $itemsHTMLInfoMaker
 	) {
+		$uniqueText = $itemsHTMLInfoMaker->makeUniqueText($cacheExpirationInSeconds);
 
-		$uniqueText = $itemsHTMLInfoMaker->makeUniqueText($itemHTMLOption);
 		$uniqueTextOfDisplayHTML = DisplayHTMLPAAPINotAvailableUtils::DISPLAY_HTML_PAAPI_NOT_AVAILABLE_PREFIX .
 			$uniqueText;
 

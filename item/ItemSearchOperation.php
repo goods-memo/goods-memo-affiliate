@@ -22,7 +22,6 @@ class ItemSearchOperation
 		ItemHTMLOption $itemHTMLOption,
 		ItemsHTMLInfoMaker $itemsHTMLInfoMaker
 	) {
-
 		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
 
 		if ($cacheExpirationInSeconds <= 0) {
@@ -31,22 +30,22 @@ class ItemSearchOperation
 				$urlInfo,
 				$itemHTMLOption->getNumberToDisplay()
 			);
-			$itemArray = $itemsHTMLInfoMaker->makeItemArray($response, $itemHTMLOption); // var_dump($itemArray);
+			$itemArray = $itemsHTMLInfoMaker->makeItemArray($response, $itemHTMLOption);
 			$itemsHtml = ItemArrayHTMLMaking::makeItemArrayHTML($itemArray, $itemHTMLOption);
 			return $itemsHtml;
 		}
 
 		$itemArray = NULL;
 
-		$uniqueText = $itemsHTMLInfoMaker->makeUniqueText($itemHTMLOption);
+		$uniqueText = $itemsHTMLInfoMaker->makeUniqueText($cacheExpirationInSeconds);
 		// $transientID：キャッシュされるデータにつけるユニークな識別子。長さ 45 文字以下であること。
 		// md5() ：32 文字の 16 進数からなるハッシュを返します。
-		$transientID = GOODS_MEMO_PREFIX . md5($uniqueText); // var_dump($transientID);
+		$transientID = GOODS_MEMO_PREFIX . md5($uniqueText);
 
 		$transientItemArrayCache = get_transient($transientID);
 		if ($transientItemArrayCache !== FALSE) {
 
-			$binaryItemArray = base64_decode($transientItemArrayCache); // var_dump($binaryItemArray);
+			$binaryItemArray = base64_decode($transientItemArrayCache);
 			if ($binaryItemArray !== FALSE) {
 
 				$itemArray = @unserialize($binaryItemArray); // エラー抑制演算子：E_WARNINGが画面に表示されるのを防ぐ。//var_dump($itemArray);

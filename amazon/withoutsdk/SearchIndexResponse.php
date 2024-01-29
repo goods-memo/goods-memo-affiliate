@@ -18,44 +18,48 @@ require_once GOODS_MEMO_DIR . "item/ReviewItem.php";
 require_once GOODS_MEMO_DIR . "item/html/HTMLUtils.php";
 require_once GOODS_MEMO_DIR . "date/DateTextMaking.php";
 
-class SearchIndexResponse {
+class SearchIndexResponse
+{
 
-	public static function makeItemArray($searchItemsResponse, int $numberToDisplay,
-			bool $adultProductEnable) {
+	public static function makeItemArray(
+		$searchItemsResponse,
+		bool $adultProductEnable
+	) {
 
-		$itemArray = array ();
+		$itemArray = array();
 
-		if (empty ( $searchItemsResponse ) or
-				! property_exists ( $searchItemsResponse, 'SearchResult' ) or
-				! property_exists ( $searchItemsResponse->SearchResult, 'Items' )) {
+		if (
+			empty($searchItemsResponse) or
+			!property_exists($searchItemsResponse, 'SearchResult') or
+			!property_exists($searchItemsResponse->SearchResult, 'Items')
+		) {
 
 			return $itemArray; // 商品情報なし
 		}
 
 		$searchItems = $searchItemsResponse->SearchResult->Items;
-		$priceTime = DateTextMaking::getUnixTimeMillSecond ();
+		$priceTime = DateTextMaking::getUnixTimeMillSecond();
 
-		$searchItemCount = count ( $searchItems );
-		$count = min ( $searchItemCount, $numberToDisplay );
+		$searchItemCount = count($searchItems);
+		for ($i = 0; $i < $searchItemCount; $i++) {
 
-		for($i = 0; $i < $count; $i ++) {
-
-			$searchItem = $searchItems [$i];
-			if (is_null ( $searchItem )) { // 念のため。配列の要素がNULLの場合
+			$searchItem = $searchItems[$i];
+			if (is_null($searchItem)) { // 念のため。配列の要素がNULLの場合
 				continue;
 			}
 
-			if (SearchIndexResponse::getItemEnabled ( $searchItem, $adultProductEnable )) {
+			if (SearchIndexResponse::getItemEnabled($searchItem, $adultProductEnable)) {
 
-				$item = SearchIndexResponse::makeItem ( $searchItem, $priceTime );
-				array_push ( $itemArray, $item );
+				$item = SearchIndexResponse::makeItem($searchItem, $priceTime);
+				array_push($itemArray, $item);
 			}
 		}
 
 		return $itemArray;
 	}
 
-	private static function getItemEnabled($searchItem, bool $adultProductEnable): bool {
+	private static function getItemEnabled($searchItem, bool $adultProductEnable): bool
+	{
 
 		if ($adultProductEnable) {
 			return true;
@@ -65,10 +69,11 @@ class SearchIndexResponse {
 		 * 以下、アダルト商品が無効と指定されている場合について
 		 */
 
-		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->ProductInfo ) and
-				isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct ) and
-				isset ( $searchItem->ItemInfo->ProductInfo->IsAdultProduct->DisplayValue )) {
-			;
+		if (
+			isset($searchItem->ItemInfo) and isset($searchItem->ItemInfo->ProductInfo) and
+			isset($searchItem->ItemInfo->ProductInfo->IsAdultProduct) and
+			isset($searchItem->ItemInfo->ProductInfo->IsAdultProduct->DisplayValue)
+		) {;
 		} else {
 			return true; // アダルト商品の情報がない場合、有効とする。
 		}
@@ -81,101 +86,107 @@ class SearchIndexResponse {
 		}
 	}
 
-	private static function makeItem($searchItem, float $priceTime): Item {
+	private static function makeItem($searchItem, float $priceTime): Item
+	{
 
-		$item = new Item ();
+		$item = new Item();
 
-		if (isset ( $searchItem->DetailPageURL )) {
-			$item->setPageURL ( esc_url ( $searchItem->DetailPageURL ) );
+		if (isset($searchItem->DetailPageURL)) {
+			$item->setPageURL(esc_url($searchItem->DetailPageURL));
 		}
 
-		SearchIndexResponse::setItemInfoTo ( $item, $searchItem );
+		SearchIndexResponse::setItemInfoTo($item, $searchItem);
 
-		SearchIndexResponse::setOffersTo ( $item, $searchItem );
+		SearchIndexResponse::setOffersTo($item, $searchItem);
 
-		$imageItem = ImageResponse::makeImageItem ( $searchItem );
-		$item->setImageItem ( $imageItem );
+		$imageItem = ImageResponse::makeImageItem($searchItem);
+		$item->setImageItem($imageItem);
 
-		$priceItem = PriceResponse::makePriceItem ( $searchItem, $priceTime );
-		$item->setPriceItem ( $priceItem );
+		$priceItem = PriceResponse::makePriceItem($searchItem, $priceTime);
+		$item->setPriceItem($priceItem);
 
-		$productionItem = ProductionResponse::makeProductionItem ( $searchItem );
-		$item->setProductionItem ( $productionItem );
+		$productionItem = ProductionResponse::makeProductionItem($searchItem);
+		$item->setProductionItem($productionItem);
 
-		$reviewItem = SearchIndexResponse::makeReviewItem ( $searchItem );
-		$item->setReviewItem ( $reviewItem );
+		$reviewItem = SearchIndexResponse::makeReviewItem($searchItem);
+		$item->setReviewItem($reviewItem);
 
 		return $item;
 	}
 
-	private static function setItemInfoTo(Item &$item, $searchItem) {
+	private static function setItemInfoTo(Item &$item, $searchItem)
+	{
 
-		if (isset ( $searchItem->ItemInfo )) {
-			;
+		if (isset($searchItem->ItemInfo)) {;
 		} else {
 			return;
 		}
 
 		$itemInfo = $searchItem->ItemInfo;
 
-		if (isset ( $itemInfo->Title ) and isset ( $itemInfo->Title->DisplayValue )) {
+		if (isset($itemInfo->Title) and isset($itemInfo->Title->DisplayValue)) {
 
 			$titleValue = $itemInfo->Title->DisplayValue;
-			$item->setTitle ( HTMLUtils::makePlainText ( $titleValue ) );
+			$item->setTitle(HTMLUtils::makePlainText($titleValue));
 		}
 	}
 
-	private static function setOffersTo(Item &$item, $searchItem) {
+	private static function setOffersTo(Item &$item, $searchItem)
+	{
 
-		if (isset ( $searchItem->Offers )) {
-			;
+		if (isset($searchItem->Offers)) {;
 		} else {
 			return;
 		}
 
 		$offers = $searchItem->Offers;
 
-		if (isset ( $offers->Listings ) and isset ( $offers->Listings [0] )) {
+		if (isset($offers->Listings) and isset($offers->Listings[0])) {
 
-			$listing = $offers->Listings [0];
+			$listing = $offers->Listings[0];
 
-			if (isset ( $listing->DeliveryInfo ) and
-					isset ( $listing->DeliveryInfo->IsPrimeEligible )) {
+			if (
+				isset($listing->DeliveryInfo) and
+				isset($listing->DeliveryInfo->IsPrimeEligible)
+			) {
 
 				$isPrimeEligible = $listing->DeliveryInfo->IsPrimeEligible;
 				if ($isPrimeEligible) {
-					$item->setPreferentialMember ( HTMLUtils::makePlainText ( "&#10003;prime" ) ); // "✓prime"
+					$item->setPreferentialMember(HTMLUtils::makePlainText("&#10003;prime")); // "✓prime"
 				}
 			}
 
-			if (isset ( $listing->MerchantInfo ) and isset ( $listing->MerchantInfo->Name )) {
+			if (isset($listing->MerchantInfo) and isset($listing->MerchantInfo->Name)) {
 
 				$merchantName = $listing->MerchantInfo->Name;
-				$item->setShop ( HTMLUtils::makePlainText ( $merchantName ) );
+				$item->setShop(HTMLUtils::makePlainText($merchantName));
 			}
 		}
 	}
 
-	private static function makeReviewItem($searchItem): ReviewItem {
+	private static function makeReviewItem($searchItem): ReviewItem
+	{
 
-		$reviewItem = new ReviewItem ();
+		$reviewItem = new ReviewItem();
 
-		if (isset ( $searchItem->ItemInfo ) and isset ( $searchItem->ItemInfo->Features ) and
-				isset ( $searchItem->ItemInfo->Features->DisplayValues )) {
+		if (
+			isset($searchItem->ItemInfo) and isset($searchItem->ItemInfo->Features) and
+			isset($searchItem->ItemInfo->Features->DisplayValues)
+		) {
 			$featuresValues = $searchItem->ItemInfo->Features->DisplayValues; // string[]
 
-			$featureArray = array ();
-			foreach ( $featuresValues as $value ) {
+			$featureArray = array();
+			foreach ($featuresValues as $value) {
 
 				if ($value == NULL) {
 					continue;
 				}
 
-				$feature = HTMLUtils::makePlainText ( $value );
-				array_push ( $featureArray, $feature );
+				$feature = HTMLUtils::makePlainText($value);
+				array_push($featureArray, $feature);
 			}
 
-			$reviewItem->setReviewLineArray ( $featureArray );
+			$reviewItem->setReviewLineArray($featureArray);
 		}
 
 		// TODO Check back later for updates

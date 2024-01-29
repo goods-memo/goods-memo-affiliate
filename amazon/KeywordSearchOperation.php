@@ -11,7 +11,6 @@ use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableOption;
 use goodsmemo\amazon\displayhtml\DisplayHTMLPAAPINotAvailableUtils;
 use goodsmemo\item\ItemSearchOperation;
 use goodsmemo\item\html\ItemHTMLOption;
-use goodsmemo\item\html\ItemArrayHTMLMaking;
 use goodsmemo\option\amazon\RESTParagraphUtils;
 use goodsmemo\exception\HttpRequestException;
 use goodsmemo\exception\IllegalArgumentException;
@@ -25,7 +24,6 @@ require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableOp
 require_once GOODS_MEMO_DIR . "amazon/displayhtml/DisplayHTMLPAAPINotAvailableUtils.php";
 require_once GOODS_MEMO_DIR . "item/ItemSearchOperation.php";
 require_once GOODS_MEMO_DIR . "item/html/ItemHTMLOption.php";
-require_once GOODS_MEMO_DIR . "item/html/ItemArrayHTMLMaking.php";
 require_once GOODS_MEMO_DIR . "option/amazon/RESTParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 require_once GOODS_MEMO_DIR . "exception/IllegalArgumentException.php";
@@ -41,15 +39,15 @@ class KeywordSearchOperation
 		ProductTypeOption $productTypeOption,
 		DisplayHTMLPAAPINotAvailableOption $displayHTMLOption
 	) {
-
 		$itemsHTMLInfoMaker = new AmazonItemsHTMLInfoMaker(
 			$commonParameter,
 			$restParameter,
 			$productTypeOption
 		);
 
+		$cacheExpirationInSeconds = $itemHTMLOption->getCacheExpirationInSeconds();
 		$displayHTMLCache = DisplayHTMLPAAPINotAvailableUtils::getDisplayHTMLPAAPINotAvailableCache(
-			$itemHTMLOption,
+			$cacheExpirationInSeconds,
 			$itemsHTMLInfoMaker
 		);
 		if ($displayHTMLCache !== false) {
@@ -90,7 +88,7 @@ class KeywordSearchOperation
 
 			DisplayHTMLPAAPINotAvailableUtils::setDisplayHTMLPAAPINotAvailableCache(
 				$displayHTML,
-				$itemHTMLOption,
+				$cacheExpirationInSeconds,
 				$itemsHTMLInfoMaker
 			);
 			return $displayHTML;

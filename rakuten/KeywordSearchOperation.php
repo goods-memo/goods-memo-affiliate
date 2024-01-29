@@ -29,8 +29,9 @@ class KeywordSearchOperation
         SearchOption $searchOption,
         ItemHTMLOption $itemHTMLOption
     ) {
+        $imageItemHTMLOption = $itemHTMLOption->getImageItemHTMLOption();
+        $itemsHTMLInfoMaker = new RakutenItemsHTMLInfoMaker($commonParameter, $restParameter, $searchOption, $imageItemHTMLOption);
 
-        $itemsHTMLInfoMaker = new RakutenItemsHTMLInfoMaker($commonParameter, $restParameter, $searchOption);
         $itemsHtml = ItemSearchOperation::makeItemsHTML($urlInfo, $itemHTMLOption, $itemsHTMLInfoMaker);
         return $itemsHtml;
     }

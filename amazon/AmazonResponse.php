@@ -6,15 +6,17 @@ use goodsmemo\amazon\withoutsdk\SearchIndexResponse;
 
 require_once GOODS_MEMO_DIR . "amazon/withoutsdk/SearchIndexResponse.php";
 
-class AmazonResponse {
+class AmazonResponse
+{
 
-	public static function makeItemArray($searchItemsResponse, $numberToDisplay, $adultProductEnable) {
-
+	public static function makeItemArray($searchItemsResponse, $adultProductEnable)
+	{
 		/*
 		 * ここでSDKあり・なしの分岐処理をするかもしれない。
 		 * SDKAmazonResponse::makeItemArray()
 		 */
-		$itemArray = SearchIndexResponse::makeItemArray ( $searchItemsResponse, $numberToDisplay, $adultProductEnable );
+
+		$itemArray = SearchIndexResponse::makeItemArray($searchItemsResponse,  $adultProductEnable);
 		return $itemArray;
 	}
 }

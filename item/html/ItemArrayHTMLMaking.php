@@ -22,23 +22,29 @@ require_once GOODS_MEMO_DIR . "item/html/FooterHTMLUtils.php";
 require_once GOODS_MEMO_DIR . "date/DateTextMaking.php";
 require_once GOODS_MEMO_DIR . "text/TextUtils.php";
 
-class ItemArrayHTMLMaking {
+class ItemArrayHTMLMaking
+{
 	const NO_APPLICABLE_PRODUCT = "該当する商品は、ありませんでした。";
 
-	public static function makeItemArrayHTML($itemArray,
-			ItemHTMLOption $itemHTMLOption) {
+	public static function makeItemArrayHTML(
+		$itemArray,
+		ItemHTMLOption $itemHTMLOption
+	) {
 
 		$_ = function ($s) {
 			return $s;
 		}; // 展開用のラムダ関数。ヒアドキュメントで定数を展開できる。
 
-		$idPrefix = $itemHTMLOption->getIdPrefix ();
+		$idPrefix = $itemHTMLOption->getIdPrefix();
 		$itemArrayHTML = <<< EOD
 		<div class="{$_(GOODS_MEMO_PREFIX)}-{$idPrefix}-items {$_(GOODS_MEMO_PREFIX)}-items">
 		EOD;
 
-		$itemCount = count ( $itemArray );
-		if ($itemCount <= 0) {
+		$itemCount = count($itemArray);
+		$numberToDisplay = $itemHTMLOption->getNumberToDisplay();
+		$count = min($itemCount, $numberToDisplay);
+
+		if ($count <= 0) {
 
 			$itemArrayHTML .= <<< EOD
 			<p>{$_(ItemArrayHTMLMaking::NO_APPLICABLE_PRODUCT)}</p>
@@ -47,71 +53,82 @@ class ItemArrayHTMLMaking {
 			return $itemArrayHTML;
 		}
 
-		$footerHTMLInfo = FooterHTMLUtils::makeFooterHTMLInfo ( $itemHTMLOption );
-		$footerID = $footerHTMLInfo->getFooterID ();
+		$footerHTMLInfo = FooterHTMLUtils::makeFooterHTMLInfo($itemHTMLOption);
+		$footerID = $footerHTMLInfo->getFooterID();
 
-		for($index = 0; $index < $itemCount; $index ++) {
+		for ($index = 0; $index < $count; $index++) {
 
-			$item = $itemArray [$index];
-			$oneItemHTML = ItemArrayHTMLMaking::makeOneItemHTML ( $item, $index,
-					$itemHTMLOption, $footerID );
+			$item = $itemArray[$index];
+			$oneItemHTML = ItemArrayHTMLMaking::makeOneItemHTML(
+				$item,
+				$index,
+				$itemHTMLOption,
+				$footerID
+			);
 			$itemArrayHTML .= $oneItemHTML;
 		}
 
-		$footerDiv = $footerHTMLInfo->getFooterDiv ();
+		$footerDiv = $footerHTMLInfo->getFooterDiv();
 		$itemArrayHTML .= $footerDiv;
 		$itemArrayHTML .= "</div>";
 
 		return $itemArrayHTML;
 	}
 
-	private static function makeOneItemHTML(Item $item, $index,
-			ItemHTMLOption $itemHTMLOption, $footerID) {
+	private static function makeOneItemHTML(
+		Item $item,
+		$index,
+		ItemHTMLOption $itemHTMLOption,
+		$footerID
+	) {
 
 		$idIndex = $index + 1; // １から始まる値にする。
-		$idPrefix = $itemHTMLOption->getIdPrefix ();
+		$idPrefix = $itemHTMLOption->getIdPrefix();
 
-		$pageURL = $item->getPageURL ();
+		$pageURL = $item->getPageURL();
 
-		$imageItem = $item->getImageItem ();
-		ItemArrayHTMLMaking::setImageInfoIfURLIsEmpty ( $imageItem );
-		$imageURL = $imageItem->getImageURL ();
-		$imageWidth = $imageItem->getImageWidth ();
-		$imageHeight = $imageItem->getImageHeight ();
+		$imageItem = $item->getImageItem();
+		ItemArrayHTMLMaking::setImageInfoIfURLIsEmpty($imageItem);
+		$imageURL = $imageItem->getImageURL();
+		$imageWidth = $imageItem->getImageWidth();
+		$imageHeight = $imageItem->getImageHeight();
 
-		$title = ItemArrayHTMLMaking::makeTitle ( $item, $itemHTMLOption );
+		$title = ItemArrayHTMLMaking::makeTitle($item, $itemHTMLOption);
 
-		$priceItem = $item->getPriceItem ();
-		$priceLabel = $priceItem->getLabel ();
-		$price = $priceItem->getPrice ();
-		$priceAddition = $priceItem->getPriceAddition ();
-		$priceTimeText = ItemArrayHTMLMaking::makePriceTimeText ( $priceItem );
-		$postageText = $priceItem->getPostageText ();
+		$priceItem = $item->getPriceItem();
+		$priceLabel = $priceItem->getLabel();
+		$price = $priceItem->getPrice();
+		$priceAddition = $priceItem->getPriceAddition();
+		$priceTimeText = ItemArrayHTMLMaking::makePriceTimeText($priceItem);
+		$postageText = $priceItem->getPostageText();
 
-		$pointItem = $item->getPointItem ();
-		$pointRate = $pointItem->getPointRate ();
-		$pointRateStartTime = $pointItem->getPointRateStartTime ();
-		$pointRateEndTime = $pointItem->getPointRateEndTime ();
+		$pointItem = $item->getPointItem();
+		$pointRate = $pointItem->getPointRate();
+		$pointRateStartTime = $pointItem->getPointRateStartTime();
+		$pointRateEndTime = $pointItem->getPointRateEndTime();
 
-		$productionItem = $item->getProductionItem ();
-		$contributorText = ItemArrayHTMLMaking::makeContributorText ( 
-				$productionItem );
-		$manufacturerLabel = $productionItem->getManufacturerLabel ();
-		$manufacturer = $productionItem->getManufacturer ();
-		$binding = $productionItem->getBinding ();
+		$productionItem = $item->getProductionItem();
+		$contributorText = ItemArrayHTMLMaking::makeContributorText(
+			$productionItem
+		);
+		$manufacturerLabel = $productionItem->getManufacturerLabel();
+		$manufacturer = $productionItem->getManufacturer();
+		$binding = $productionItem->getBinding();
 
-		$preferentialMember = $item->getPreferentialMember ();
-		$shop = $item->getShop ();
+		$preferentialMember = $item->getPreferentialMember();
+		$shop = $item->getShop();
 
-		$reviewText = ItemArrayHTMLMaking::makeReviewText ( $item,
-				$itemHTMLOption );
+		$reviewText = ItemArrayHTMLMaking::makeReviewText(
+			$item,
+			$itemHTMLOption
+		);
 
 		$_ = function ($s) {
 			return $s;
 		}; // 展開用のラムダ関数。ヒアドキュメントで定数を展開できる。
-		   // 項目の有無によって、表示を制御する。
+		// 項目の有無によって、表示を制御する。
 		$hideIfEmpty = function ($value) {
-			if (is_numeric ( $value )) {
+			if (is_numeric($value)) {
 				return "";
 			}
 			if ($value === "") {
@@ -200,49 +217,59 @@ class ItemArrayHTMLMaking {
 		return $oneItemHTML;
 	}
 
-	private static function makeTitle(Item $item, ItemHTMLOption $itemHTMLOption) {
+	private static function makeTitle(Item $item, ItemHTMLOption $itemHTMLOption)
+	{
 
-		$title = $item->getTitle ();
-		$titleLength = $itemHTMLOption->getTitleLength ();
-		$trimmedTitle = TextUtils::mb_strimwidth ( $title, 0, $titleLength, "…" );
+		$title = $item->getTitle();
+		$titleLength = $itemHTMLOption->getTitleLength();
+		$trimmedTitle = TextUtils::mb_strimwidth($title, 0, $titleLength, "…");
 		return $trimmedTitle;
 	}
 
-	private static function setImageInfoIfURLIsEmpty(ImageItem &$imageItem) {
+	private static function setImageInfoIfURLIsEmpty(ImageItem &$imageItem)
+	{
 
-		$imageURL = $imageItem->getImageURL ();
-		if (empty ( $imageURL )) {
+		$imageURL = $imageItem->getImageURL();
+		if (empty($imageURL)) {
 
-			$imageURL = plugins_url ( 'images/no-image.png', __FILE__ );
-			$imageItem->setImageURL ( $imageURL );
+			$imageURL = plugins_url('images/no-image.png', __FILE__);
+			$imageItem->setImageURL($imageURL);
 
-			$imageItem->setImageWidth ( 300 ); // no-image.png の幅
-			$imageItem->setImageHeight ( 300 ); // no-image.png の高さ
+			$imageItem->setImageWidth(300); // no-image.png の幅
+			$imageItem->setImageHeight(300); // no-image.png の高さ
 		}
 	}
 
-	private static function makePriceTimeText(PriceItem $priceItem) {
+	private static function makePriceTimeText(PriceItem $priceItem)
+	{
 
-		$priceTime = $priceItem->getPriceTime ();
-		$priceTimeText = DateTextMaking::makeTimeText ( 
-				DateTextMaking::TIME_TEXT_FORMAT, $priceTime );
+		$priceTime = $priceItem->getPriceTime();
+		$priceTimeText = DateTextMaking::makeTimeText(
+			DateTextMaking::TIME_TEXT_FORMAT,
+			$priceTime
+		);
 		return $priceTimeText;
 	}
 
-	private static function makeContributorText(ProductionItem $productionItem) {
+	private static function makeContributorText(ProductionItem $productionItem)
+	{
 
-		$contributorArray = $productionItem->getContributorArray ();
-		$contributorText = implode ( ", ", $contributorArray );
+		$contributorArray = $productionItem->getContributorArray();
+		$contributorText = implode(", ", $contributorArray);
 		return $contributorText;
 	}
 
-	private static function makeReviewText(Item $item,
-			ItemHTMLOption $itemHTMLOption) {
+	private static function makeReviewText(
+		Item $item,
+		ItemHTMLOption $itemHTMLOption
+	) {
 
-		$reviewItem = $item->getReviewItem ();
-		$reviewItemHTMLOption = $itemHTMLOption->getReviewItemHTMLOption ();
-		$reviewText = ReviewItemHTMLUtils::makeFitReviewText ( $reviewItem,
-				$reviewItemHTMLOption );
+		$reviewItem = $item->getReviewItem();
+		$reviewItemHTMLOption = $itemHTMLOption->getReviewItemHTMLOption();
+		$reviewText = ReviewItemHTMLUtils::makeFitReviewText(
+			$reviewItem,
+			$reviewItemHTMLOption
+		);
 		return $reviewText;
 	}
 }
