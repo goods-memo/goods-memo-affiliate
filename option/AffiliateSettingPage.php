@@ -14,7 +14,8 @@ require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/RakutenSettingSection.php";
 require_once GOODS_MEMO_DIR . "exception/OptionException.php";
 
-class AffiliateSettingPage {
+class AffiliateSettingPage
+{
 	/*
 	 * 参照：設定ページの作成
 	 * https://wpdocs.osdn.jp/%E8%A8%AD%E5%AE%9A%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E4%BD%9C%E6%88%90
@@ -23,60 +24,73 @@ class AffiliateSettingPage {
 	const SETTING_MENU_SLUG = "goodsmemo-affiliate-setting";
 	const OPTION_GROUP = "goodsmemo_option_group";
 	const OPTION_NAME_OF_DATABASE = "goodsmemo_option_name"; // 注意：goodsmemo-affiliate.phpにも記述した。
-	private $sectionArray = array ();
+	private $sectionArray = array();
 
 	/**
 	 * Start up
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 
 		// 管理画面でプラグインを削除した時に呼び出されるメソッドを登録（このメソッドはスタティックであること）
 		// register_uninstall_hook(__FILE__, '\goodsmemo\option\AffiliateSettingPage::uninstall');//クラスのメソッドはエラーとなるらしい。
-		$amazonSettingSelection = new AmazonSettingSection ();
-		array_push ( $this->sectionArray, $amazonSettingSelection );
+		$amazonSettingSelection = new AmazonSettingSection();
+		array_push($this->sectionArray, $amazonSettingSelection);
 
-		$rakutenSettingSelection = new RakutenSettingSection ();
-		array_push ( $this->sectionArray, $rakutenSettingSelection );
+		$rakutenSettingSelection = new RakutenSettingSection();
+		array_push($this->sectionArray, $rakutenSettingSelection);
 
-		add_action ( 'admin_menu', array ($this,'add_plugin_page'
-		) );
-		add_action ( 'admin_init', array ($this,'init_page'
-		) );
+		add_action('admin_menu', array(
+			$this,
+			'add_plugin_page'
+		));
+		add_action('admin_init', array(
+			$this,
+			'init_page'
+		));
 	}
 
 	/**
 	 * Add options page
 	 */
-	public function add_plugin_page() {
+	public function add_plugin_page()
+	{
 
 		// This page will be under "Settings" 設定のサブメニューとしてメニューを追加する
-		add_options_page ( 'アフィリエイトの設定', // メニューで選択したページのタイトルタグに表示されるテキスト
-		'アフィリエイト商品表示（グッズ・メモランダム作成）', // メニューに使用されるテキスト
-		'manage_options', // 権限 ( 'manage_options' や 'administrator' など)
-		AffiliateSettingPage::SETTING_MENU_SLUG, // スラッグ名
-		array ($this,'output_affiliate_page'
-		) // The function to be called to output the content for this page.
+		add_options_page(
+			'アフィリエイトの設定', // メニューで選択したページのタイトルタグに表示されるテキスト
+			'アフィリエイト商品表示', // メニューに使用されるテキスト
+			'manage_options', // 権限 ( 'manage_options' や 'administrator' など)
+			AffiliateSettingPage::SETTING_MENU_SLUG, // スラッグ名
+			array(
+				$this,
+				'output_affiliate_page'
+			) // The function to be called to output the content for this page.
 		);
 	}
 
 	/**
 	 * Register and add settings
 	 */
-	public function init_page() {
+	public function init_page()
+	{
 
-		register_setting ( AffiliateSettingPage::OPTION_GROUP, // option group
-				AffiliateSettingPage::OPTION_NAME_OF_DATABASE, // option name データベースに保存するオプションの名前
-				array ($this,'sanitize'
-				) // オプションの値を無害化するコールバック関数。
+		register_setting(
+			AffiliateSettingPage::OPTION_GROUP, // option group
+			AffiliateSettingPage::OPTION_NAME_OF_DATABASE, // option name データベースに保存するオプションの名前
+			array(
+				$this,
+				'sanitize'
+			) // オプションの値を無害化するコールバック関数。
 		);
 
-		$pageInfo = new PageInfo ();
-		$pageInfo->setSettingMenuSlug ( AffiliateSettingPage::SETTING_MENU_SLUG );
-		$pageInfo->setOptionGroup ( AffiliateSettingPage::OPTION_GROUP );
-		$pageInfo->setOptionNameOfDatabase ( AffiliateSettingPage::OPTION_NAME_OF_DATABASE );
+		$pageInfo = new PageInfo();
+		$pageInfo->setSettingMenuSlug(AffiliateSettingPage::SETTING_MENU_SLUG);
+		$pageInfo->setOptionGroup(AffiliateSettingPage::OPTION_GROUP);
+		$pageInfo->setOptionNameOfDatabase(AffiliateSettingPage::OPTION_NAME_OF_DATABASE);
 
-		foreach ( $this->sectionArray as $section ) {
-			$section->initSection ( $pageInfo );
+		foreach ($this->sectionArray as $section) {
+			$section->initSection($pageInfo);
 		}
 	}
 
@@ -87,32 +101,33 @@ class AffiliateSettingPage {
 	 * Set class property
 	 * Holds the values to be used in the fields callbacks
 	 */
-	public function output_affiliate_page() {
+	public function output_affiliate_page()
+	{
 
-		$this->addGoodsMemoOptionStyles ();
+		$this->addGoodsMemoOptionStyles();
 
 		try {
-			$optionMap = AffiliateOptionUtils::getAffiliateOption ();
+			$optionMap = AffiliateOptionUtils::getAffiliateOption();
 
-			foreach ( $this->sectionArray as $section ) {
-				$section->setOptionMap ( $optionMap );
+			foreach ($this->sectionArray as $section) {
+				$section->setOptionMap($optionMap);
 			}
-		} catch ( OptionException $ex ) { // 最初に「アフィリエイトの設定」画面を表示した際、OptionExceptionが通知される。
-		                                  // print $ex;
+		} catch (OptionException $ex) { // 最初に「アフィリエイトの設定」画面を表示した際、OptionExceptionが通知される。
+			// print $ex;
 		}
-		?>
-	<div class="wrap">
-	    <h2>アフィリエイトの設定</h2>
-	    <form method="post" action="options.php">
-		<?php
-		// This prints out all hidden setting fields
-		settings_fields ( AffiliateSettingPage::OPTION_GROUP );
-		do_settings_sections ( AffiliateSettingPage::SETTING_MENU_SLUG ); // 引数：設定セクションを表示したいページのスラッグ。
-		submit_button ();
-		?>
-	    </form>
-	</div>
-	<?php
+?>
+		<div class="wrap">
+			<h2>アフィリエイトの設定</h2>
+			<form method="post" action="options.php">
+				<?php
+				// This prints out all hidden setting fields
+				settings_fields(AffiliateSettingPage::OPTION_GROUP);
+				do_settings_sections(AffiliateSettingPage::SETTING_MENU_SLUG); // 引数：設定セクションを表示したいページのスラッグ。
+				submit_button();
+				?>
+			</form>
+		</div>
+<?php
 	}
 
 	/**
@@ -121,24 +136,28 @@ class AffiliateSettingPage {
 	 * @param array $inputedValueMap
 	 *        	Contains all settings fields as array keys
 	 */
-	public function sanitize($inputedValueMap) {
+	public function sanitize($inputedValueMap)
+	{
 
-		$sanitizedValueMap = array ();
+		$sanitizedValueMap = array();
 
-		foreach ( $this->sectionArray as $section ) {
-			$section->sanitizeSectionValue ( $inputedValueMap, $sanitizedValueMap );
+		foreach ($this->sectionArray as $section) {
+			$section->sanitizeSectionValue($inputedValueMap, $sanitizedValueMap);
 		}
 
 		return $sanitizedValueMap;
 	}
 
-	private function addGoodsMemoOptionStyles() {
+	private function addGoodsMemoOptionStyles()
+	{
 
-		$pluginCssURL = plugins_url ( 'gma-optionStyle.css', __FILE__ );
+		$pluginCssURL = plugins_url('gma-optionStyle.css', __FILE__);
 		// var_dump($pluginCssURL);
 
-		wp_enqueue_style ( AffiliateSettingPage::SETTING_MENU_SLUG, // スラッグ名
-		$pluginCssURL );
+		wp_enqueue_style(
+			AffiliateSettingPage::SETTING_MENU_SLUG, // スラッグ名
+			$pluginCssURL
+		);
 	}
 
 	/*
