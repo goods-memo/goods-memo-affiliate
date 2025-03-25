@@ -147,7 +147,7 @@ class ItemArrayHTMLMaking
 			</a>
 			</div>
 		
-			<p class="title"  {$hideIfEmpty($title)}>
+			<p class="title" {$hideIfEmpty($title)}>
 			<a href="{$pageURL}">{$title}</a>
 			</p>
 		
@@ -208,8 +208,11 @@ class ItemArrayHTMLMaking
 				<p class="shop">{$shop}</p>
 				</div>
 			</div>
-		
-			<p class="review" {$hideIfEmpty($reviewText)}>{$reviewText}</p>
+
+			<div class="reviewArea" {$hideIfEmpty($reviewText)}>
+			<p class="reviewLabel">商品の説明:</p>
+			<p class="review">{$reviewText}</p>
+			</div>
 		
 		</div>
 		EOD;

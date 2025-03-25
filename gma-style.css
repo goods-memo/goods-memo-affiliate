@@ -36,14 +36,6 @@
     border-top: 1px #ddd solid;
 }
 
-.goodsmemo-amazon-items .goodsmemo-oneItem .imageArea,
-.goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea
-{
-    float: left;
-    width: 160px;
-    margin-right: 10px;
-}
-
 .goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea img
 {
     /* 幅が128よりも狭い画像があった。 */
@@ -51,11 +43,99 @@
     height: auto;
 }
 
-.goodsmemo-amazon-items .goodsmemo-oneItem .review,
-.goodsmemo-rakuten-items .goodsmemo-oneItem .review
+
+/* 商品名のリンクボタン */
+
+.goodsmemo-amazon-items .goodsmemo-oneItem .title a,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .title a,
+.goods_memo_ad_asp .title a /* 自分用 */
 {
-    overflow: hidden;/* 画像の下に回り込むことを防ぐ */
+    /* 角丸で矢印付きのボタン */
+    display: inline-block;
+    padding: 10px 40px 10px 40px;
+    background-color: #FFB724; /* 明るいオレンジに修正 */
+    color: #000000; /* 黒色に修正 */
+    text-decoration: none;
+    border-radius: 25px; /* 角をより丸く */
+    position: relative;
+
+    /* 立体的な効果を追加 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #E5A322; /* 境界の調整 */
+
+    margin-bottom: 10px; /* 例：ボタンの下側にある価格が、暗くなるのを防ぐため */
+
+    /* トランジション設定 */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* aタグの文字数が短い場合 */
+    width: fit-content; /* コンテンツの幅に合わせる */
+    max-width: 500px; /* 最大幅を500pxに設定 */
+    box-sizing: border-box; /* パディングを幅に含める */
+    white-space: normal; /* 長いテキストを折り返す */
+    word-wrap: break-word; /* 単語の途中でも折り返す */
+    min-height: 44px; /* ボタンの最小の高さを設定 */
+    align-items: center; /* 垂直方向に中央揃え */
 }
+
+/* 一つ目の矢印 */
+.goodsmemo-amazon-items .goodsmemo-oneItem .title a::after,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .title a::after,
+.goods_memo_ad_asp .title a::after /* 自分用 */
+{
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #000000; /* 黒色に修正 */
+    border-right: 2px solid #000000; /* 黒色に修正 */
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* 二つ目の矢印 */
+.goodsmemo-amazon-items .goodsmemo-oneItem .title a::before,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .title a::before,
+.goods_memo_ad_asp .title a::before /* 自分用 */
+{
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #000000; /* 黒色に修正 */
+    border-right: 2px solid #000000; /* 黒色に修正 */
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.goodsmemo-amazon-items .goodsmemo-oneItem .title a:hover,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .title a:hover,
+.goods_memo_ad_asp .title a:hover /* 自分用 */
+{
+    background-color: #E5A322; /* 暖かいオレンジに修正 */
+
+    /* 立体的な効果を追加 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-bottom: 4px solid #CC931F; /* 境界の調整 */
+}
+
+/* 立体的な効果を追加 */
+.goodsmemo-amazon-items .goodsmemo-oneItem .title a:active,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .title a:active,
+.goods_memo_ad_asp .title a:active /* 自分用 */
+{
+    background-color: #E5A322; /* 暖かいオレンジに修正 */
+    color: #000000; /* 黒色に修正 */
+
+    /* クリック時の影を調整 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
+    transform: translateY(2px);
+    border-bottom: 2px solid #CC931F; /* 境界の調整 */
+}
+
 
 .goodsmemo-amazon-items .goodsmemo-oneItem .review br, 
 .goodsmemo-rakuten-items .goodsmemo-oneItem .review br 
@@ -152,15 +232,4 @@ p.gma-error-message
 {
     max-height: 4em;/* 大体２行ほどの高さ */
     overflow: auto;
-}
-
-/*480px以下*/
-@media screen and (max-width: 480px) {
-
-    .goodsmemo-amazon-items .goodsmemo-oneItem .imageArea,
-    .goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea
-    {
-	width: 25%;
-    }
-
 }
