@@ -4,7 +4,7 @@
  * Plugin Name: Affiliate product display
  * Plugin URI:
  * Description: Amazonや楽天市場の商品を、アフィリエイト対象の商品として表示します。
- * Version: 0.4.2
+ * Version: 0.4.3
  * Author:programming goodsmemo
  * Author URI: https://programming.goods-memo.net/affiliate-product-display-wordpress-plugin/
  * License: GPL v2 or later

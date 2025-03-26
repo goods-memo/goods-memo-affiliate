@@ -137,14 +137,6 @@
 }
 
 
-.goodsmemo-amazon-items .goodsmemo-oneItem .review br, 
-.goodsmemo-rakuten-items .goodsmemo-oneItem .review br 
-{
-	display: block;
-	content: "";/* brタグに高さを持たせる */
-	margin: 1em 0;/* 行間は、1 + 1 = 2em */
-}
-
 /* 商品詳細テーブル */
 .goodsmemo-amazon-items .goodsmemo-oneItem .itemDetailsTable,
 .goodsmemo-rakuten-items .goodsmemo-oneItem .itemDetailsTable
