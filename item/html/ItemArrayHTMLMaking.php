@@ -147,9 +147,9 @@ class ItemArrayHTMLMaking
 			</a>
 			</div>
 		
-			<p class="title" {$hideIfEmpty($title)}>
+			<div class="title" {$hideIfEmpty($title)}>
 			<a href="{$pageURL}">{$title}</a>
-			</p>
+			</div>
 		
 			<div class="itemDetailsTable">
 				<div class="tableRow" {$hideIfEmpty($price)}>

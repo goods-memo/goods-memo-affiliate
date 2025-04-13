@@ -4,7 +4,7 @@
  * Plugin Name: Affiliate product display
  * Plugin URI:
  * Description: Amazonや楽天市場の商品を、アフィリエイト対象の商品として表示します。
- * Version: 0.4.3
+ * Version: 0.4.4
  * Author:programming goodsmemo
  * Author URI: https://programming.goods-memo.net/affiliate-product-display-wordpress-plugin/
  * License: GPL v2 or later
@@ -24,10 +24,20 @@ register_uninstall_hook(__FILE__, "goodsmemo_affiliate_uninstall");
 function addGoodsMemoAffiliateStyles()
 {
 
+	// ユニークなスタイルシート名を定義
 	$styleSheetUniqueName = GOODS_MEMO_PREFIX . "-affiliateStyles";
+
+	// プラグイン内の CSS ファイルの URL を取得
 	$pluginCssURL = plugins_url('gma-style.css', __FILE__);
 
-	wp_register_style($styleSheetUniqueName, $pluginCssURL);
+	// CSS ファイルの物理パスを取得（バージョン情報に利用）
+	$pluginCssPath = plugin_dir_path(__FILE__) . 'gma-style.css';
+
+	// ファイルの更新日時をバージョンとして利用。存在しない場合は '1.0.0' を利用
+	$version = file_exists($pluginCssPath) ? filemtime($pluginCssPath) : '1.0.0';
+
+	// スタイルシートを登録（バージョンは自動的にクエリ文字列に付加される。?ver=バージョン番号）
+	wp_register_style($styleSheetUniqueName, $pluginCssURL, array(), $version);
 	wp_enqueue_style($styleSheetUniqueName);
 }
 

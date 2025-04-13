@@ -36,6 +36,15 @@
     border-top: 1px #ddd solid;
 }
 
+/* 商品画像ブロック */
+.goodsmemo-amazon-items .goodsmemo-oneItem .imageArea,
+.goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea
+{
+    /* 商品画像の下側に、リンクボタンを表示する */
+    float: none;
+}
+
+.goodsmemo-amazon-items .goodsmemo-oneItem .imageArea img,
 .goodsmemo-rakuten-items .goodsmemo-oneItem .imageArea img
 {
     /* 幅が128よりも狭い画像があった。 */
@@ -46,36 +55,45 @@
 
 /* 商品名のリンクボタン */
 
+/*
+特定のスマートフォン端末で、オレンジ色のリンクボタンが描画されないなど、
+CSSが適用されない場合があった※。
+特定のワードプレステーマのCSSで、aタグの下線と文字色（例：水色）が適用された。
+プラグインのCSSで!importantを指定して、強制適用してみる。
+※ワードプレスのカスタマイズ中 / 追加 CSS で、
+リンクボタンのCSSを指定すると、オレンジ色のリンクボタンが描画された。
+*/
+
+/* 商品名のリンクボタン */
 .goodsmemo-amazon-items .goodsmemo-oneItem .title a,
 .goodsmemo-rakuten-items .goodsmemo-oneItem .title a,
 .goods_memo_ad_asp .title a /* 自分用 */
 {
     /* 角丸で矢印付きのボタン */
-    display: inline-block;
-    padding: 10px 40px 10px 40px;
-    background-color: #FFB724; /* 明るいオレンジに修正 */
-    color: #000000; /* 黒色に修正 */
-    text-decoration: none;
-    border-radius: 25px; /* 角をより丸く */
-    position: relative;
+    display: inline-block !important;
+    padding: 10px 40px 10px 40px !important;
+    background-color: #FFB724 !important; /* 明るいオレンジ */
+    color: #000000 !important; /* 黒色 */
+    text-decoration: none !important;
+    border-radius: 25px !important; /* 角をより丸く */
+    position: relative !important;
 
     /* 立体的な効果を追加 */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 4px solid #E5A322; /* 境界の調整 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) , 0 3px 6px rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 4px solid #E5A322 !important; /* 境界の調整 */
 
-    margin-bottom: 10px; /* 例：ボタンの下側にある価格が、暗くなるのを防ぐため */
+    margin-bottom: 10px !important; /* 例：ボタンの下側にある価格が、暗くなるのを防ぐため */
 
     /* トランジション設定 */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 
     /* aタグの文字数が短い場合 */
-    width: fit-content; /* コンテンツの幅に合わせる */
-    max-width: 500px; /* 最大幅を500pxに設定 */
-    box-sizing: border-box; /* パディングを幅に含める */
-    white-space: normal; /* 長いテキストを折り返す */
-    word-wrap: break-word; /* 単語の途中でも折り返す */
-    min-height: 44px; /* ボタンの最小の高さを設定 */
-    align-items: center; /* 垂直方向に中央揃え */
+    width: fit-content !important; /* コンテンツの幅に合わせる */
+    max-width: 500px !important; /* 最大幅を500pxに設定 */
+    box-sizing: border-box !important; /* パディングを幅に含める */
+    white-space: normal !important; /* 長いテキストを折り返す */
+    word-wrap: break-word !important; /* 単語の途中でも折り返す */
+    min-height: 44px !important; /* ボタンの最小の高さを設定 */
 }
 
 /* 一つ目の矢印 */
@@ -83,15 +101,15 @@
 .goodsmemo-rakuten-items .goodsmemo-oneItem .title a::after,
 .goods_memo_ad_asp .title a::after /* 自分用 */
 {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    width: 8px;
-    height: 8px;
-    border-top: 2px solid #000000; /* 黒色に修正 */
-    border-right: 2px solid #000000; /* 黒色に修正 */
-    transform: translateY(-50%) rotate(45deg);
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 15px !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-top: 2px solid #000000 !important; /* 黒色 */
+    border-right: 2px solid #000000 !important; /* 黒色 */
+    transform: translateY(-50%) rotate(45deg) !important;
 }
 
 /* 二つ目の矢印 */
@@ -99,41 +117,40 @@
 .goodsmemo-rakuten-items .goodsmemo-oneItem .title a::before,
 .goods_memo_ad_asp .title a::before /* 自分用 */
 {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    width: 8px;
-    height: 8px;
-    border-top: 2px solid #000000; /* 黒色に修正 */
-    border-right: 2px solid #000000; /* 黒色に修正 */
-    transform: translateY(-50%) rotate(45deg);
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 20px !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-top: 2px solid #000000 !important; /* 黒色 */
+    border-right: 2px solid #000000 !important; /* 黒色 */
+    transform: translateY(-50%) rotate(45deg) !important;
 }
 
 .goodsmemo-amazon-items .goodsmemo-oneItem .title a:hover,
 .goodsmemo-rakuten-items .goodsmemo-oneItem .title a:hover,
 .goods_memo_ad_asp .title a:hover /* 自分用 */
 {
-    background-color: #E5A322; /* 暖かいオレンジに修正 */
+    background-color: #E5A322 !important; /* 暖かいオレンジ */
 
     /* 立体的な効果を追加 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    border-bottom: 4px solid #CC931F; /* 境界の調整 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) , 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-2px) !important;
+    border-bottom: 4px solid #CC931F !important; /* 境界の調整 */
 }
 
-/* 立体的な効果を追加 */
 .goodsmemo-amazon-items .goodsmemo-oneItem .title a:active,
 .goodsmemo-rakuten-items .goodsmemo-oneItem .title a:active,
 .goods_memo_ad_asp .title a:active /* 自分用 */
 {
-    background-color: #E5A322; /* 暖かいオレンジに修正 */
-    color: #000000; /* 黒色に修正 */
+    background-color: #E5A322 !important; /* 暖かいオレンジ */
+    color: #000000 !important; /* 黒色 */
 
     /* クリック時の影を調整 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
-    transform: translateY(2px);
-    border-bottom: 2px solid #CC931F; /* 境界の調整 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) , 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(2px) !important;
+    border-bottom: 2px solid #CC931F !important; /* 境界の調整 */
 }
 
 
