@@ -21,7 +21,7 @@ class AmazonRequest
 		URLInfo $urlInfo,
 		CommonRESTParameter $commonParameter,
 		RESTParameter $restParameter,
-		$retryCount = 1
+		$retryCount = 2
 	) {
 		$partnerTag = $commonParameter->getAssociateTag();
 		$keyword = $restParameter->getKeyword();
