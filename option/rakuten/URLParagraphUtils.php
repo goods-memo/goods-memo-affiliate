@@ -21,7 +21,7 @@ class URLParagraphUtils
 		$hostnameFieldInfo = new TextFieldInfo();
 		$hostnameFieldInfo->setFieldID(URLParagraphUtils::HOSTNAME_ID);
 		$hostnameFieldInfo->setFieldLabel('楽天市場商品検索API ホスト名');
-		$hostnameFieldInfo->setDefaultFieldValue("app.rakuten.co.jp");
+		$hostnameFieldInfo->setDefaultFieldValue("openapi.rakuten.co.jp");
 		array_push($fieldInfoArray, $hostnameFieldInfo);
 
 		$pathFieldInfo = new TextFieldInfo();
