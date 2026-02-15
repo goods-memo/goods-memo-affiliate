@@ -37,14 +37,15 @@ class RakutenRequest
 		//プラグインを使用しているWordPressサイトのホームURL（トップページURL）
 		//楽天ウェブサービスのアプリ登録 許可されたWebサイトのドメインと同じであること
 		//ローカル環境のドメインも、登録する。例：wptest.local
-		$referer = home_url();
+		$siteURL = home_url();
 
 		$requestArguments =
 			array(
 				'headers' => array(
-					//403エラーを防ぐため、OriginとRefererを設定する。Refererだけだと、403エラーが発生した
-					'Origin' => $referer,
-					'Referer' => $referer
+					//403(REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING)エラーを防ぐため、
+					//OriginとRefererを設定する。Refererだけだと、403エラーが発生した
+					'Origin' => $siteURL,
+					'Referer' => $siteURL
 				),
 
 				// $timeout = 5 の場合、テスト用ページでタイムアウトエラーになった。
