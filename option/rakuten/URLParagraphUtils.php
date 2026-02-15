@@ -27,7 +27,7 @@ class URLParagraphUtils
 		$pathFieldInfo = new TextFieldInfo();
 		$pathFieldInfo->setFieldID(URLParagraphUtils::PATH_ID);
 		$pathFieldInfo->setFieldLabel('楽天市場商品検索API リクエストURLのパス');
-		$pathFieldInfo->setDefaultFieldValue("services/api/IchibaItem/Search/20220601");
+		$pathFieldInfo->setDefaultFieldValue("ichibams/api/IchibaItem/Search/20220601");
 		array_push($fieldInfoArray, $pathFieldInfo);
 
 		return $fieldInfoArray;
