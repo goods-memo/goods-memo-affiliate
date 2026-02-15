@@ -1,26 +1,3 @@
-/*
-Copyright (C) 2018 Goods Memo.
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-MA 02110-1301  USA
-*/
-/*
-    Created on : 2018/11/16, 14:37:00
-    Author     : Goods Memo
-*/
-
 .form-table{
     border-collapse: collapse;/*各セルの線を重ねて表示します。*/
 }
@@ -32,7 +9,11 @@ MA 02110-1301  USA
 他の書き方（nth-of-typeを使わない書き方）があるか？考え中。
 */
 
-/*アマゾンの設定*/
+/*
+アマゾンの設定
+フォームテーブル（form-tableクラス）の１番目のテーブル
+.form-table:nth-of-type(1)
+*/
 
 /*URLParagraph*/
 .form-table:nth-of-type(1) tr:nth-of-type(1) {
@@ -69,6 +50,7 @@ MA 02110-1301  USA
     border-left: solid 1px darkgray;
 }
 .form-table:nth-of-type(1) tr:nth-of-type(7) {
+    border-top: solid 1px darkgray;
     border-right: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     border-left: solid 1px darkgray;
@@ -115,7 +97,11 @@ MA 02110-1301  USA
     border-left: solid 1px darkgray;
 }
 
-/*楽天の設定*/
+/*
+楽天の設定
+フォームテーブル（form-tableクラス）の2番目のテーブル
+.form-table:nth-of-type(2)
+*/
 
 /*URLParagraph*/
 .form-table:nth-of-type(2) tr:nth-of-type(1) {
@@ -137,33 +123,38 @@ MA 02110-1301  USA
 }
 .form-table:nth-of-type(2) tr:nth-of-type(4) {
     border-right: solid 1px darkgray;
+    border-left: solid 1px darkgray;
+}
+.form-table:nth-of-type(2) tr:nth-of-type(5) {
+    border-right: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     border-left: solid 1px darkgray;
 }
 
 /*ItemHTMLParagraph*/
-.form-table:nth-of-type(2) tr:nth-of-type(5) {
+.form-table:nth-of-type(2) tr:nth-of-type(6) {
     border-top: solid 1px darkgray;
     border-right: solid 1px darkgray;
     border-left: solid 1px darkgray;
 }
-.form-table:nth-of-type(2) tr:nth-of-type(6) {
+.form-table:nth-of-type(2) tr:nth-of-type(7) {
+    border-top: solid 1px darkgray;
     border-right: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     border-left: solid 1px darkgray;
 }
 
 /*ReviewParagraph*/
-.form-table:nth-of-type(2) tr:nth-of-type(7) {
+.form-table:nth-of-type(2) tr:nth-of-type(8) {
     border-top: solid 1px darkgray;
     border-right: solid 1px darkgray;
     border-left: solid 1px darkgray;
 }
-.form-table:nth-of-type(2) tr:nth-of-type(8) {
+.form-table:nth-of-type(2) tr:nth-of-type(9) {
     border-right: solid 1px darkgray;
     border-left: solid 1px darkgray;
 }
-.form-table:nth-of-type(2) tr:nth-of-type(9) {
+.form-table:nth-of-type(2) tr:nth-of-type(10) {
     border-right: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     border-left: solid 1px darkgray;

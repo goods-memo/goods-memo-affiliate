@@ -1,24 +1,5 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
-
 namespace goodsmemo\option\rakuten;
 
 use goodsmemo\option\AbstractSettingSection;
@@ -52,11 +33,13 @@ require_once GOODS_MEMO_DIR . "option/rakuten/ReviewParagraphUtils.php";
  *
  * @author Goods Memo
  */
-class RakutenSettingSection extends AbstractSettingSection {
+class RakutenSettingSection extends AbstractSettingSection
+{
 
 	const ID_PREFIX = "rakuten";
 
-	public function initSection(PageInfo $pageInfo) {
+	public function initSection(PageInfo $pageInfo)
+	{
 
 		$sectionInfo = new SectionInfo();
 		$sectionInfo->setSectionID("rakuten_section_id");
@@ -90,8 +73,8 @@ class RakutenSettingSection extends AbstractSettingSection {
 		parent::addParagraph($reviewParagraph);
 	}
 
-	public function printSectionInfo() {
+	public function printSectionInfo()
+	{
 		print '楽天アフィリエイトの設定を入力してください。未入力だった場合、初期値を表示します。';
 	}
-
 }
