@@ -21,7 +21,7 @@ class RakutenRequest
 		$parameterMap = array();
 
 		$parameterMap["applicationId"] = $commonParameter->getApplicationId();
-		$parameterMap["accessKey"] = $commonParameter->getAccessKey();
+		$parameterMap["accessKey"] = $commonParameter->getAccessKey(); //GETパラメータを使う場合
 		$parameterMap["affiliateId"] = $commonParameter->getAffiliateId();
 
 		$parameterMap["imageFlag"] = $restParameter->getImageFlag();
@@ -39,14 +39,20 @@ class RakutenRequest
 		//ローカル環境のドメインも、登録する。例：wptest.local
 		$siteURL = home_url();
 
+		$headersMap = array(
+			//400 Bad Requestエラーになる。解決できなかった
+			//ヘッダー方式。URLに機密情報漏洩なし
+			//'Authorization' => 'Bearer ' . $commonParameter->getAccessKey(),
+
+			//403(REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING)エラーを防ぐため、
+			//OriginとRefererを設定する。Refererだけだと、403エラーが発生した
+			'Origin' => $siteURL,
+			'Referer' => $siteURL . '/'
+		);
+
 		$requestArguments =
 			array(
-				'headers' => array(
-					//403(REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING)エラーを防ぐため、
-					//OriginとRefererを設定する。Refererだけだと、403エラーが発生した
-					'Origin' => $siteURL,
-					'Referer' => $siteURL
-				),
+				'headers' => $headersMap,
 
 				// $timeout = 5 の場合、テスト用ページでタイムアウトエラーになった。
 				// 例：cURL error 28: Operation timed out after 0 milliseconds with 0 out of 0 bytes received.
