@@ -21,6 +21,7 @@ class RakutenRequest
 		$parameterMap = array();
 
 		$parameterMap["applicationId"] = $commonParameter->getApplicationId();
+		$parameterMap["accessKey"] = $commonParameter->getAccessKey();
 		$parameterMap["affiliateId"] = $commonParameter->getAffiliateId();
 
 		$parameterMap["imageFlag"] = $restParameter->getImageFlag();
@@ -32,7 +33,26 @@ class RakutenRequest
 		$path = $urlInfo->getPath();
 
 		$requestURL = 'https://' . $hostname . '/' . $path . '?' . $queryString;
-		$response = HTTPRequest::getContents($requestURL);
+
+		//プラグインを使用しているWordPressサイトのホームURL（トップページURL）
+		//楽天ウェブサービスのアプリ登録 許可されたWebサイトのドメインと同じであること
+		//ローカル環境のドメインも、登録する。例：wptest.local
+		$referer = home_url();
+
+		$requestArguments =
+			array(
+				'headers' => array(
+					//403エラーを防ぐため、OriginとRefererを設定する。Refererだけだと、403エラーが発生した
+					'Origin' => $referer,
+					'Referer' => $referer
+				),
+
+				// $timeout = 5 の場合、テスト用ページでタイムアウトエラーになった。
+				// 例：cURL error 28: Operation timed out after 0 milliseconds with 0 out of 0 bytes received.
+				'timeout' => 15
+			);
+
+		$response = HTTPRequest::getContents($requestURL, $requestArguments);
 
 		return $response;
 	}

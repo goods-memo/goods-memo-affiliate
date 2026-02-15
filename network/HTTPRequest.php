@@ -9,16 +9,10 @@ require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 class HTTPRequest
 {
 
-	public static function getContents($url, $timeout = 15, $retryCount = 2)
+	public static function getContents($url, $requestArguments, $retryCount = 2)
 	{
-
-		// $timeout = 5 の場合、テスト用ページでタイムアウトエラーになった。
-		// 例：cURL error 28: Operation timed out after 0 milliseconds with 0 out of 0 bytes received.
-		$args = array(
-			'timeout' => $timeout
-		);
-		$lastResponseCode;
-		$lastErrorMessage;
+		$lastResponseCode = "";
+		$lastErrorMessage = "";
 
 		for ($i = 0; $i < $retryCount; $i++) {
 
@@ -30,7 +24,7 @@ class HTTPRequest
 			 * WordPressのwp_remote_get関数を使う。
 			 * PHPのfile_get_contents関数より、エラー処理をしやすいから。
 			 */
-			$response = wp_remote_get($url, $args);
+			$response = wp_remote_get($url, $requestArguments);
 			if (is_wp_error($response)) {
 				$lastResponseCode = -1; // $errorCode = $response->get_error_code(); // WP_Error() の第一引数 //レスポンスコードでない
 				$lastErrorMessage = $response->get_error_message(); // WP_Error() の第二引数
