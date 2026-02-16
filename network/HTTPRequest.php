@@ -9,12 +9,12 @@ require_once GOODS_MEMO_DIR . "exception/HttpRequestException.php";
 class HTTPRequest
 {
 
-	public static function getContents($url, $requestArguments, $retryCount = 2)
+	public static function getContents($url, $requestArguments, $requestCount = 2)
 	{
 		$lastResponseCode = "";
 		$lastErrorMessage = "";
 
-		for ($i = 0; $i < $retryCount; $i++) {
+		for ($i = 0; $i < $requestCount; $i++) {
 
 			if ($i >= 1) {
 				sleep(1); // 再試行の待ち時間（１秒）
