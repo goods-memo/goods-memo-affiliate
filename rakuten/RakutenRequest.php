@@ -36,16 +36,16 @@ class RakutenRequest
 
 		$requestURL = 'https://' . $hostname . '/' . $path . '?' . $queryString;
 
-		//プラグインを使用しているWordPressサイトのホームURL（トップページURL）。
-		//楽天ウェブサービスのアプリ登録 許可されたWebサイトのドメインと同じであること。
-		//ローカル環境のドメインも、登録する。例：wptest.local
-		$siteURL = home_url();
-
 		$headersMap = array();
 
 		//400 Bad Requestエラーになる。解決できなかった。
 		//ヘッダー方式。URLに機密情報漏洩なし。GETパラメータを使う場合、コメントにする。
 		//$headersMap["Authorization"] = "Bearer " . $commonParameter->getAccessKey();
+
+		//プラグインを使用しているWordPressサイトのホームURL（トップページURL）。
+		//楽天ウェブサービスのアプリ登録 許可されたWebサイトのドメインと同じであること。
+		//ローカル環境のドメインも、登録する。例：wptest.local
+		$siteURL = home_url();
 
 		//403(REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING)エラーを防ぐため、
 		//OriginとRefererを設定する。Refererだけだと、403エラーが発生した
