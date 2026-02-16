@@ -1,6 +1,5 @@
 <?php
 
-
 namespace goodsmemo\rakuten;
 
 use goodsmemo\rakuten\CommonRESTParameter;
@@ -25,10 +24,13 @@ class RakutenOptionUtils
 
 		$parameter = new CommonRESTParameter();
 
-		$applicationId = $optionMap[CommonRESTParagraphUtils::APPLICATION_ID_ID]; //var_dump($accessKey);
+		$applicationId = $optionMap[CommonRESTParagraphUtils::APPLICATION_ID_ID];
 		$parameter->setApplicationId($applicationId);
 
-		$affiliateId = $optionMap[CommonRESTParagraphUtils::AFFILIATE_ID_ID]; //var_dump($associateTag);
+		$accessKey = $optionMap[CommonRESTParagraphUtils::ACCESS_KEY_ID];
+		$parameter->setAccessKey($accessKey);
+
+		$affiliateId = $optionMap[CommonRESTParagraphUtils::AFFILIATE_ID_ID];
 		$parameter->setAffiliateId($affiliateId);
 
 		return $parameter;

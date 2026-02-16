@@ -1,50 +1,41 @@
 <?php
 
-/*
- * Copyright (C) 2018 Goods Memo.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
- */
-
 namespace goodsmemo\rakuten;
 
-/**
- * Description of CommonRESTParameter
- *
- * @author Goods Memo
- */
-class CommonRESTParameter {
+class CommonRESTParameter
+{
 
     private $applicationId;
+    private $accessKey;
     private $affiliateId;
 
-    public function getApplicationId() {
-	return $this->applicationId;
+    public function getApplicationId()
+    {
+        return $this->applicationId;
     }
 
-    public function getAffiliateId() {
-	return $this->affiliateId;
+    public function setApplicationId($applicationId)
+    {
+        $this->applicationId = $applicationId;
     }
 
-    public function setApplicationId($applicationId) {
-	$this->applicationId = $applicationId;
+    public function getAccessKey()
+    {
+        return $this->accessKey;
     }
 
-    public function setAffiliateId($affiliateId) {
-	$this->affiliateId = $affiliateId;
+    public function setAccessKey($accessKey)
+    {
+        $this->accessKey = $accessKey;
     }
 
+    public function getAffiliateId()
+    {
+        return $this->affiliateId;
+    }
+
+    public function setAffiliateId($affiliateId)
+    {
+        $this->affiliateId = $affiliateId;
+    }
 }
