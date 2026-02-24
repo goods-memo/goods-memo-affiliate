@@ -28,11 +28,6 @@ require_once GOODS_MEMO_DIR . "option/rakuten/CommonRESTParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/ItemHTMLParagraphUtils.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/ReviewParagraphUtils.php";
 
-/**
- * Description of RakutenSettingSection
- *
- * @author Goods Memo
- */
 class RakutenSettingSection extends AbstractSettingSection
 {
 
@@ -49,7 +44,7 @@ class RakutenSettingSection extends AbstractSettingSection
 			$sectionInfo->getSectionID(), // ID
 			$sectionInfo->getSectionTitle(), // Title
 			array($this, SettingSection::PRINT_SECTION_INFO_FUNCTION_NAME), // Callback
-			$pageInfo->getSettingMenuSlug() //設定ページのslug。メニューのslugと同じもの。
+			$pageInfo->getSettingPageSlug()
 		);
 
 		$urlParagraph = new URLParagraph();
@@ -75,6 +70,6 @@ class RakutenSettingSection extends AbstractSettingSection
 
 	public function printSectionInfo()
 	{
-		print '楽天アフィリエイトの設定を入力してください。未入力だった場合、初期値を表示します。';
+		print '楽天アフィリエイトの設定を入力してください。未入力で初期値がある場合、初期値を表示します。';
 	}
 }

@@ -21,7 +21,7 @@ class AmazonRequest
 		URLInfo $urlInfo,
 		CommonRESTParameter $commonParameter,
 		RESTParameter $restParameter,
-		$retryCount = 2
+		$requestCount = 2
 	) {
 		$partnerTag = $commonParameter->getAssociateTag();
 		$keyword = $restParameter->getKeyword();
@@ -32,8 +32,8 @@ class AmazonRequest
 		$secretKey = $commonParameter->getSecretKey();
 		$regionName = $commonParameter->getRegion();
 
-		$lastHttpRequestException;
-		for ($i = 0; $i < $retryCount; $i++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
+		$lastHttpRequestException = "";
+		for ($i = 0; $i < $requestCount; $i++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
 
 			if ($i >= 1) {
 				sleep(1); // 再試行の待ち時間（1秒）
