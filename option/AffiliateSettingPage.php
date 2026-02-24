@@ -22,6 +22,8 @@ class AffiliateSettingPage
 	 * 名前の付け方など、この解説を真似した。
 	 */
 	const SETTING_MENU_SLUG = "goodsmemo-affiliate-setting";
+	const AMAZON_PAGE_SLUG = "goodsmemo-affiliate-amazon-page";
+	const RAKUTEN_PAGE_SLUG = "goodsmemo-affiliate-rakuten-page";
 	const OPTION_GROUP = "goodsmemo_option_group";
 	const OPTION_NAME_OF_DATABASE = "goodsmemo_option_name"; // 注意：goodsmemo-affiliate.phpにも記述した。
 	private $sectionArray = array();
@@ -31,9 +33,10 @@ class AffiliateSettingPage
 	 */
 	public function __construct()
 	{
-
 		// 管理画面でプラグインを削除した時に呼び出されるメソッドを登録（このメソッドはスタティックであること）
-		// register_uninstall_hook(__FILE__, '\goodsmemo\option\AffiliateSettingPage::uninstall');//クラスのメソッドはエラーとなるらしい。
+		//クラスのメソッドはエラーとなるらしい。
+		// register_uninstall_hook(__FILE__, '\goodsmemo\option\AffiliateSettingPage::uninstall');
+
 		$amazonSettingSelection = new AmazonSettingSection();
 		array_push($this->sectionArray, $amazonSettingSelection);
 
@@ -55,7 +58,6 @@ class AffiliateSettingPage
 	 */
 	public function add_plugin_page()
 	{
-
 		// This page will be under "Settings" 設定のサブメニューとしてメニューを追加する
 		add_options_page(
 			'アフィリエイトの設定', // メニューで選択したページのタイトルタグに表示されるテキスト
@@ -74,7 +76,6 @@ class AffiliateSettingPage
 	 */
 	public function init_page()
 	{
-
 		register_setting(
 			AffiliateSettingPage::OPTION_GROUP, // option group
 			AffiliateSettingPage::OPTION_NAME_OF_DATABASE, // option name データベースに保存するオプションの名前
@@ -84,14 +85,23 @@ class AffiliateSettingPage
 			) // オプションの値を無害化するコールバック関数。
 		);
 
-		$pageInfo = new PageInfo();
-		$pageInfo->setSettingMenuSlug(AffiliateSettingPage::SETTING_MENU_SLUG);
-		$pageInfo->setOptionGroup(AffiliateSettingPage::OPTION_GROUP);
-		$pageInfo->setOptionNameOfDatabase(AffiliateSettingPage::OPTION_NAME_OF_DATABASE);
+		// Amazonセクション用のPageInfo
+		$amaznonPageInfo = new PageInfo();
+		$amaznonPageInfo->setSettingPageSlug(self::AMAZON_PAGE_SLUG);
+		$amaznonPageInfo->setOptionGroup(self::OPTION_GROUP);
+		$amaznonPageInfo->setOptionNameOfDatabase(self::OPTION_NAME_OF_DATABASE);
 
-		foreach ($this->sectionArray as $section) {
-			$section->initSection($pageInfo);
-		}
+		$amazonSettingSelection = $this->sectionArray[0];
+		$amazonSettingSelection->initSection($amaznonPageInfo);
+
+		// Rakutenセクション用のPageInfo  
+		$rakutenPageInfo = new PageInfo();
+		$rakutenPageInfo->setSettingPageSlug(self::RAKUTEN_PAGE_SLUG);
+		$rakutenPageInfo->setOptionGroup(self::OPTION_GROUP);
+		$rakutenPageInfo->setOptionNameOfDatabase(self::OPTION_NAME_OF_DATABASE);
+
+		$rakutenSettingSelection = $this->sectionArray[1];
+		$rakutenSettingSelection->initSection($rakutenPageInfo);
 	}
 
 	/**
@@ -103,7 +113,6 @@ class AffiliateSettingPage
 	 */
 	public function output_affiliate_page()
 	{
-
 		$this->addGoodsMemoOptionStyles();
 
 		try {
@@ -122,10 +131,18 @@ class AffiliateSettingPage
 				<?php
 				// This prints out all hidden setting fields
 				settings_fields(AffiliateSettingPage::OPTION_GROUP);
-				do_settings_sections(AffiliateSettingPage::SETTING_MENU_SLUG); // 引数：設定セクションを表示したいページのスラッグ。
+
+				do_settings_sections(self::AMAZON_PAGE_SLUG);
+				submit_button(
+					'', //ボタンのテキストは、初期値のテキスト
+					'primary',
+					'submit-amazon'
+				);
+
+				do_settings_sections(self::RAKUTEN_PAGE_SLUG);
 				submit_button();
 				?>
-			</form>
+				pagem>
 		</div>
 <?php
 	}
