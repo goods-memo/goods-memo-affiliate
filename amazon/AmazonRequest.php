@@ -33,7 +33,7 @@ class AmazonRequest
 		$regionName = $commonParameter->getRegion();
 
 		$lastHttpRequestException = "";
-		for ($i = 0; $i < $requestCount; $i++) { // 例：リトライ回数：2回 //TODO 設定画面で指定する
+		for ($i = 0; $i < $requestCount; $i++) { // 例：リクエスト回数：2回 //TODO 設定画面で指定する
 
 			if ($i >= 1) {
 				sleep(1); // 再試行の待ち時間（1秒）
