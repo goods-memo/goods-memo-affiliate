@@ -142,7 +142,7 @@ class AffiliateSettingPage
 				do_settings_sections(self::RAKUTEN_PAGE_SLUG);
 				submit_button();
 				?>
-				pagem>
+			</form>
 		</div>
 <?php
 	}
