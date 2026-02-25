@@ -2,14 +2,12 @@
 
 namespace goodsmemo\option;
 
-use goodsmemo\option\PageInfo;
 use goodsmemo\option\PageInfoUtils;
 use goodsmemo\option\AffiliateOptionUtils;
 use goodsmemo\option\amazon\AmazonSettingSection;
 use goodsmemo\option\rakuten\RakutenSettingSection;
 use goodsmemo\exception\OptionException;
 
-require_once GOODS_MEMO_DIR . "option/PageInfo.php";
 require_once GOODS_MEMO_DIR . "option/PageInfoUtils.php";
 require_once GOODS_MEMO_DIR . "option/AffiliateOptionUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
