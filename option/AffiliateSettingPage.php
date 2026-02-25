@@ -3,12 +3,14 @@
 namespace goodsmemo\option;
 
 use goodsmemo\option\PageInfo;
+use goodsmemo\option\PageInfoUtils;
 use goodsmemo\option\AffiliateOptionUtils;
 use goodsmemo\option\amazon\AmazonSettingSection;
 use goodsmemo\option\rakuten\RakutenSettingSection;
 use goodsmemo\exception\OptionException;
 
 require_once GOODS_MEMO_DIR . "option/PageInfo.php";
+require_once GOODS_MEMO_DIR . "option/PageInfoUtils.php";
 require_once GOODS_MEMO_DIR . "option/AffiliateOptionUtils.php";
 require_once GOODS_MEMO_DIR . "option/amazon/AmazonSettingSection.php";
 require_once GOODS_MEMO_DIR . "option/rakuten/RakutenSettingSection.php";
@@ -86,19 +88,13 @@ class AffiliateSettingPage
 		);
 
 		// Amazonセクション用のPageInfo
-		$amaznonPageInfo = new PageInfo();
-		$amaznonPageInfo->setSettingPageSlug(self::AMAZON_PAGE_SLUG);
-		$amaznonPageInfo->setOptionGroup(self::OPTION_GROUP);
-		$amaznonPageInfo->setOptionNameOfDatabase(self::OPTION_NAME_OF_DATABASE);
+		$amaznonPageInfo = PageInfoUtils::createAffiliatePageInfo(self::AMAZON_PAGE_SLUG);
 
 		$amazonSettingSelection = $this->sectionArray[0];
 		$amazonSettingSelection->initSection($amaznonPageInfo);
 
 		// Rakutenセクション用のPageInfo  
-		$rakutenPageInfo = new PageInfo();
-		$rakutenPageInfo->setSettingPageSlug(self::RAKUTEN_PAGE_SLUG);
-		$rakutenPageInfo->setOptionGroup(self::OPTION_GROUP);
-		$rakutenPageInfo->setOptionNameOfDatabase(self::OPTION_NAME_OF_DATABASE);
+		$rakutenPageInfo = PageInfoUtils::createAffiliatePageInfo(self::RAKUTEN_PAGE_SLUG);
 
 		$rakutenSettingSelection = $this->sectionArray[1];
 		$rakutenSettingSelection->initSection($rakutenPageInfo);
